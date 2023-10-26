@@ -1,14 +1,19 @@
 package com.example.datagenerator.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
+@Builder
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "_user")
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +24,7 @@ public class User {
     private String password;
     private LocalDate registrationDate;
     private LocalDate lastLogin;
-    private String isEnabled;
+    private Boolean isEnabled;
     private String contactNumber;
     private String additionalInfo;
     @OneToOne(mappedBy = "user")
