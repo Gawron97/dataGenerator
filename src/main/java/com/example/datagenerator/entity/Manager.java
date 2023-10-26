@@ -19,6 +19,7 @@ public class Manager {
     private String workSchedule;
     private Long seniority;
     @OneToOne
+    @JoinColumn(name = "id_user")
     private User user;
 
 

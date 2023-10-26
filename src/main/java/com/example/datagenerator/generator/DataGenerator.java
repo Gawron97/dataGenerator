@@ -1,5 +1,6 @@
 package com.example.datagenerator.generator;
 
+import com.example.datagenerator.entity.Manager;
 import com.example.datagenerator.entity.User;
 import com.example.datagenerator.repository.ManagerRepository;
 import com.example.datagenerator.repository.UserRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +47,30 @@ public class DataGenerator {
             userRepository.save(user);
         }
 
+    }
+
+    public void generateManagers(int numberOfManagers) {
+
+        List<User> unsignedUsers = getUnsignedUsers();
+        int min = 0;
+        int max = unsignedUsers.size();
+
+        for(int i=0; i<numberOfManagers; i++) {
+
+            Manager manager = Manager.builder()
+                    .seniority(Long.valueOf(faker.number().numberBetween(0, 13)))
+                    .user(unsignedUsers.get(faker.number().numberBetween(min, max)))
+                    .build();
+
+            managerRepository.save(manager);
+
+        }
+
+    }
+
+    private List<User> getUnsignedUsers() {
+        return userRepository.findAll().stream().filter(user -> user.getManager() == null).toList();
+        //TODO rozszerzyc o kolejnych urzytkownikow
     }
 
     private String getPhoneNumber() {
