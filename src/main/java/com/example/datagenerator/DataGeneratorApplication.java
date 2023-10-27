@@ -12,13 +12,16 @@ public class DataGeneratorApplication implements CommandLineRunner {
     @Autowired
     private DataGenerator dataGenerator;
 
+    //numberBetween(0, 2) wygeneruje 0 lub 1
+
     public static void main(String[] args) {
         SpringApplication.run(DataGeneratorApplication.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-//        dataGenerator.generateUsers(10);
-//        dataGenerator.generateManagers(4);
+        dataGenerator.generateUsers(30);
+        dataGenerator.generateManagers(4);
+        dataGenerator.generateStudents(10);
     }
 }

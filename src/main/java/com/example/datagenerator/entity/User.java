@@ -1,10 +1,7 @@
 package com.example.datagenerator.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -28,6 +25,10 @@ public class User {
     private String contactNumber;
     private String additionalInfo;
     @OneToOne(mappedBy = "user")
+    @ToString.Exclude
     private Manager manager;
+    @OneToOne(mappedBy = "user")
+    @ToString.Exclude
+    private Student student;
 
 }
