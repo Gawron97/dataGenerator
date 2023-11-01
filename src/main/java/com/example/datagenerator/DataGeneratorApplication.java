@@ -20,8 +20,9 @@ public class DataGeneratorApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        dataGenerator.generateUsers(30);
-        dataGenerator.generateManagers(4);
-        dataGenerator.generateStudents(10);
+//        dataGenerator.generateUsers(20);
+//        dataGenerator.generateManagers(4);
+//        dataGenerator.generateStudents(10);
+        dataGenerator.generateSecurity(10);
     }
 }
