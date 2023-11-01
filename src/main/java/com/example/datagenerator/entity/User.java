@@ -30,5 +30,8 @@ public class User {
     @OneToOne(mappedBy = "user")
     @ToString.Exclude
     private Student student;
+    @OneToOne(mappedBy = "user")
+    @ToString.Exclude
+    private Security security;
 
 }
