@@ -1,15 +1,15 @@
-package com.example.datagenerator.generator.methods;
+package com.example.datagenerator.generator.generators;
 
 import com.example.datagenerator.entity.Student;
 import com.example.datagenerator.entity.User;
-import com.example.datagenerator.generator.CommonMethods;
+import com.example.datagenerator.generator.GeneratorHelper;
 import com.example.datagenerator.repository.StudentRepository;
 import com.example.datagenerator.repository.UserRepository;
 import com.github.javafaker.Faker;
 
 import java.util.List;
 
-public class StudentGenerator extends CommonMethods {
+public class StudentGenerator extends GeneratorHelper {
     private final StudentRepository studentRepository;
     public StudentGenerator(Faker faker, StudentRepository studentRepository, UserRepository userRepository) {
         super(faker, userRepository);

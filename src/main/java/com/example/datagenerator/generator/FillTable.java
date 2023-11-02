@@ -1,6 +1,6 @@
 package com.example.datagenerator.generator;
 
-import com.example.datagenerator.generator.methods.*;
+import com.example.datagenerator.generator.generators.*;
 import com.example.datagenerator.repository.*;
 import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;

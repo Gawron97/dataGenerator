@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class CommonMethods {
+public class GeneratorHelper {
     protected final Faker faker;
     private final UserRepository userRepository;
 

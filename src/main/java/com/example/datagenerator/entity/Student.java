@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -24,5 +26,7 @@ public class Student {
     @OneToOne
     @JoinColumn(name = "id_user")
     private User user;
-
+    @OneToMany
+    @JoinColumn(name = "id_application")
+    private List<Application> application;
 }
