@@ -1,13 +1,7 @@
 package com.example.datagenerator.generator;
 
-import com.example.datagenerator.entity.Manager;
-import com.example.datagenerator.entity.Security;
-import com.example.datagenerator.entity.Student;
-import com.example.datagenerator.entity.User;
-import com.example.datagenerator.repository.ManagerRepository;
-import com.example.datagenerator.repository.SecurityRepository;
-import com.example.datagenerator.repository.StudentRepository;
-import com.example.datagenerator.repository.UserRepository;
+import com.example.datagenerator.entity.*;
+import com.example.datagenerator.repository.*;
 import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +20,7 @@ public class DataGenerator {
     private final ManagerRepository managerRepository;
     private final StudentRepository studentRepository;
     private final SecurityRepository securityRepository;
+    private final OfficeWorkerRepository officeWorkerRepository;
     private final Faker faker = new Faker();
 
     public void generateUsers(int numberOfUsers) {
@@ -45,9 +40,9 @@ public class DataGenerator {
                     .email(faker.internet().emailAddress())
                     .password(faker.internet().password())
                     .registrationDate(registrationDate)
-                    .lastLogin(lastLoginDate)
+                    .lastLogin(getFieldFillingProbability(75) ? lastLoginDate : null)
                     .isEnabled(faker.bool().bool())
-                    .contactNumber(getPhoneNumber())
+                    .contactNumber(getFieldFillingProbability(75) ? getPhoneNumber() : null)
                     .build();
 
             userRepository.save(user);
@@ -58,8 +53,6 @@ public class DataGenerator {
     public void generateManagers(int numberOfManagers) {
 
         List<User> unsignedUsers = getUnsignedUsers();
-        int min = 0;
-        int max = unsignedUsers.size();
 
         if(unsignedUsers.size() >= numberOfManagers) {
             for (int i = 0; i < numberOfManagers; i++) {
@@ -67,8 +60,8 @@ public class DataGenerator {
                 User chosenUser = unsignedUsers.remove(faker.number().numberBetween(0, unsignedUsers.size()));
 
                 Manager manager = Manager.builder()
-                        .seniority(Long.valueOf(faker.number().numberBetween(0,
-                                2023 - chosenUser.getRegistrationDate().getYear() + 1)))
+                        .workSchedule(getFieldFillingProbability(75) ? getWorkSchedule() : null)
+                        .seniority(getSeniority(chosenUser.getRegistrationDate()))
                         .user(chosenUser)
                         .build();
 
@@ -90,11 +83,11 @@ public class DataGenerator {
                 Student student = Student.builder()
                         .academicYear(faker.number().numberBetween(1,
                                 Integer.min(4, 2023 - chosenUser.getRegistrationDate().getYear() + 2)))
-                        .domicile(faker.address().cityName())
-                        .street(faker.number().numberBetween(0, 4) == 1 ? null : faker.address().streetName())
-                        .houseNumber(getHouseNumber())
-                        .apartmentNumber(faker.number().numberBetween(0, 4) == 1 ? String.valueOf(faker.number().numberBetween(0, 40)) : null)
-                        .zipCode(getZipCode())
+                        .domicile(getFieldFillingProbability(75) ? faker.address().cityName() : null)
+                        .street(getFieldFillingProbability(60) ? faker.address().streetName() : null)
+                        .houseNumber(getFieldFillingProbability(75) ? getHouseNumber() : null)
+                        .apartmentNumber(getFieldFillingProbability(25) ? String.valueOf(faker.number().numberBetween(0, 40)) : null)
+                        .zipCode(getFieldFillingProbability(75) ? getZipCode() : null)
                         .user(chosenUser)
                         .build();
 
@@ -119,6 +112,32 @@ public class DataGenerator {
                 securityRepository.save(security);
             }
         }
+    }
+
+    public void generateOfficeWorker(int numberOfOfficeWorkers) {
+
+        List<User> unsignedUsers = getUnsignedUsers();
+        if(unsignedUsers.size() >= numberOfOfficeWorkers) {
+            for(int i=0; i<numberOfOfficeWorkers; i++) {
+                User chosenUser = unsignedUsers.remove(faker.number().numberBetween(0, unsignedUsers.size()));
+
+                OfficeWorker officeWorker = OfficeWorker.builder()
+                        .seniority(getSeniority(chosenUser.getRegistrationDate()))
+                        .user(chosenUser)
+                        .build();
+
+                officeWorkerRepository.save(officeWorker);
+            }
+        }
+
+    }
+
+    private Long getSeniority(LocalDate maxDate) {
+        return (long) faker.number().numberBetween(0, 2023 - maxDate.getYear() + 1);
+    }
+
+    private boolean getFieldFillingProbability(int percentage) {
+        return faker.number().numberBetween(0, 101) <= percentage;
     }
 
     private String getQualifications() {
