@@ -23,6 +23,7 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //        dataGenerator.generateUsers(20);
 //        dataGenerator.generateManagers(4);
 //        dataGenerator.generateStudents(10);
-        dataGenerator.generateSecurity(10);
+//        dataGenerator.generateSecurity(10);
+        dataGenerator.generateOfficeWorker(4);
     }
 }
