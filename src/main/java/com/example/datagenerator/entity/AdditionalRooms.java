@@ -1,27 +1,24 @@
 package com.example.datagenerator.entity;
 
-import com.github.javafaker.App;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class OfficeWorker {
+public class AdditionalRooms {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long seniority;
-    @OneToOne
-    @JoinColumn(name = "id_user")
-    private User user;
-    @OneToMany(mappedBy = "officeWorker")
-    private List<Application> application;
+    private int roomNumber;
+    private String description;
+    @ManyToOne
+    @JoinColumn(name = "id_room_type")
+    private AdditionalRoomType additionalRoomType;
+
 }

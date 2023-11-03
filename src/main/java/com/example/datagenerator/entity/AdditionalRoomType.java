@@ -10,12 +10,13 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApplicationType {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AdditionalRoomType {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String type;
-    @OneToMany(mappedBy = "applicationType")
+    @OneToMany(mappedBy = "additionalRoomType")
     @ToString.Exclude
-    private List<Application> application;
+    private List<AdditionalRooms> additionalRooms;
+
 }

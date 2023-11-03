@@ -15,7 +15,7 @@ public class ApplicationStatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String status;
-    @OneToMany(mappedBy = "application")
+    @OneToMany(mappedBy = "applicationStatus")
     @ToString.Exclude
     private List<Application> application;
 }

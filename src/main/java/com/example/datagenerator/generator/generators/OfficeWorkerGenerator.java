@@ -11,6 +11,7 @@ import java.util.List;
 
 public class OfficeWorkerGenerator extends GeneratorHelper {
     private final OfficeWorkerRepository officeWorkerRepository;
+
     public OfficeWorkerGenerator(Faker faker, OfficeWorkerRepository officeWorkerRepository, UserRepository userRepository) {
         super(faker, userRepository);
         this.officeWorkerRepository = officeWorkerRepository;

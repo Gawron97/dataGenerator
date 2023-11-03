@@ -32,14 +32,6 @@ public class GeneratorHelper {
         return users.remove(randomIndex);
     }
 
-    protected Manager generateManagerForUser(User user) {
-        return Manager.builder()
-                .workSchedule(getFieldFillingProbability(75) ? getWorkSchedule() : null)
-                .seniority(getSeniority(user.getRegistrationDate()))
-                .user(user)
-                .build();
-    }
-
     protected Long getSeniority(LocalDate maxDate) {
         return (long) faker.number().numberBetween(0, 2023 - maxDate.getYear() + 1);
     }
@@ -91,7 +83,8 @@ public class GeneratorHelper {
 
     protected List<User> getUnsignedUsers() {
         return userRepository.findAll().stream()
-                .filter(user -> user.getManager() == null && user.getStudent() == null && user.getSecurity() == null)
+                .filter(user -> user.getManager() == null && user.getStudent() == null && user.getSecurity() == null
+                && user.getOfficeWorker() == null)
                 .collect(Collectors.toList());
         //TODO rozszerzyc o kolejnych urzytkownikow
     }

@@ -20,16 +20,16 @@ public class Application {
     private LocalDate submissionDate;
     private String preferredLocation;
     private String additionalInformation;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_application_status")
     private ApplicationStatus applicationStatus;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_application_type")
     private ApplicationType applicationType;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_office_worker")
     private OfficeWorker officeWorker;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_student")
     private Student student;
 }

@@ -30,6 +30,14 @@ public class ManagerWorkerGenerator extends GeneratorHelper {
                 managerRepository.save(manager);
             }
         }
-
     }
+
+    private Manager generateManagerForUser(User user) {
+        return Manager.builder()
+                .workSchedule(getFieldFillingProbability(75) ? getWorkSchedule() : null)
+                .seniority(getSeniority(user.getRegistrationDate()))
+                .user(user)
+                .build();
+    }
+
 }
