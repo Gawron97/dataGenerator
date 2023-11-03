@@ -19,16 +19,16 @@ public class UserGenerator extends GeneratorHelper {
     public void generateUsers(int numberOfUsers) {
         for (int i = 0; i < numberOfUsers; i++) {
             User user = generateRandomUser();
-            userRepository.save(user);
+            System.out.println(user);
+//            userRepository.save(user);
         }
     }
 
     private User generateRandomUser() {
-        Date fakerRegistrationDate = faker.date().between(new Date(110, 0, 1), new Date(123, 9, 26));
-        Date fakerLastLoginDate = faker.date().between(fakerRegistrationDate, new Date(123, 9, 30));
 
-        LocalDate registrationDate = fakerRegistrationDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate lastLoginDate = fakerLastLoginDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate registrationDate = getRandomDateBetween(LocalDate.of(2010, 1, 11),
+                LocalDate.of(2023, 9, 26));
+        LocalDate lastLoginDate = getRandomDateLaterThen(registrationDate);
 
         return User.builder()
                 .firstName(faker.name().firstName())

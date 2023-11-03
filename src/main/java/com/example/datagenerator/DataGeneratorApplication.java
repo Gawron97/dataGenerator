@@ -24,7 +24,8 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //        fillTable.fillTable().securityWorker().generateSecurity(2);
 //        fillTable.fillTable().student().generateStudents(2);
 //        fillTable.fillTable().additionalRoomType().generateAdditionalRoomTypes();
-        fillTable.fillTable().additionalRoom().generateAdditionalRooms(20);
+//        fillTable.fillTable().additionalRoom().generateAdditionalRooms(20);
+//        fillTable.fillTable().complain().generateComplains(15);
     }
 
     @Override

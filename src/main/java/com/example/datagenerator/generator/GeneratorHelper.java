@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -30,6 +31,17 @@ public class GeneratorHelper {
 
         int randomIndex = faker.number().numberBetween(0, users.size());
         return users.remove(randomIndex);
+    }
+
+    protected LocalDate getRandomDateLaterThen(LocalDate minDate) {
+        return getRandomDateBetween(minDate, LocalDate.now());
+    }
+
+    protected LocalDate getRandomDateBetween(LocalDate minDate, LocalDate maxDate) {
+        long minDay = minDate.toEpochDay();
+        long maxDay = maxDate.toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        return LocalDate.ofEpochDay(randomDay);
     }
 
     protected Long getSeniority(LocalDate maxDate) {
