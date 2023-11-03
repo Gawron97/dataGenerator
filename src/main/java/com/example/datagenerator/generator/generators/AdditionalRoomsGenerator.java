@@ -13,17 +13,16 @@ import java.util.List;
 public class AdditionalRoomsGenerator extends GeneratorHelper {
 
     private final AdditionalRoomsRepository additionalRoomsRepository;
-    private final AdditionalRoomTypeRepository additionalRoomTypeRepository;
+    private final List<AdditionalRoomType> additionalRoomTypes;
 
     public AdditionalRoomsGenerator(Faker faker, UserRepository userRepository, AdditionalRoomsRepository additionalRoomsRepository, AdditionalRoomTypeRepository additionalRoomTypeRepository) {
         super(faker, userRepository);
         this.additionalRoomsRepository = additionalRoomsRepository;
-        this.additionalRoomTypeRepository = additionalRoomTypeRepository;
+        additionalRoomTypes = additionalRoomTypeRepository.findAll();
     }
 
     public void generateAdditionalRooms(int numberOfAdditionalRooms) {
 
-        List<AdditionalRoomType> additionalRoomTypes = getAdditionalRoomTypes();
         if(additionalRoomTypes.isEmpty()) {
             return;
         }
@@ -32,18 +31,14 @@ public class AdditionalRoomsGenerator extends GeneratorHelper {
             AdditionalRooms additionalRooms = AdditionalRooms.builder()
                     .roomNumber(faker.number().numberBetween(1, 110))
                     .description(null)
-                    .additionalRoomType(getRandomAdditionalRoomType(additionalRoomTypes))
+                    .additionalRoomType(getRandomAdditionalRoomType())
                     .build();
 
             additionalRoomsRepository.save(additionalRooms);
         }
     }
 
-    private List<AdditionalRoomType> getAdditionalRoomTypes() {
-        return additionalRoomTypeRepository.findAll();
-    }
-
-    private AdditionalRoomType getRandomAdditionalRoomType(List<AdditionalRoomType> additionalRoomTypes) {
+    private AdditionalRoomType getRandomAdditionalRoomType() {
         return additionalRoomTypes.get(faker.number().numberBetween(0, additionalRoomTypes.size()));
     }
 

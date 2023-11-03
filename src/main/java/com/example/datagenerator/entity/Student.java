@@ -27,5 +27,8 @@ public class Student {
     @JoinColumn(name = "id_user")
     private User user;
     @OneToMany(mappedBy = "student")
-    private List<Application> application;
+    private List<Application> applications;
+    @OneToMany(mappedBy = "student")
+    private List<Complain> complains;
+
 }
