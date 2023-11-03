@@ -10,6 +10,8 @@ public class TableGeneratorApi {
     private final OfficeWorkerGenerator officeWorkerGenerator;
     private final SecurityWorkerGenerator securityWorkerGenerator;
     private final StudentGenerator studentGenerator;
+    private final AdditionalRoomTypeGenerator additionalRoomTypeGenerator;
+    private final AdditionalRoomsGenerator additionalRoomsGenerator;
 
     public UserGenerator user() {
         return userGenerator;
@@ -31,4 +33,11 @@ public class TableGeneratorApi {
         return studentGenerator;
     }
 
+    public AdditionalRoomTypeGenerator additionalRoomType() {
+        return additionalRoomTypeGenerator;
+    }
+
+    public AdditionalRoomsGenerator additionalRoom() {
+        return additionalRoomsGenerator;
+    }
 }

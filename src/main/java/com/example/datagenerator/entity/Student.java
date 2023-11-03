@@ -26,7 +26,6 @@ public class Student {
     @OneToOne
     @JoinColumn(name = "id_user")
     private User user;
-    @OneToMany
-    @JoinColumn(name = "id_application")
+    @OneToMany(mappedBy = "student")
     private List<Application> application;
 }
