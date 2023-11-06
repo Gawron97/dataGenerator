@@ -15,7 +15,13 @@ public class TableGeneratorApi {
     private final ComplainGenerator complainGenerator;
     private final ModuleTypeGenerator moduleTypeGenerator;
     private final ModuleGenerator moduleGenerator;
+<<<<<<< Updated upstream
     private final FacultyGenerator facultyGenerator;
+=======
+    private final StatuteGenerator statuteGenerator;
+
+    private final RoomTypeGenerator roomTypeGenerator;
+>>>>>>> Stashed changes
 
     public UserGenerator user() {
         return userGenerator;
@@ -53,7 +59,13 @@ public class TableGeneratorApi {
 
     public ModuleGenerator module() {return moduleGenerator;}
 
+<<<<<<< Updated upstream
     public FacultyGenerator facultyGenerator() {
         return facultyGenerator;
     }
+=======
+    public StatuteGenerator statute() {return statuteGenerator;}
+
+    public RoomTypeGenerator roomType(){ return roomTypeGenerator;}
+>>>>>>> Stashed changes
 }

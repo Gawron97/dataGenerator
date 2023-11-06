@@ -28,7 +28,12 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //        fillTable.fillTable().complain().generateComplains(15);
 //        fillTable.fillTable().moduleType().generateModuleTypes();
 //        fillTable.fillTable().module().generateModules(20);
+<<<<<<< Updated upstream
 //        fillTable.fillTable().facultyGenerator().generateFaculties();
+=======
+//        fillTable.fillTable().statute().generateStatutes();
+//        fillTable.fillTable().roomType().generateRoomTypes();
+>>>>>>> Stashed changes
     }
 
     @Override

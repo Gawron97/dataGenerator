@@ -19,7 +19,12 @@ public class FillTable {
     private final ComplainRepository complainRepository;
     private final ModuleTypeRepository moduleTypeRepository;
     private final ModuleRepository moduleRepository;
+<<<<<<< Updated upstream
     private final FacultyRepository facultyRepository;
+=======
+    private final StatuteRepository statuteRepository;
+    private final RoomTypeRepository roomTypeRepository;
+>>>>>>> Stashed changes
 
     public TableGeneratorApi fillTable() {
         Faker faker = new Faker();
@@ -33,6 +38,11 @@ public class FillTable {
                 new ComplainGenerator(faker, userRepository, complainRepository, studentRepository),
                 new ModuleTypeGenerator(faker, userRepository, moduleTypeRepository),
                 new ModuleGenerator(faker, userRepository, moduleRepository, moduleTypeRepository),
+<<<<<<< Updated upstream
                 new FacultyGenerator(faker, userRepository, facultyRepository));
+=======
+                new StatuteGenerator(faker,userRepository,statuteRepository),
+                new RoomTypeGenerator(faker,userRepository,roomTypeRepository));
+>>>>>>> Stashed changes
     }
 }
