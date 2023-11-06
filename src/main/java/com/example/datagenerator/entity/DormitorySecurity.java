@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class DormitorySecurity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;  //there is (huge xd) possibility that this field needs to be added to table schema
     private Long seniority;
     private String salary;
     @ManyToOne
