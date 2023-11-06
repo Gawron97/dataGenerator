@@ -22,6 +22,8 @@ public class TableGeneratorApi {
 
     private final RoomTypeGenerator roomTypeGenerator;
 
+    private final DormitoryGenerator dormitoryGenerator;
+
 
     public UserGenerator user() {
         return userGenerator;
@@ -67,5 +69,7 @@ public class TableGeneratorApi {
     public StatuteGenerator statute() {return statuteGenerator;}
 
     public RoomTypeGenerator roomType(){ return roomTypeGenerator;}
+
+    public DormitoryGenerator dormitory(){return dormitoryGenerator;}
 
 }
