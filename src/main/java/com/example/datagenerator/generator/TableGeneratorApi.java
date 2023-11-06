@@ -15,6 +15,7 @@ public class TableGeneratorApi {
     private final ComplainGenerator complainGenerator;
     private final ModuleTypeGenerator moduleTypeGenerator;
     private final ModuleGenerator moduleGenerator;
+    private final FacultyGenerator facultyGenerator;
 
     public UserGenerator user() {
         return userGenerator;
@@ -51,4 +52,8 @@ public class TableGeneratorApi {
     public ModuleTypeGenerator moduleType() {return moduleTypeGenerator;}
 
     public ModuleGenerator module() {return moduleGenerator;}
+
+    public FacultyGenerator facultyGenerator() {
+        return facultyGenerator;
+    }
 }
