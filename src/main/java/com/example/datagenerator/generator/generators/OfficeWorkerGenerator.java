@@ -18,19 +18,19 @@ public class OfficeWorkerGenerator extends GeneratorHelper {
     }
 
     public void generateOfficeWorker(int numberOfOfficeWorkers) {
-        List<User> unsignedUsers = getUnsignedUsers();
-
-        if (unsignedUsers.size() < numberOfOfficeWorkers) {
-            return;
-        }
-        for (int i = 0; i < numberOfOfficeWorkers; i++) {
-            User chosenUser = getRandomUserFromList(unsignedUsers);
-
-            if (chosenUser != null) {
-                OfficeWorker officeWorker = generateOfficeWorkerForUser(chosenUser);
-                officeWorkerRepository.save(officeWorker);
-            }
-        }
+//        List<User> unsignedUsers = getUnsignedUsers();
+//
+//        if (unsignedUsers.size() < numberOfOfficeWorkers) {
+//            return;
+//        }
+//        for (int i = 0; i < numberOfOfficeWorkers; i++) {
+//            User chosenUser = getRandomUserFromList(unsignedUsers);
+//
+//            if (chosenUser != null) {
+//                OfficeWorker officeWorker = generateOfficeWorkerForUser(chosenUser);
+//                officeWorkerRepository.save(officeWorker);
+//            }
+//        }
     }
 
     private OfficeWorker generateOfficeWorkerForUser(User user) {

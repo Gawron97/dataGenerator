@@ -17,19 +17,19 @@ public class ManagerWorkerGenerator extends GeneratorHelper {
     }
 
     public void generateManagers(int numberOfManagers) {
-        List<User> unsignedUsers = getUnsignedUsers();
-
-        if (unsignedUsers.size() < numberOfManagers) {
-            return;
-        }
-
-        for (int i = 0; i < numberOfManagers; i++) {
-            User chosenUser = getRandomUserFromList(unsignedUsers);
-            if (chosenUser != null) {
-                Manager manager = generateManagerForUser(chosenUser);
-                managerRepository.save(manager);
-            }
-        }
+//        List<User> unsignedUsers = getUnsignedUsers();
+//
+//        if (unsignedUsers.size() < numberOfManagers) {
+//            return;
+//        }
+//
+//        for (int i = 0; i < numberOfManagers; i++) {
+//            User chosenUser = getRandomUserFromList(unsignedUsers);
+//            if (chosenUser != null) {
+//                Manager manager = generateManagerForUser(chosenUser);
+//                managerRepository.save(manager);
+//            }
+//        }
     }
 
     private Manager generateManagerForUser(User user) {

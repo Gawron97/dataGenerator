@@ -1,9 +1,6 @@
 package com.example.datagenerator.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +21,10 @@ public class Dormitory {
     private String numberOfStreet;
     private String description;
     private String contactInfo;
-    private Long idStatute;
-    private Long idManager;
-
+    @ManyToOne
+    @JoinColumn(name = "id_statute")
+    private Statute statute;
+    @ManyToOne
+    @JoinColumn(name = "id_manager")
+    private Manager manager;
 }

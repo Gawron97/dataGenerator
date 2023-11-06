@@ -22,5 +22,4 @@ public class Faculty {
     private String deanOfficeLocation;
     private String contactNumber;
     private String emailAddress;
-
 }

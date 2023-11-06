@@ -1,9 +1,6 @@
 package com.example.datagenerator.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +17,8 @@ public class Floor {
     private Long id;
     private Long level;
     private String description;
-    private String isAvailable;
-    private Long idDormitory;
+    private Boolean isAvailable;
+    @ManyToOne
+    @JoinColumn(name = "id_dormitory")
+    private Dormitory dormitory;
 }

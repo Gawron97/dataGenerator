@@ -1,10 +1,7 @@
 package com.example.datagenerator.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,8 +18,12 @@ public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long idRoom;
-    private Long idStudent;
     private LocalDate startDate;
     private LocalDate endDate;
+    @OneToOne
+    @JoinColumn(name = "id_room")
+    private Room room;
+    @OneToOne
+    @JoinColumn(name = "id_student")
+    private Student student;
 }

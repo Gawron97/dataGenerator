@@ -93,13 +93,13 @@ public class GeneratorHelper {
         return houseNumber;
     }
 
-    protected List<User> getUnsignedUsers() {
-        return userRepository.findAll().stream()
-                .filter(user -> user.getManager() == null && user.getStudent() == null && user.getSecurity() == null
-                && user.getOfficeWorker() == null)
-                .collect(Collectors.toList());
-        //TODO rozszerzyc o kolejnych urzytkownikow
-    }
+//    protected List<User> getUnsignedUsers() {
+//        return userRepository.findAll().stream()
+//                .filter(user -> user.getManager() == null && user.getStudent() == null && user.getSecurity() == null
+//                && user.getOfficeWorker() == null)
+//                .collect(Collectors.toList());
+//        //TODO rozszerzyc o kolejnych urzytkownikow
+//    }
 
     protected String getPhoneNumber() {
         StringBuilder number = new StringBuilder();

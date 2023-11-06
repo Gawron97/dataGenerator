@@ -10,16 +10,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Statute {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String content;
     private String additional_info;
-
-//    @OneToMany(mappedBy = "roomType")
-//    @ToString.Exclude
-//    private List<Dormitory> dormitories;
-
 }

@@ -29,7 +29,6 @@ public class ModuleGenerator extends GeneratorHelper {
 
         for (int i = 0; i < numberOfModules; i++) {
             Module module = Module.builder()
-                    .name(faker.lorem().word())
                     .has_a_bathroom(faker.bool().bool())
                     .moduleType(getRandomModuleType())
                     .build();

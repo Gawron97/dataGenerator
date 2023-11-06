@@ -20,9 +20,9 @@ public class FacultyGenerator extends GeneratorHelper {
 
     public void generateFaculties() {
 
-        for (int i = 0; i < faculties.size(); i++) {
+        for (String s : faculties) {
             Faculty faculty = Faculty.builder()
-                    .name(faculties.get(i))
+                    .name(s)
                     .deanOfficeLocation(getFieldFillingProbability(75) ? faker.address().streetName() : null)
                     .contactNumber(getFieldFillingProbability(75) ? getPhoneNumber() : null)
                     .emailAddress(getFieldFillingProbability(75) ? faker.internet().emailAddress() : null)

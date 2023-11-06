@@ -17,19 +17,19 @@ public class StudentGenerator extends GeneratorHelper {
     }
 
     public void generateStudents(int numberOfStudents) {
-        List<User> unsignedUsers = getUnsignedUsers();
-
-        if (unsignedUsers.size() < numberOfStudents) {
-            return;
-        }
-        for (int i = 0; i < numberOfStudents; i++) {
-            User chosenUser = getRandomUserFromList(unsignedUsers);
-
-            if (chosenUser != null) {
-                Student student = generateStudentForUser(chosenUser);
-                studentRepository.save(student);
-            }
-        }
+//        List<User> unsignedUsers = getUnsignedUsers();
+//
+//        if (unsignedUsers.size() < numberOfStudents) {
+//            return;
+//        }
+//        for (int i = 0; i < numberOfStudents; i++) {
+//            User chosenUser = getRandomUserFromList(unsignedUsers);
+//
+//            if (chosenUser != null) {
+//                Student student = generateStudentForUser(chosenUser);
+//                studentRepository.save(student);
+//            }
+//        }
 
     }
 
@@ -37,7 +37,7 @@ public class StudentGenerator extends GeneratorHelper {
         int maxAcademicYear = Integer.min(4, 2023 - user.getRegistrationDate().getYear() + 2);
 
         return Student.builder()
-                .academicYear(faker.number().numberBetween(1, maxAcademicYear))
+                .academicYear((long) faker.number().numberBetween(1, maxAcademicYear))
                 .domicile(getFieldFillingProbability(75) ? faker.address().cityName() : null)
                 .street(getFieldFillingProbability(60) ? faker.address().streetName() : null)
                 .houseNumber(getFieldFillingProbability(75) ? getHouseNumber() : null)

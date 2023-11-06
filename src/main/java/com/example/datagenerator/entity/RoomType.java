@@ -16,11 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoomType {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String type;
-//    @OneToMany(mappedBy = "roomType")
-//    @ToString.Exclude
-//    private List<Room> rooms;
 }

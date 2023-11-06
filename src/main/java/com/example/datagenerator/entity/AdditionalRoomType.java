@@ -15,8 +15,4 @@ public class AdditionalRoomType {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String type;
-    @OneToMany(mappedBy = "additionalRoomType")
-    @ToString.Exclude
-    private List<AdditionalRooms> additionalRooms;
-
 }

@@ -24,17 +24,4 @@ public class User {
     private Boolean isEnabled;
     private String contactNumber;
     private String additionalInfo;
-    @OneToOne(mappedBy = "user")
-    @ToString.Exclude
-    private Manager manager;
-    @OneToOne(mappedBy = "user")
-    @ToString.Exclude
-    private Student student;
-    @OneToOne(mappedBy = "user")
-    @ToString.Exclude
-    private Security security;
-    @OneToOne(mappedBy = "user")
-    @ToString.Exclude
-    private OfficeWorker officeWorker;
-
 }

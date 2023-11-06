@@ -1,14 +1,12 @@
 package com.example.datagenerator.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -17,12 +15,15 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Payment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
     private LocalDate creationDate;
-    private String price;
-    private Long idStudent;
-    private Long idPaymentStatus;
+    private BigDecimal price;
+    @ManyToOne
+    @JoinColumn(name = "id_student")
+    private Student student;
+    @ManyToOne
+    @JoinColumn(name = "id_payment_status")
+    private PaymentStatus paymentStatus;
 }

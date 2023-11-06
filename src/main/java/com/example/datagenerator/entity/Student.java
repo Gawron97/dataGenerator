@@ -14,10 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Student {
-
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long academicYear;
+    private Long academicYear;
     private String domicile;
     private String street;
     private String houseNumber;
@@ -26,9 +25,4 @@ public class Student {
     @OneToOne
     @JoinColumn(name = "id_user")
     private User user;
-    @OneToMany(mappedBy = "student")
-    private List<Application> applications;
-    @OneToMany(mappedBy = "student")
-    private List<Complain> complains;
-
 }

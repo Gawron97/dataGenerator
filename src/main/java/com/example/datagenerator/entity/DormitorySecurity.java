@@ -16,5 +16,6 @@ public class DormitorySecurity {
     private Long idSecurity;
     private Long seniority;
     private String salary;
-
 }
+
+//TODO

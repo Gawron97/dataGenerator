@@ -15,7 +15,4 @@ public class ApplicationType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String type;
-    @OneToMany(mappedBy = "applicationType")
-    @ToString.Exclude
-    private List<Application> application;
 }

@@ -15,13 +15,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OfficeWorker {
-
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long seniority;
+    private Long seniority;
     @OneToOne
     @JoinColumn(name = "id_user")
     private User user;
-    @OneToMany(mappedBy = "officeWorker")
-    private List<Application> application;
 }

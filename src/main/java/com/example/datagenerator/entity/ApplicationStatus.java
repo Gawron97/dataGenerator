@@ -3,8 +3,6 @@ package com.example.datagenerator.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Data
 @Builder
 @Entity
@@ -15,7 +13,4 @@ public class ApplicationStatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String status;
-    @OneToMany(mappedBy = "applicationStatus")
-    @ToString.Exclude
-    private List<Application> application;
 }

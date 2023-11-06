@@ -1,10 +1,7 @@
 package com.example.datagenerator.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,5 +18,7 @@ public class FieldOfStudy {
     private Long id;
     private String name;
     private String level;
-    private Long idFaculty;
+    @ManyToOne
+    @JoinColumn(name = "id_faculty")
+    private Faculty faculty;
 }

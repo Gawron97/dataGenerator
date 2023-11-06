@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Security {
-
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String qualifications;
@@ -20,5 +19,4 @@ public class Security {
     @OneToOne
     @JoinColumn(name = "id_user")
     private User user;
-
 }

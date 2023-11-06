@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Complain {
-
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate submissionDate;
@@ -24,5 +23,4 @@ public class Complain {
     @ManyToOne
     @JoinColumn(name = "id_student")
     private Student student;
-
 }

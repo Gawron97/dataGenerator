@@ -17,19 +17,19 @@ public class SecurityWorkerGenerator extends GeneratorHelper {
     }
 
     public void generateSecurity(int numberOfSecurities) {
-        List<User> unsignedUsers = getUnsignedUsers();
-
-        if (unsignedUsers.size() < numberOfSecurities) {
-            return;
-        }
-        for (int i = 0; i < numberOfSecurities; i++) {
-            User chosenUser = getRandomUserFromList(unsignedUsers);
-
-            if (chosenUser != null) {
-                Security security = generateSecurityForUser(chosenUser);
-                securityRepository.save(security);
-            }
-        }
+//        List<User> unsignedUsers = getUnsignedUsers();
+//
+//        if (unsignedUsers.size() < numberOfSecurities) {
+//            return;
+//        }
+//        for (int i = 0; i < numberOfSecurities; i++) {
+//            User chosenUser = getRandomUserFromList(unsignedUsers);
+//
+//            if (chosenUser != null) {
+//                Security security = generateSecurityForUser(chosenUser);
+//                securityRepository.save(security);
+//            }
+//        }
     }
 
     private Security generateSecurityForUser(User user) {

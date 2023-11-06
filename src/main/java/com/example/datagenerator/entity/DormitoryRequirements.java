@@ -19,3 +19,5 @@ public class DormitoryRequirements {
     private Long idRequirement;
 
 }
+
+//TODO

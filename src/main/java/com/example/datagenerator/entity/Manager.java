@@ -20,6 +20,4 @@ public class Manager {
     @OneToOne
     @JoinColumn(name = "id_user")
     private User user;
-
-
 }

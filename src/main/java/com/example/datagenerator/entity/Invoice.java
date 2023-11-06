@@ -1,15 +1,13 @@
 package com.example.datagenerator.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -24,6 +22,8 @@ public class Invoice {
     private String title;
     private LocalDate creationDate;
     private LocalDate paymentDue;
-    private String totalPrice;
-    private Long idPayment;
+    private BigDecimal totalPrice;
+    @ManyToOne
+    @JoinColumn(name = "id_payment")
+    private Payment payment;
 }
