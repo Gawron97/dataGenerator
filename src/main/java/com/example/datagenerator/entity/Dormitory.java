@@ -20,19 +20,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Dormitory {
-<<<<<<< Updated upstream
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private String city;
-    private String street;
-    private String numberOfStreet;
-    private String description;
-    private String contactInfo;
-    private Long idStatute;
-    private Long idManager;
-=======
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,6 +47,5 @@ public class Dormitory {
     @JoinColumn(name = "id_manager", referencedColumnName = "id")
     private Manager manager;
 
->>>>>>> Stashed changes
 
 }
