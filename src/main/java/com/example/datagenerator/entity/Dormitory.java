@@ -1,14 +1,11 @@
 package com.example.datagenerator.entity;
 
-<<<<<<< Updated upstream
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-=======
-
 import jakarta.persistence.*;
->>>>>>> Stashed changes
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
