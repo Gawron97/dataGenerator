@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @Builder
 @Entity
@@ -35,5 +37,11 @@ public class Dormitory {
     @JoinColumn(name = "id_manager", referencedColumnName = "id")
     private Manager manager;
 
+    @ManyToMany
+    @JoinColumn(name = "id_requirements")
+    private Set<Requirements> requirements;
 
+    @ManyToMany
+    @JoinColumn(name = "id_additional_services")
+    private Set<AdditionalServices> additionalServices;
 }

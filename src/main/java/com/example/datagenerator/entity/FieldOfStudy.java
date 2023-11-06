@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @Builder
 @Entity
@@ -21,4 +23,8 @@ public class FieldOfStudy {
     @ManyToOne
     @JoinColumn(name = "id_faculty")
     private Faculty faculty;
+
+    @ManyToMany
+    @JoinColumn(name = "id_student")
+    private Set<Student> students;
 }

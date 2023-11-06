@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @Builder
@@ -26,4 +27,7 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "id_payment_status")
     private PaymentStatus paymentStatus;
+    @ManyToMany
+    @JoinColumn(name = "id_contract")
+    private Set<Contract> contracts;
 }

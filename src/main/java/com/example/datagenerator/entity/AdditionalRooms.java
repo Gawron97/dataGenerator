@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @Builder
 @Entity
@@ -17,8 +19,12 @@ public class AdditionalRooms {
     private Long id;
     private int roomNumber;
     private String description;
+
     @ManyToOne
     @JoinColumn(name = "id_room_type")
     private AdditionalRoomType additionalRoomType;
 
+    @ManyToMany
+    @JoinColumn(name = "id_floor")
+    private Set<Floor> floors;
 }

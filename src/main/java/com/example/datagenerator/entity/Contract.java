@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @Builder
@@ -26,4 +27,7 @@ public class Contract {
     @OneToOne
     @JoinColumn(name = "id_student")
     private Student student;
+    @ManyToMany
+    @JoinColumn(name = "id_payment")
+    private Set<Payment> payments;
 }

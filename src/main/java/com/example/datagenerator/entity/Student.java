@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -22,7 +23,12 @@ public class Student {
     private String houseNumber;
     private String apartmentNumber;
     private String zipCode;
+
     @OneToOne
     @JoinColumn(name = "id_user")
     private User user;
+
+    @ManyToMany
+    @JoinColumn(name = "id_field_of_study")
+    private Set<FieldOfStudy> fieldOfStudies;
 }
