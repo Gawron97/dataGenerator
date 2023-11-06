@@ -1,7 +1,10 @@
 package com.example.datagenerator.generator;
 
 import com.example.datagenerator.entity.Manager;
+import com.example.datagenerator.entity.Statute;
 import com.example.datagenerator.entity.User;
+import com.example.datagenerator.repository.ManagerRepository;
+import com.example.datagenerator.repository.StatuteRepository;
 import com.example.datagenerator.repository.UserRepository;
 import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
@@ -107,6 +110,24 @@ public class GeneratorHelper {
             number.append(faker.number().numberBetween(0, 10));
         }
         return number.toString();
+    }
+
+    protected Manager getRandomManager(ManagerRepository managerRepository) {
+        List<Manager> managers = managerRepository.findAll();
+        if (managers.isEmpty()) {
+            return null;
+        }
+        int randomIndex = faker.number().numberBetween(0, managers.size());
+        return managers.get(randomIndex);
+    }
+
+    protected Statute getRandomStatute(StatuteRepository statuteRepository) {
+        List<Statute> statutes = statuteRepository.findAll();
+        if (statutes.isEmpty()) {
+            return null;
+        }
+        int randomIndex = faker.number().numberBetween(0, statutes.size());
+        return statutes.get(randomIndex);
     }
 
 }
