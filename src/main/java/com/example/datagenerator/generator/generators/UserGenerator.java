@@ -19,8 +19,7 @@ public class UserGenerator extends GeneratorHelper {
     public void generateUsers(int numberOfUsers) {
         for (int i = 0; i < numberOfUsers; i++) {
             User user = generateRandomUser();
-            System.out.println(user);
-//            userRepository.save(user);
+            userRepository.save(user);
         }
     }
 

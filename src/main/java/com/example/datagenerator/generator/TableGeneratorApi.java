@@ -16,6 +16,13 @@ public class TableGeneratorApi {
     private final ModuleTypeGenerator moduleTypeGenerator;
     private final ModuleGenerator moduleGenerator;
 
+    private final FacultyGenerator facultyGenerator;
+
+    private final StatuteGenerator statuteGenerator;
+
+    private final RoomTypeGenerator roomTypeGenerator;
+
+
     public UserGenerator user() {
         return userGenerator;
     }
@@ -51,4 +58,14 @@ public class TableGeneratorApi {
     public ModuleTypeGenerator moduleType() {return moduleTypeGenerator;}
 
     public ModuleGenerator module() {return moduleGenerator;}
+
+
+    public FacultyGenerator facultyGenerator() {
+        return facultyGenerator;
+    }
+
+    public StatuteGenerator statute() {return statuteGenerator;}
+
+    public RoomTypeGenerator roomType(){ return roomTypeGenerator;}
+
 }

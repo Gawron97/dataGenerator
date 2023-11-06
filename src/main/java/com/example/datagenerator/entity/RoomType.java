@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @Builder
 @Entity
@@ -19,4 +20,7 @@ public class RoomType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String type;
+//    @OneToMany(mappedBy = "roomType")
+//    @ToString.Exclude
+//    private List<Room> rooms;
 }
