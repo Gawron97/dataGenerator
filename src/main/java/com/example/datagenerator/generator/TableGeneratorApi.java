@@ -32,6 +32,8 @@ public class TableGeneratorApi {
 
     private final PaymentStatusGenerator paymentStatusGenerator;
 
+    private final PaymentGenerator paymentGenerator;
+
 
     public UserGenerator user() {
         return userGenerator;
@@ -87,5 +89,7 @@ public class TableGeneratorApi {
     public ContractGenerator contract(){return contractGenerator;}
 
     public PaymentStatusGenerator paymentStatus(){return paymentStatusGenerator;}
+
+    public PaymentGenerator payment(){return paymentGenerator;}
 
 }

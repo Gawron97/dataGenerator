@@ -27,7 +27,7 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "id_payment_status")
     private PaymentStatus paymentStatus;
-    @ManyToMany
-    @JoinColumn(name = "id_contract")
-    private Set<Contract> contracts;
+//    @ManyToMany
+//    @JoinColumn(name = "id_contract")
+//    private Set<Contract> contracts;
 }

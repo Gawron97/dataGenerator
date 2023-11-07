@@ -38,7 +38,8 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //        fillTable.fillTable().room().generateRooms(5,10);
 //        fillTable.fillTable().contract().generateContracts( LocalDate.of(2023,1,1),
 //                                                            LocalDate.of(2023,12,31),10);
-        fillTable.fillTable().paymentStatus().generatePaymentStatuses();
+//        fillTable.fillTable().paymentStatus().generatePaymentStatuses();
+//        fillTable.fillTable().payment().generatePayments(20);
 
     }
 
