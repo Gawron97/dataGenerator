@@ -36,22 +36,23 @@ public class ContractGenerator extends GeneratorHelper {
         List<Student> studentsWithoutRooms = this.studentRepository.findStudentsWithoutContractsInPeriod(periodStartDate,periodEndDate);
 
         for(int i = 0; i < numberOfContracts; i++){
+            if (!studentsWithoutRooms.isEmpty()) {
+                Student currentStudent = studentsWithoutRooms.get(faker.number().numberBetween(0,studentsWithoutRooms.size()));
+                Room currentRoom = freeRooms.get(faker.number().numberBetween(0,freeRooms.size()));
 
-            Student currentStudent = studentsWithoutRooms.get(faker.number().numberBetween(0,studentsWithoutRooms.size()));
-            Room currentRoom = freeRooms.get(faker.number().numberBetween(0,freeRooms.size()));
+                createContract(currentStudent, currentRoom, periodStartDate, periodEndDate);
+                if(currentRoom.getFreeBeds() != null) {
+                    Long freeBeds = currentRoom.getFreeBeds();
 
-            createContract(currentStudent, currentRoom, periodStartDate, periodEndDate);
-            if(currentRoom.getFreeBeds() != null) {
-                Long freeBeds = currentRoom.getFreeBeds();
-
-                currentRoom.setFreeBeds(currentRoom.getFreeBeds() - 1);
-                if (freeBeds == 0) {
-                    currentRoom.setIsAvailable(false);
-                    freeRooms.remove(currentRoom);
+                    currentRoom.setFreeBeds(currentRoom.getFreeBeds() - 1);
+                    if (freeBeds == 0) {
+                        currentRoom.setIsAvailable(false);
+                        freeRooms.remove(currentRoom);
+                    }
                 }
-            }
 
-            studentsWithoutRooms.remove(currentStudent);
+                studentsWithoutRooms.remove(currentStudent);
+            }
         }
 
 

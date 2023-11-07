@@ -25,21 +25,21 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //        fillTable.fillTable().officeWorker().generateOfficeWorker(2);
 //        fillTable.fillTable().securityWorker().generateSecurity(2);
 //        fillTable.fillTable().student().generateStudents(2);
-//        fillTable.fillTable().additionalRoomType().generateAdditionalRoomTypes();
-//        fillTable.fillTable().additionalRoom().generateAdditionalRooms(20);
-//        fillTable.fillTable().complain().generateComplains(15);
-//        fillTable.fillTable().moduleType().generateModuleTypes();
-//        fillTable.fillTable().module().generateModules(20);
-//        fillTable.fillTable().facultyGenerator().generateFaculties();
-//        fillTable.fillTable().statute().generateStatutes();
-//        fillTable.fillTable().roomType().generateRoomTypes();
-//        fillTable.fillTable().dormitory().generateDormitories();
-//        fillTable.fillTable().floor().generateFloors();
-//        fillTable.fillTable().room().generateRooms(5,10);
-//        fillTable.fillTable().contract().generateContracts( LocalDate.of(2023,1,1),
-//                                                            LocalDate.of(2023,12,31),10);
-//        fillTable.fillTable().paymentStatus().generatePaymentStatuses();
-//        fillTable.fillTable().payment().generatePayments(20);
+        fillTable.fillTable().additionalRoomType().generateAdditionalRoomTypes();
+        fillTable.fillTable().additionalRoom().generateAdditionalRooms(20);
+        fillTable.fillTable().complain().generateComplains(15);
+        fillTable.fillTable().moduleType().generateModuleTypes();
+        fillTable.fillTable().module().generateModules(20);
+        fillTable.fillTable().facultyGenerator().generateFaculties();
+        fillTable.fillTable().statute().generateStatutes();
+        fillTable.fillTable().roomType().generateRoomTypes();
+        fillTable.fillTable().dormitory().generateDormitories();
+        fillTable.fillTable().floor().generateFloors();
+        fillTable.fillTable().room().generateRooms(5,10);
+        fillTable.fillTable().contract().generateContracts( LocalDate.of(2022,1,1),
+                                                            LocalDate.of(2023,12,31),10);
+        fillTable.fillTable().paymentStatus().generatePaymentStatuses();
+        fillTable.fillTable().payment().generatePayments(20);
 
     }
 
