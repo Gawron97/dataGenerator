@@ -11,25 +11,19 @@ import java.util.List;
 
 public class StudentGenerator extends GeneratorHelper {
     private final StudentRepository studentRepository;
+
     public StudentGenerator(Faker faker, StudentRepository studentRepository, UserRepository userRepository) {
         super(faker, userRepository);
         this.studentRepository = studentRepository;
     }
 
     public void generateStudents(int numberOfStudents) {
-//        List<User> unsignedUsers = getUnsignedUsers();
-//
-//        if (unsignedUsers.size() < numberOfStudents) {
-//            return;
-//        }
-//        for (int i = 0; i < numberOfStudents; i++) {
-//            User chosenUser = getRandomUserFromList(unsignedUsers);
-//
-//            if (chosenUser != null) {
-//                Student student = generateStudentForUser(chosenUser);
-//                studentRepository.save(student);
-//            }
-//        }
+
+        for (int i = 0; i < numberOfStudents; i++) {
+            User chosenUser = generateRandomUser();
+            Student student = generateStudentForUser(chosenUser);
+            studentRepository.save(student);
+        }
 
     }
 

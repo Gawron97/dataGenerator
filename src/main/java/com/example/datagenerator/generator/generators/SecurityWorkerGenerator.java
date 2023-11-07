@@ -11,25 +11,19 @@ import java.util.List;
 
 public class SecurityWorkerGenerator extends GeneratorHelper {
     private final SecurityRepository securityRepository;
+
     public SecurityWorkerGenerator(Faker faker, SecurityRepository securityRepository, UserRepository userRepository) {
         super(faker, userRepository);
         this.securityRepository = securityRepository;
     }
 
     public void generateSecurity(int numberOfSecurities) {
-//        List<User> unsignedUsers = getUnsignedUsers();
-//
-//        if (unsignedUsers.size() < numberOfSecurities) {
-//            return;
-//        }
-//        for (int i = 0; i < numberOfSecurities; i++) {
-//            User chosenUser = getRandomUserFromList(unsignedUsers);
-//
-//            if (chosenUser != null) {
-//                Security security = generateSecurityForUser(chosenUser);
-//                securityRepository.save(security);
-//            }
-//        }
+
+        for (int i = 0; i < numberOfSecurities; i++) {
+            User chosenUser = generateRandomUser();
+            Security security = generateSecurityForUser(chosenUser);
+            securityRepository.save(security);
+        }
     }
 
     private Security generateSecurityForUser(User user) {
