@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
-import java.util.stream.LongStream;
+
 
 @RequiredArgsConstructor
 public class GeneratorHelper {
@@ -133,17 +133,5 @@ public class GeneratorHelper {
         return statutes.get(randomIndex);
     }
 
-    protected LongStream getLevelsRange(){
-        int lowestLevel = faker.number().numberBetween(-1,1);
-        int highestLevel = faker.number().numberBetween(5,13);
-
-        return LongStream.range(lowestLevel,highestLevel);
-
-    }
-
-    protected List<Dormitory> getAllDormitories(DormitoryRepository dormitoryRepository){
-
-        return dormitoryRepository.findAll();
-    }
 
 }

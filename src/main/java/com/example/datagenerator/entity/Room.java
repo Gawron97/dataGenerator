@@ -20,7 +20,7 @@ public class Room {
     private String roomNumber;
     private String description;
     private Long numberOfBeds;
-    private Boolean hasABathroom;
+    private boolean has_a_bathroom;
     private BigDecimal price;
     private BigDecimal size;
     private Long freeBeds;

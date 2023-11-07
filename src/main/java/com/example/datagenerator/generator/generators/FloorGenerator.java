@@ -26,7 +26,7 @@ public class FloorGenerator extends GeneratorHelper {
 
     public void generateFloors(){
 
-        List<Dormitory> dorms = super.getAllDormitories(dormitoryRepository);
+        List<Dormitory> dorms = dormitoryRepository.findAll();
 
         dorms.forEach(dorm -> generateFloorsForDormitory(dorm));
 
@@ -34,7 +34,7 @@ public class FloorGenerator extends GeneratorHelper {
 
     private void generateFloorsForDormitory(Dormitory dormitory){
 
-        LongStream levels = super.getLevelsRange();
+        LongStream levels = getLevelsRange();
 
         levels.forEach( level -> {
             Floor currentFloor = Floor.builder()
@@ -45,6 +45,14 @@ public class FloorGenerator extends GeneratorHelper {
 
             floorRepository.save(currentFloor);
         });
+
+    }
+
+    private LongStream getLevelsRange(){
+        int lowestLevel = faker.number().numberBetween(-1,1);
+        int highestLevel = faker.number().numberBetween(5,13);
+
+        return LongStream.range(lowestLevel,highestLevel);
 
     }
 

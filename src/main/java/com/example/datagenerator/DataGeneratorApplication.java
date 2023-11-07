@@ -33,6 +33,7 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //        fillTable.fillTable().roomType().generateRoomTypes();
 //        fillTable.fillTable().dormitory().generateDormitories();
 //        fillTable.fillTable().floor().generateFloors();
+//        fillTable.fillTable().room().generateRooms(5,10);
 
     }
 
