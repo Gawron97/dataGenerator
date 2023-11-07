@@ -1,8 +1,10 @@
 package com.example.datagenerator.generator;
 
+import com.example.datagenerator.entity.Dormitory;
 import com.example.datagenerator.entity.Manager;
 import com.example.datagenerator.entity.Statute;
 import com.example.datagenerator.entity.User;
+import com.example.datagenerator.repository.DormitoryRepository;
 import com.example.datagenerator.repository.ManagerRepository;
 import com.example.datagenerator.repository.StatuteRepository;
 import com.example.datagenerator.repository.UserRepository;
@@ -17,6 +19,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 @RequiredArgsConstructor
 public class GeneratorHelper {
@@ -128,6 +131,19 @@ public class GeneratorHelper {
         }
         int randomIndex = faker.number().numberBetween(0, statutes.size());
         return statutes.get(randomIndex);
+    }
+
+    protected LongStream getLevelsRange(){
+        int lowestLevel = faker.number().numberBetween(-1,1);
+        int highestLevel = faker.number().numberBetween(5,13);
+
+        return LongStream.range(lowestLevel,highestLevel);
+
+    }
+
+    protected List<Dormitory> getAllDormitories(DormitoryRepository dormitoryRepository){
+
+        return dormitoryRepository.findAll();
     }
 
 }

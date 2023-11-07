@@ -32,6 +32,7 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //        fillTable.fillTable().statute().generateStatutes();
 //        fillTable.fillTable().roomType().generateRoomTypes();
 //        fillTable.fillTable().dormitory().generateDormitories();
+//        fillTable.fillTable().floor().generateFloors();
 
     }
 
