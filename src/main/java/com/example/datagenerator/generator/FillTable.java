@@ -31,6 +31,8 @@ public class FillTable {
 
     private final RoomRepository roomRepository;
 
+    private final ContractRepository contractRepository;
+
     public TableGeneratorApi fillTable() {
         Faker faker = new Faker();
         return new TableGeneratorApi(new UserGenerator(faker, userRepository),
@@ -48,7 +50,8 @@ public class FillTable {
                 new RoomTypeGenerator(faker,userRepository,roomTypeRepository),
                 new DormitoryGenerator(faker, userRepository,dormitoryRepository,managerRepository,statuteRepository),
                 new FloorGenerator(faker, userRepository, floorRepository, dormitoryRepository ),
-                new RoomGenerator(faker,userRepository, roomRepository, floorRepository, roomTypeRepository)
+                new RoomGenerator(faker,userRepository, roomRepository, floorRepository, roomTypeRepository),
+                new ContractGenerator(faker, userRepository,contractRepository,studentRepository,roomRepository )
         );
 
     }

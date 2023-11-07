@@ -19,8 +19,8 @@ public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDate start_date;
+    private LocalDate end_date;
     @OneToOne
     @JoinColumn(name = "id_room")
     private Room room;

@@ -28,6 +28,8 @@ public class TableGeneratorApi {
 
     private final RoomGenerator roomGenerator;
 
+    private final ContractGenerator contractGenerator;
+
 
     public UserGenerator user() {
         return userGenerator;
@@ -79,5 +81,7 @@ public class TableGeneratorApi {
     public FloorGenerator floor(){return floorGenerator;}
 
     public RoomGenerator room(){return roomGenerator;}
+
+    public ContractGenerator contract(){return contractGenerator;}
 
 }
