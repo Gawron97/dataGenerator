@@ -40,6 +40,7 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //        fillTable.fillTable().paymentStatus().generatePaymentStatuses();
 //        fillTable.fillTable().payment().generatePayments(20);
         fillTable.fillTable().applicationType().generateApplicationTypes();
+        fillTable.fillTable().applicationStatus().generateApplicationStatuses();
     }
 
     @Override

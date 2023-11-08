@@ -26,6 +26,7 @@ public class TableGeneratorApi {
     private final PaymentGenerator paymentGenerator;
     private final ContractPaymentGenerator contractPaymentGenerator;
     private final ApplicationTypeGenerator applicationTypeGenerator;
+    private final ApplicationStatusGenerator applicationStatusGenerator;
 
 
     public UserGenerator user() {
@@ -111,5 +112,9 @@ public class TableGeneratorApi {
 
     public ApplicationTypeGenerator applicationType() {
         return applicationTypeGenerator;
+    }
+
+    public ApplicationStatusGenerator applicationStatus() {
+        return applicationStatusGenerator;
     }
 }
