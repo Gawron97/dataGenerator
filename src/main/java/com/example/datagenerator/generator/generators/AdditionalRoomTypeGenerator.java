@@ -11,7 +11,7 @@ import java.util.List;
 public class AdditionalRoomTypeGenerator extends GeneratorHelper {
 
     private final AdditionalRoomTypeRepository additionalRoomTypeRepository;
-    private static final List<String> types = List.of("Lazienka", "Sala gier", "Salon", "Pokoj administracyjny",
+    private final List<String> types = List.of("Lazienka", "Sala gier", "Salon", "Pokoj administracyjny",
             "Kuchnia", "Pralnia", "Sala nauki", "Stolowka", "Biblioteka", "Pokoj na rowery");
 
     public AdditionalRoomTypeGenerator(Faker faker, UserRepository userRepository, AdditionalRoomTypeRepository additionalRoomTypeRepository) {
