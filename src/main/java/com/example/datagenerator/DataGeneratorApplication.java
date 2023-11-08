@@ -42,7 +42,8 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //        fillTable.fillTable().applicationType().generateApplicationTypes();
 //        fillTable.fillTable().applicationStatus().generateApplicationStatuses();
 //        fillTable.fillTable().additionalServices().generateAdditionalServices();
-        fillTable.fillTable().requirements().generateRequirements();
+//        fillTable.fillTable().requirements().generateRequirements();
+        fillTable.fillTable().fieldOfStudy().generateFieldsOfStudy();
     }
 
     @Override

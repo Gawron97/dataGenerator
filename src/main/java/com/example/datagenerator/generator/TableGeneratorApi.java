@@ -29,7 +29,7 @@ public class TableGeneratorApi {
     private final ApplicationStatusGenerator applicationStatusGenerator;
     private final AdditionalServicesGenerator additionalServicesGenerator;
     private final RequirementsGenerator requirementsGenerator;
-
+    private final FieldOfStudyGenerator fieldOfStudyGenerator;
 
     public UserGenerator user() {
         return userGenerator;
@@ -126,5 +126,9 @@ public class TableGeneratorApi {
 
     public RequirementsGenerator requirements() {
         return requirementsGenerator;
+    }
+
+    public FieldOfStudyGenerator fieldOfStudy() {
+        return fieldOfStudyGenerator;
     }
 }

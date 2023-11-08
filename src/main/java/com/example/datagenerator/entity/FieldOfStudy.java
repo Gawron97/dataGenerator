@@ -23,8 +23,4 @@ public class FieldOfStudy {
     @ManyToOne
     @JoinColumn(name = "id_faculty")
     private Faculty faculty;
-
-    @ManyToMany
-    @JoinColumn(name = "id_student")
-    private Set<Student> students;
 }
