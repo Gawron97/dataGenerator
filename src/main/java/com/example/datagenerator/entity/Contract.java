@@ -27,7 +27,7 @@ public class Contract {
     @OneToOne
     @JoinColumn(name = "id_student")
     private Student student;
-    @ManyToMany
-    @JoinColumn(name = "id_payment")
+
+    @ManyToMany(mappedBy = "contracts",  fetch = FetchType.EAGER)
     private Set<Payment> payments;
 }

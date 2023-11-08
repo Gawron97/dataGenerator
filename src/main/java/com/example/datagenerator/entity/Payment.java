@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -27,7 +28,12 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "id_payment_status")
     private PaymentStatus paymentStatus;
-//    @ManyToMany
-//    @JoinColumn(name = "id_contract")
-//    private Set<Contract> contracts;
+
+
+    @ManyToMany
+    @JoinTable(name = "contract_payment",
+            joinColumns = @JoinColumn(name="id_payment"),
+            inverseJoinColumns = @JoinColumn(name="id_contract"))
+
+    private Set<Contract> contracts = new HashSet<>();
 }

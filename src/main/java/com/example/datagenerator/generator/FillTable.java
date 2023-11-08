@@ -57,7 +57,8 @@ public class FillTable {
                 new RoomGenerator(faker,userRepository, roomRepository, floorRepository, roomTypeRepository),
                 new ContractGenerator(faker, userRepository,contractRepository,studentRepository,roomRepository ),
                 new PaymentStatusGenerator(faker, userRepository, paymentStatusRepository),
-                new PaymentGenerator(faker, userRepository, paymentRepository,studentRepository,paymentStatusRepository)
+                new PaymentGenerator(faker, userRepository, paymentRepository,studentRepository,paymentStatusRepository),
+                new ContractPaymentGenerator(faker, userRepository, contractRepository, paymentRepository, paymentStatusRepository)
         );
 
     }
