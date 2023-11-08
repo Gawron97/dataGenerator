@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -48,4 +49,5 @@ public class Dormitory {
             joinColumns = @JoinColumn(name = "id_dormitory"),
             inverseJoinColumns = @JoinColumn(name = "id_additional_service"))
     private Set<AdditionalServices> additionalServices;
+
 }
