@@ -19,23 +19,16 @@ public class FillTable {
     private final ComplainRepository complainRepository;
     private final ModuleTypeRepository moduleTypeRepository;
     private final ModuleRepository moduleRepository;
-
     private final FacultyRepository facultyRepository;
-
     private final StatuteRepository statuteRepository;
     private final RoomTypeRepository roomTypeRepository;
-
     private final DormitoryRepository dormitoryRepository;
-
     private final FloorRepository floorRepository;
-
     private final RoomRepository roomRepository;
-
     private final ContractRepository contractRepository;
-
     private final PaymentStatusRepository paymentStatusRepository;
-
     private final PaymentRepository paymentRepository;
+    private final ApplicationTypeRepository applicationTypeRepository;
 
     public TableGeneratorApi fillTable() {
         Faker faker = new Faker();
@@ -58,7 +51,8 @@ public class FillTable {
                 new ContractGenerator(faker, userRepository,contractRepository,studentRepository,roomRepository ),
                 new PaymentStatusGenerator(faker, userRepository, paymentStatusRepository),
                 new PaymentGenerator(faker, userRepository, paymentRepository,studentRepository,paymentStatusRepository),
-                new ContractPaymentGenerator(faker, userRepository, contractRepository, paymentRepository, paymentStatusRepository)
+                new ContractPaymentGenerator(faker, userRepository, contractRepository, paymentRepository, paymentStatusRepository),
+                new ApplicationTypeGenerator(faker, userRepository, applicationTypeRepository)
         );
 
     }

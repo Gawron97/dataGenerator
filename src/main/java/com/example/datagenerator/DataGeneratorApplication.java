@@ -20,11 +20,10 @@ public class DataGeneratorApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(DataGeneratorApplication.class, args);
-//        fillTable.fillTable().user().generateUsers(10);
-        fillTable.fillTable().manager().generateManagers(10);
-        fillTable.fillTable().officeWorker().generateOfficeWorker(10);
-        fillTable.fillTable().securityWorker().generateSecurity(10);
-        fillTable.fillTable().student().generateStudents(10);
+//        fillTable.fillTable().manager().generateManagers(10);
+//        fillTable.fillTable().officeWorker().generateOfficeWorker(10);
+//        fillTable.fillTable().securityWorker().generateSecurity(10);
+//        fillTable.fillTable().student().generateStudents(10);
 //        fillTable.fillTable().additionalRoomType().generateAdditionalRoomTypes();
 //        fillTable.fillTable().additionalRoom().generateAdditionalRooms(20);
 //        fillTable.fillTable().complain().generateComplains(15);
@@ -40,7 +39,7 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //                                                            LocalDate.of(2023,12,31),10);
 //        fillTable.fillTable().paymentStatus().generatePaymentStatuses();
 //        fillTable.fillTable().payment().generatePayments(20);
-
+        fillTable.fillTable().applicationType().generateApplicationTypes();
     }
 
     @Override

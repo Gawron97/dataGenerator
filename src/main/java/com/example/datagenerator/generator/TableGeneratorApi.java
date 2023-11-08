@@ -15,26 +15,17 @@ public class TableGeneratorApi {
     private final ComplainGenerator complainGenerator;
     private final ModuleTypeGenerator moduleTypeGenerator;
     private final ModuleGenerator moduleGenerator;
-
     private final FacultyGenerator facultyGenerator;
-
     private final StatuteGenerator statuteGenerator;
-
     private final RoomTypeGenerator roomTypeGenerator;
-
     private final DormitoryGenerator dormitoryGenerator;
-
     private final FloorGenerator floorGenerator;
-
     private final RoomGenerator roomGenerator;
-
     private final ContractGenerator contractGenerator;
-
     private final PaymentStatusGenerator paymentStatusGenerator;
-
     private final PaymentGenerator paymentGenerator;
-
     private final ContractPaymentGenerator contractPaymentGenerator;
+    private final ApplicationTypeGenerator applicationTypeGenerator;
 
 
     public UserGenerator user() {
@@ -69,31 +60,56 @@ public class TableGeneratorApi {
         return complainGenerator;
     }
 
-    public ModuleTypeGenerator moduleType() {return moduleTypeGenerator;}
+    public ModuleTypeGenerator moduleType() {
+        return moduleTypeGenerator;
+    }
 
-    public ModuleGenerator module() {return moduleGenerator;}
+    public ModuleGenerator module() {
+        return moduleGenerator;
+    }
 
 
     public FacultyGenerator facultyGenerator() {
         return facultyGenerator;
     }
 
-    public StatuteGenerator statute() {return statuteGenerator;}
+    public StatuteGenerator statute() {
+        return statuteGenerator;
+    }
 
-    public RoomTypeGenerator roomType(){ return roomTypeGenerator;}
+    public RoomTypeGenerator roomType() {
+        return roomTypeGenerator;
+    }
 
-    public DormitoryGenerator dormitory(){return dormitoryGenerator;}
+    public DormitoryGenerator dormitory() {
+        return dormitoryGenerator;
+    }
 
-    public FloorGenerator floor(){return floorGenerator;}
+    public FloorGenerator floor() {
+        return floorGenerator;
+    }
 
-    public RoomGenerator room(){return roomGenerator;}
+    public RoomGenerator room() {
+        return roomGenerator;
+    }
 
-    public ContractGenerator contract(){return contractGenerator;}
+    public ContractGenerator contract() {
+        return contractGenerator;
+    }
 
-    public PaymentStatusGenerator paymentStatus(){return paymentStatusGenerator;}
+    public PaymentStatusGenerator paymentStatus() {
+        return paymentStatusGenerator;
+    }
 
-    public PaymentGenerator payment(){return paymentGenerator;}
+    public PaymentGenerator payment() {
+        return paymentGenerator;
+    }
 
-    public ContractPaymentGenerator contractPayment(){return contractPaymentGenerator;}
+    public ContractPaymentGenerator contractPayment() {
+        return contractPaymentGenerator;
+    }
 
+    public ApplicationTypeGenerator applicationType() {
+        return applicationTypeGenerator;
+    }
 }
