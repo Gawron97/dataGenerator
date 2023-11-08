@@ -29,9 +29,8 @@ public class Payment {
     @JoinColumn(name = "id_payment_status")
     private PaymentStatus paymentStatus;
 
-
-    @ManyToMany
-    @JoinTable(name = "contract_payment",
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "contract_payments",
             joinColumns = @JoinColumn(name="id_payment"),
             inverseJoinColumns = @JoinColumn(name="id_contract"))
 

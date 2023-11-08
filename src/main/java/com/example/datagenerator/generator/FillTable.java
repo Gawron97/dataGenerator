@@ -60,7 +60,8 @@ public class FillTable {
                 new ApplicationStatusGenerator(faker, userRepository, applicationStatusRepository),
                 new AdditionalServicesGenerator(faker, userRepository, additionalServicesRepository),
                 new RequirementsGenerator(faker, userRepository, requirementsRepository),
-                new FieldOfStudyGenerator(faker, userRepository, fieldOfStudyRepository, facultyRepository)
+                new FieldOfStudyGenerator(faker, userRepository, fieldOfStudyRepository, facultyRepository),
+                new DormitoryRequirementsGenerator(faker, userRepository, dormitoryRepository, requirementsRepository)
         );
 
     }

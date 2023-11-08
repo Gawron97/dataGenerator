@@ -28,6 +28,6 @@ public class Contract {
     @JoinColumn(name = "id_student")
     private Student student;
 
-    @ManyToMany(mappedBy = "contracts",  fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "contracts", fetch = FetchType.EAGER)
     private Set<Payment> payments;
 }

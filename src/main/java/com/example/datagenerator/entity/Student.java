@@ -28,7 +28,9 @@ public class Student {
     @JoinColumn(name = "id_user")
     private User user;
 
-    @ManyToMany
-    @JoinColumn(name = "id_field_of_study")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "student_field_of_studies",
+        joinColumns = @JoinColumn(name = "id_student"),
+        inverseJoinColumns = @JoinColumn(name = "id_field_of_study"))
     private Set<FieldOfStudy> fieldOfStudies;
 }

@@ -37,7 +37,7 @@ public class ContractPaymentGenerator extends GeneratorHelper {
         this.statuses = paymentStatusRepository.findAll();
 
     }
-@Transactional
+    @Transactional
     public void generateContractsPayments(){
 
         List<Contract> contracts = contractRepository.findAll();

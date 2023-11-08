@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -17,4 +18,6 @@ public class Requirements {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String criterion;
+    @ManyToMany(mappedBy = "requirements", fetch = FetchType.EAGER)
+    private List<Dormitory> dormitories;
 }

@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -23,4 +24,6 @@ public class FieldOfStudy {
     @ManyToOne
     @JoinColumn(name = "id_faculty")
     private Faculty faculty;
+    @ManyToMany(mappedBy = "fieldOfStudies", fetch = FetchType.EAGER)
+    private List<Student> students;
 }

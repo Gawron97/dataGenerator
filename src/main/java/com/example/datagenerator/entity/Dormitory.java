@@ -37,11 +37,15 @@ public class Dormitory {
     @JoinColumn(name = "id_manager", referencedColumnName = "id")
     private Manager manager;
 
-    @ManyToMany
-    @JoinColumn(name = "id_requirements")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "dormitory_requirements",
+            joinColumns = @JoinColumn(name = "id_dormitory"),
+            inverseJoinColumns = @JoinColumn(name = "id_requirement"))
     private Set<Requirements> requirements;
 
-    @ManyToMany
-    @JoinColumn(name = "id_additional_services")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "dormitory_services",
+            joinColumns = @JoinColumn(name = "id_dormitory"),
+            inverseJoinColumns = @JoinColumn(name = "id_additional_service"))
     private Set<AdditionalServices> additionalServices;
 }
