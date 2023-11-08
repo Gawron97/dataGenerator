@@ -17,7 +17,4 @@ public class Requirements {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String criterion;
-    @ManyToMany
-    @JoinColumn(name = "id_dormitory")
-    private Set<Dormitory> dormitories;
 }

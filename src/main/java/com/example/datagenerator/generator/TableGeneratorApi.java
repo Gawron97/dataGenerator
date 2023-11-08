@@ -28,6 +28,7 @@ public class TableGeneratorApi {
     private final ApplicationTypeGenerator applicationTypeGenerator;
     private final ApplicationStatusGenerator applicationStatusGenerator;
     private final AdditionalServicesGenerator additionalServicesGenerator;
+    private final RequirementsGenerator requirementsGenerator;
 
 
     public UserGenerator user() {
@@ -121,5 +122,9 @@ public class TableGeneratorApi {
 
     public AdditionalServicesGenerator additionalServices() {
         return additionalServicesGenerator;
+    }
+
+    public RequirementsGenerator requirements() {
+        return requirementsGenerator;
     }
 }
