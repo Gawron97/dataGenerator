@@ -32,6 +32,7 @@ public class TableGeneratorApi {
     private final FieldOfStudyGenerator fieldOfStudyGenerator;
     private final DormitoryRequirementsGenerator dormitoryRequirementsGenerator;
     private final DormitorySecurityGenerator dormitorySecurityGenerator;
+    private final DormitoryServicesGenerator dormitoryServicesGenerator;
 
     public UserGenerator user() {
         return userGenerator;
@@ -140,6 +141,10 @@ public class TableGeneratorApi {
 
     public DormitorySecurityGenerator dormitorySecurityGenerator() {
         return dormitorySecurityGenerator;
+    }
+
+    public DormitoryServicesGenerator dormitoryServicesGenerator() {
+        return dormitoryServicesGenerator;
     }
 
 }

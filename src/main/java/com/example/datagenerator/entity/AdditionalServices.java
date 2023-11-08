@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -20,11 +21,6 @@ public class AdditionalServices {
     private String name;
     private String description;
 
-    @ManyToMany
-    @JoinColumn(name = "id_dormitory")
-    private Set<Dormitory> dormitories;
-
-    @ManyToMany
-    @JoinColumn(name = "id_additional_rooms")
-    private Set<AdditionalRooms> additionalRooms;
+    @ManyToMany(mappedBy = "additionalServices", fetch = FetchType.EAGER)
+    private List<Dormitory> dormitories;
 }

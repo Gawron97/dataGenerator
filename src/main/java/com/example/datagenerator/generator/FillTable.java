@@ -63,7 +63,8 @@ public class FillTable {
                 new RequirementsGenerator(faker, userRepository, requirementsRepository),
                 new FieldOfStudyGenerator(faker, userRepository, fieldOfStudyRepository, facultyRepository),
                 new DormitoryRequirementsGenerator(faker, userRepository, dormitoryRepository, requirementsRepository),
-                new DormitorySecurityGenerator(faker, userRepository, dormitoryRepository, securityRepository, dormitorySecurityRepository)
+                new DormitorySecurityGenerator(faker, userRepository, dormitoryRepository, securityRepository, dormitorySecurityRepository),
+                new DormitoryServicesGenerator(faker, userRepository, dormitoryRepository, additionalServicesRepository)
         );
 
     }

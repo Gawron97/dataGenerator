@@ -31,7 +31,7 @@ public class DormitoryRequirementsGenerator extends GeneratorHelper {
 
         dormitories.forEach(dormitory -> {
 
-            Set<Requirements> requirements = getRandomRequirements(5);
+            Set<Requirements> requirements = getRandomRequirements(faker.number().numberBetween(0, 6));
 
             requirements.forEach(requirement -> {
                 dormitory.getRequirements().add(requirement);
