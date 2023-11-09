@@ -16,6 +16,19 @@ public class FloorGenerator extends GeneratorHelper {
 
     private final FloorRepository floorRepository;
     private final DormitoryRepository dormitoryRepository;
+    private final List<String> descriptions = List.of(
+            "Przestronna przestrzeń z widokiem na kampus!",
+            "Pokój z przytulnym dywanem i kolorowymi poduszkami.",
+            "Minimalistyczny design sprzyjający nauce i relaksowi.",
+            "Atmosfera sprzyjająca kreatywności i wymianie pomysłów.",
+            "Nowoczesne wyposażenie i szybki dostęp do internetu.",
+            "Pokój z ekologicznymi rozwiązaniami i naturalnym oświetleniem.",
+            "Klimatyzacja dla komfortu w gorące dni.",
+            "Przemyślana aranżacja, idealna do nauki i odpoczynku.",
+            "Energia pozytywna w każdym kącie!",
+            "Wygodne łóżko zapewniające regenerację po intensywnym dniu.",
+            "Pokój z motywem roślinnym dla miłośników natury.",
+            "Kącik do pracy zdalnej z ergonomicznym biurkiem.");
 
     public FloorGenerator(Faker faker, UserRepository userRepository, FloorRepository floorRepository, DormitoryRepository dormitoryRepository){
         super(faker, userRepository);
@@ -38,7 +51,8 @@ public class FloorGenerator extends GeneratorHelper {
 
         levels.forEach( level -> {
             Floor currentFloor = Floor.builder()
-                    .level(level).description(null)
+                    .level(level)
+                    .description(descriptions.get(faker.number().numberBetween(0, descriptions.size())))
                     .isAvailable(super.getFieldFillingProbability(85))
                     .dormitory(dormitory)
                     .build();
