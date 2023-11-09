@@ -16,6 +16,7 @@ public class RoomGenerator extends GeneratorHelper {
 
     private final RoomRepository roomRepository;
     private final FloorRepository floorRepository;
+
     private final List<RoomType> roomTypes;
     private final List<Module> modules;
 
@@ -29,13 +30,13 @@ public class RoomGenerator extends GeneratorHelper {
     }
 
 
-    public void generateRooms(int minNumberOfRoomsPerFloor, int maxNumberOfRoomsPerFloor){
+    public void generateRooms(int minNumberOfRoomsPerFloor, int maxNumberOfRoomsPerFloor) {
 
         List<Floor> floors = getFloorsForRent();
 
         floors.forEach(floor -> {
 
-            int numberOfRooms = super.faker.number().numberBetween(minNumberOfRoomsPerFloor,maxNumberOfRoomsPerFloor);
+            int numberOfRooms = super.faker.number().numberBetween(minNumberOfRoomsPerFloor, maxNumberOfRoomsPerFloor);
             generateSeparateRooms(numberOfRooms, floor);
 
         });
@@ -56,7 +57,7 @@ public class RoomGenerator extends GeneratorHelper {
                     .description(faker.lorem().word())
                     .numberOfBeds(numberOfBeds)
                     .has_a_bathroom(getFieldFillingProbability(80))
-                    .price(BigDecimal.valueOf(size*40))
+                    .price(BigDecimal.valueOf(size * 40))
                     .size(BigDecimal.valueOf(size))
                     .freeBeds(faker.number().numberBetween(0, numberOfBeds))
                     .isAvailable(faker.bool().bool())
@@ -72,26 +73,26 @@ public class RoomGenerator extends GeneratorHelper {
 
     }
 
-    private void generateRoomsInModules(){
+    private void generateRoomsInModules() {
         // to generate module and rooms assigned to it on the same time
 
     }
 
-    private List<Floor> getFloorsForRent(){
+    private List<Floor> getFloorsForRent() {
 
-        return floorRepository.findByLevelGreaterThanEqual((long)1);
+        return floorRepository.findByLevelGreaterThanEqual((long) 1);
     }
 
     private RoomType getRoomType() {
         return roomTypes.get(faker.number().numberBetween(0, roomTypes.size()));
     }
 
-    private Long getRandomNumberOfBeds(){
-        return (long)faker.number().numberBetween(1,5);
+    private Long getRandomNumberOfBeds() {
+        return (long) faker.number().numberBetween(1, 5);
     }
 
-    private Long getRandomSize(){
-        return (long)faker.number().numberBetween(10,21);
+    private Long getRandomSize() {
+        return (long) faker.number().numberBetween(10, 21);
     }
 
 
