@@ -1,6 +1,7 @@
 package com.example.datagenerator.generator.generators;
 
 import com.example.datagenerator.entity.Floor;
+import com.example.datagenerator.entity.Module;
 import com.example.datagenerator.entity.ModuleType;
 import com.example.datagenerator.entity.Room;
 import com.example.datagenerator.entity.RoomType;
@@ -15,16 +16,16 @@ public class RoomGenerator extends GeneratorHelper {
 
     private final RoomRepository roomRepository;
     private final FloorRepository floorRepository;
-
     private final List<RoomType> roomTypes;
+    private final List<Module> modules;
 
     public RoomGenerator(Faker faker, UserRepository userRepository,RoomRepository roomRepository,
-                         FloorRepository floorRepository, RoomTypeRepository roomTypeRepository){
+                         FloorRepository floorRepository, RoomTypeRepository roomTypeRepository, ModuleRepository moduleRepository){
         super(faker, userRepository);
         this.roomRepository = roomRepository;
         this.floorRepository = floorRepository;
         this.roomTypes = roomTypeRepository.findAll();
-
+        this.modules = moduleRepository.findAll();
     }
 
 
@@ -58,9 +59,9 @@ public class RoomGenerator extends GeneratorHelper {
                     .price(BigDecimal.valueOf(size*40))
                     .size(BigDecimal.valueOf(size))
                     .numberOfBeds(numberOfBeds)
-                    .isAvailable(true)
+                    .isAvailable(faker.bool().bool())
                     .floor(floor)
-                    .module(null)
+                    .module(modules.get(faker.number().numberBetween(0, modules.size())))
                     .roomType(getRoomType())
                     .build();
 
