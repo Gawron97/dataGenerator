@@ -18,8 +18,8 @@ public class RoomGenerator extends GeneratorHelper {
 
     private final List<RoomType> roomTypes;
 
-    public RoomGenerator(Faker faker, UserRepository userRepository,RoomRepository roomRepository,
-                         FloorRepository floorRepository, RoomTypeRepository roomTypeRepository){
+    public RoomGenerator(Faker faker, UserRepository userRepository, RoomRepository roomRepository,
+                         FloorRepository floorRepository, RoomTypeRepository roomTypeRepository) {
         super(faker, userRepository);
         this.roomRepository = roomRepository;
         this.floorRepository = floorRepository;
@@ -28,13 +28,13 @@ public class RoomGenerator extends GeneratorHelper {
     }
 
 
-    public void generateRooms(int minNumberOfRoomsPerFloor, int maxNumberOfRoomsPerFloor){
+    public void generateRooms(int minNumberOfRoomsPerFloor, int maxNumberOfRoomsPerFloor) {
 
         List<Floor> floors = getFloorsForRent();
 
         floors.forEach(floor -> {
 
-            int numberOfRooms = super.faker.number().numberBetween(minNumberOfRoomsPerFloor,maxNumberOfRoomsPerFloor);
+            int numberOfRooms = super.faker.number().numberBetween(minNumberOfRoomsPerFloor, maxNumberOfRoomsPerFloor);
             generateSeparateRooms(numberOfRooms, floor);
 
         });
@@ -42,11 +42,11 @@ public class RoomGenerator extends GeneratorHelper {
 
     }
 
-    private void generateSeparateRooms(int numberOfRooms, Floor floor){
+    private void generateSeparateRooms(int numberOfRooms, Floor floor) {
 
-        for(int i = 1; i <= numberOfRooms; i++){
+        for (int i = 1; i <= numberOfRooms; i++) {
 
-            String number = floor.getLevel()+String.format("%02d", i);
+            String number = floor.getLevel() + String.format("%02d", i);
             Long size = getRandomSize();
             Long numberOfBeds = getRandomNumberOfBeds();
 
@@ -55,7 +55,7 @@ public class RoomGenerator extends GeneratorHelper {
                     .description(faker.lorem().word())
                     .numberOfBeds(numberOfBeds)
                     .has_a_bathroom(getFieldFillingProbability(80))
-                    .price(BigDecimal.valueOf(size*40))
+                    .price(BigDecimal.valueOf(size * 40))
                     .size(BigDecimal.valueOf(size))
                     .numberOfBeds(numberOfBeds)
                     .isAvailable(true)
@@ -71,26 +71,26 @@ public class RoomGenerator extends GeneratorHelper {
 
     }
 
-    private void generateRoomsInModules(){
+    private void generateRoomsInModules() {
         // to generate module and rooms assigned to it on the same time
 
     }
 
-    private List<Floor> getFloorsForRent(){
+    private List<Floor> getFloorsForRent() {
 
-        return floorRepository.findByLevelGreaterThanEqual((long)1);
+        return floorRepository.findByLevelGreaterThanEqual((long) 1);
     }
 
     private RoomType getRoomType() {
         return roomTypes.get(faker.number().numberBetween(0, roomTypes.size()));
     }
 
-    private Long getRandomNumberOfBeds(){
-        return (long)faker.number().numberBetween(1,5);
+    private Long getRandomNumberOfBeds() {
+        return (long) faker.number().numberBetween(1, 5);
     }
 
-    private Long getRandomSize(){
-        return (long)faker.number().numberBetween(10,21);
+    private Long getRandomSize() {
+        return (long) faker.number().numberBetween(10, 21);
     }
 
 

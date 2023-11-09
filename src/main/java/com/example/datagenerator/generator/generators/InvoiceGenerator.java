@@ -55,7 +55,7 @@ public class InvoiceGenerator extends GeneratorHelper {
                 .title(title)
                 .creationDate(creationDate)
                 .paymentDue(dueDate)
-                .totalPrice(new BigDecimal(faker.number().randomDouble(2,10,1000)))
+                .totalPrice(BigDecimal.valueOf(faker.number().randomDouble(2, 10, 1000)))
                 .payment(payment)
                 .build();
 

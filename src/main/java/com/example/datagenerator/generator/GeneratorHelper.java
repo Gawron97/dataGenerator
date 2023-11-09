@@ -46,7 +46,7 @@ public class GeneratorHelper {
     protected LocalDate getRandomDateBetween(LocalDate minDate, LocalDate maxDate) {
         long minDay = minDate.toEpochDay();
         long maxDay = maxDate.toEpochDay();
-        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay+1, maxDay);
         return LocalDate.ofEpochDay(randomDay);
     }
 
@@ -105,10 +105,15 @@ public class GeneratorHelper {
                 LocalDate.of(2023, 9, 26));
         LocalDate lastLoginDate = getRandomDateLaterThen(registrationDate);
 
+        var mail = faker.internet().emailAddress();
+        while (userRepository.existsByEmail(mail)) {
+            mail = faker.internet().emailAddress();
+        }
+
         return userRepository.save(User.builder()
                 .firstName(faker.name().firstName())
                 .lastName(faker.name().lastName())
-                .email(faker.internet().emailAddress())
+                .email(mail)
                 .password(faker.internet().password())
                 .registrationDate(registrationDate)
                 .lastLogin(getFieldFillingProbability(75) ? lastLoginDate : null)
