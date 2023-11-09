@@ -35,6 +35,8 @@ public class TableGeneratorApi {
     private final DormitoryServicesGenerator dormitoryServicesGenerator;
     private final StudentFieldOfStudiesGenerator studentFieldOfStudiesGenerator;
 
+    private final InvoiceGenerator invoiceGenerator;
+
     public UserGenerator user() {
         return userGenerator;
     }
@@ -148,5 +150,7 @@ public class TableGeneratorApi {
     }
 
     public StudentFieldOfStudiesGenerator studentFieldOfStudiesGenerator() {return studentFieldOfStudiesGenerator;}
+
+    public InvoiceGenerator invoice(){return invoiceGenerator;}
 
 }

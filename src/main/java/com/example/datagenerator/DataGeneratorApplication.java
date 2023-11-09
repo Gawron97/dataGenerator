@@ -47,8 +47,10 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //        fillTable.fillTable().contractPayment().generateContractsPayments();
 //        fillTable.fillTable().dormitoryRequirementsGenerator().generateDormitoryRequirements();
 //        fillTable.fillTable().dormitorySecurityGenerator().generateDormitorySecurity();
-        fillTable.fillTable().dormitoryServicesGenerator().generateDormitoryServices();
-        fillTable.fillTable().studentFieldOfStudiesGenerator().generateStudentFieldOfStudies();
+//        fillTable.fillTable().dormitoryServicesGenerator().generateDormitoryServices();
+//        fillTable.fillTable().studentFieldOfStudiesGenerator().generateStudentFieldOfStudies();
+//        fillTable.fillTable().invoice().generateInvoices(LocalDate.of(2022,1,1),
+//                                                            LocalDate.of(2023,10,31),10);
     }
 
 

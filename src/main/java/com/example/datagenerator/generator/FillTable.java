@@ -35,6 +35,8 @@ public class FillTable {
     private final FieldOfStudyRepository fieldOfStudyRepository;
     private final DormitorySecurityRepository dormitorySecurityRepository;
 
+    private final InvoiceRepository invoiceRepository;
+
     public TableGeneratorApi fillTable() {
         Faker faker = new Faker();
         return new TableGeneratorApi(new UserGenerator(faker, userRepository),
@@ -65,7 +67,8 @@ public class FillTable {
                 new DormitoryRequirementsGenerator(faker, userRepository, dormitoryRepository, requirementsRepository),
                 new DormitorySecurityGenerator(faker, userRepository, dormitoryRepository, securityRepository, dormitorySecurityRepository),
                 new DormitoryServicesGenerator(faker, userRepository, dormitoryRepository, additionalServicesRepository),
-                new StudentFieldOfStudiesGenerator(faker, userRepository, studentRepository, fieldOfStudyRepository)
+                new StudentFieldOfStudiesGenerator(faker, userRepository, studentRepository, fieldOfStudyRepository),
+                new InvoiceGenerator(faker, userRepository, invoiceRepository, paymentRepository)
         );
 
     }
