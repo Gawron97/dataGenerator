@@ -58,7 +58,7 @@ public class RoomGenerator extends GeneratorHelper {
                     .has_a_bathroom(getFieldFillingProbability(80))
                     .price(BigDecimal.valueOf(size*40))
                     .size(BigDecimal.valueOf(size))
-                    .numberOfBeds(numberOfBeds)
+                    .freeBeds(faker.number().numberBetween(0, numberOfBeds))
                     .isAvailable(faker.bool().bool())
                     .floor(floor)
                     .module(modules.get(faker.number().numberBetween(0, modules.size())))
