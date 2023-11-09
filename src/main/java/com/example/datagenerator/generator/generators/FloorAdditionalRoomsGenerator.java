@@ -24,7 +24,7 @@ public class FloorAdditionalRoomsGenerator extends GeneratorHelper {
     public FloorAdditionalRoomsGenerator(Faker faker, UserRepository userRepository, AdditionalRoomsRepository additionalRoomsRepository, FloorRepository floorRepository) {
         super(faker, userRepository);
         this.floors = floorRepository.findAll();
-        this.additionalRooms = additionalRoomsRepository.findAdditionalRoomsWithoutFloors();
+        this.additionalRooms = additionalRoomsRepository.findAll();
         this.floorRepository = floorRepository;
     }
 
