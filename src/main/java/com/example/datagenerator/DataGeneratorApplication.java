@@ -21,12 +21,12 @@ public class DataGeneratorApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(DataGeneratorApplication.class, args);
         fillTable.fillTable().manager().generateManagers(10);
-        fillTable.fillTable().officeWorker().generateOfficeWorker(10);
-        fillTable.fillTable().securityWorker().generateSecurity(10);
-        fillTable.fillTable().student().generateStudents(10);
+        fillTable.fillTable().officeWorker().generateOfficeWorker(50);
+        fillTable.fillTable().securityWorker().generateSecurity(50);
+        fillTable.fillTable().student().generateStudents(50);
         fillTable.fillTable().additionalRoomType().generateAdditionalRoomTypes();
-        fillTable.fillTable().additionalRoom().generateAdditionalRooms(20);
-        fillTable.fillTable().complain().generateComplains(15);
+        fillTable.fillTable().additionalRoom().generateAdditionalRooms(50);
+        fillTable.fillTable().complain().generateComplains(10);
         fillTable.fillTable().moduleType().generateModuleTypes();
         fillTable.fillTable().module().generateModules(20);
         fillTable.fillTable().facultyGenerator().generateFaculties();

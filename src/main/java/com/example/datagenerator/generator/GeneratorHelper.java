@@ -46,7 +46,7 @@ public class GeneratorHelper {
     protected LocalDate getRandomDateBetween(LocalDate minDate, LocalDate maxDate) {
         long minDay = minDate.toEpochDay();
         long maxDay = maxDate.toEpochDay();
-        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay + 1, maxDay);
         return LocalDate.ofEpochDay(randomDay);
     }
 
