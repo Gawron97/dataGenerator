@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -24,7 +25,7 @@ public class AdditionalRooms {
     @JoinColumn(name = "id_room_type")
     private AdditionalRoomType additionalRoomType;
 
-    @ManyToMany
-    @JoinColumn(name = "id_floor")
-    private Set<Floor> floors;
+
+    @ManyToMany(mappedBy = "additionalRooms", fetch = FetchType.EAGER)
+    private List<Floor> floors;
 }

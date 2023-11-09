@@ -34,8 +34,8 @@ public class TableGeneratorApi {
     private final DormitorySecurityGenerator dormitorySecurityGenerator;
     private final DormitoryServicesGenerator dormitoryServicesGenerator;
     private final StudentFieldOfStudiesGenerator studentFieldOfStudiesGenerator;
-
     private final InvoiceGenerator invoiceGenerator;
+    private final FloorAdditionalRoomsGenerator floorAdditionalRoomsGenerator;
 
     public UserGenerator user() {
         return userGenerator;
@@ -152,5 +152,7 @@ public class TableGeneratorApi {
     public StudentFieldOfStudiesGenerator studentFieldOfStudiesGenerator() {return studentFieldOfStudiesGenerator;}
 
     public InvoiceGenerator invoice(){return invoiceGenerator;}
+
+    public FloorAdditionalRoomsGenerator floorAdditionalRooms() {return floorAdditionalRoomsGenerator;}
 
 }

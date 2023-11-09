@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @Builder
 @Entity
@@ -21,4 +23,10 @@ public class Floor {
     @ManyToOne
     @JoinColumn(name = "id_dormitory")
     private Dormitory dormitory;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "floor_additional_rooms",
+            joinColumns = @JoinColumn(name = "id_floor"),
+            inverseJoinColumns = @JoinColumn(name = "id_additional_room"))
+    private Set<AdditionalRooms> additionalRooms;
 }
