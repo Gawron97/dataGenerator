@@ -16,19 +16,17 @@ public class DataGeneratorApplication implements CommandLineRunner {
         fillTable = fill;
     }
 
-    //numberBetween(0, 2) wygeneruje 0 lub 1
-
     public static void main(String[] args) {
         SpringApplication.run(DataGeneratorApplication.class, args);
-        fillTable.fillTable().manager().generateManagers(10);
-        fillTable.fillTable().officeWorker().generateOfficeWorker(50);
-        fillTable.fillTable().securityWorker().generateSecurity(50);
-        fillTable.fillTable().student().generateStudents(50);
+        fillTable.fillTable().manager().generateManagers(1000);
+        fillTable.fillTable().officeWorker().generateOfficeWorker(500);
+        fillTable.fillTable().securityWorker().generateSecurity(500);
+        fillTable.fillTable().student().generateStudents(500);
         fillTable.fillTable().additionalRoomType().generateAdditionalRoomTypes();
-        fillTable.fillTable().additionalRoom().generateAdditionalRooms(50);
-        fillTable.fillTable().complain().generateComplains(10);
+        fillTable.fillTable().additionalRoom().generateAdditionalRooms(500);
+        fillTable.fillTable().complain().generateComplains(100);
         fillTable.fillTable().moduleType().generateModuleTypes();
-        fillTable.fillTable().module().generateModules(20);
+        fillTable.fillTable().module().generateModules(2000);
         fillTable.fillTable().facultyGenerator().generateFaculties();
         fillTable.fillTable().statute().generateStatutes();
         fillTable.fillTable().roomType().generateRoomTypes();
@@ -38,10 +36,10 @@ public class DataGeneratorApplication implements CommandLineRunner {
         fillTable.fillTable().contract().generateContracts( LocalDate.of(2022,1,1),
                                                             LocalDate.of(2023,12,31),10);
         fillTable.fillTable().paymentStatus().generatePaymentStatuses();
-        fillTable.fillTable().payment().generatePayments(20);
+        fillTable.fillTable().payment().generatePayments(200);
         fillTable.fillTable().applicationType().generateApplicationTypes();
         fillTable.fillTable().applicationStatus().generateApplicationStatuses();
-        fillTable.fillTable().application().generateApplications(20);
+        fillTable.fillTable().application().generateApplications(200);
         fillTable.fillTable().additionalServices().generateAdditionalServices();
         fillTable.fillTable().requirements().generateRequirements();
         fillTable.fillTable().fieldOfStudy().generateFieldsOfStudy();
