@@ -38,22 +38,17 @@ public class ContractPaymentGenerator extends GeneratorHelper {
 
     }
     @Transactional
-    public void generateContractsPayments(){
+    public void generateContractsPayments() {
 
         List<Contract> contracts = contractRepository.findAll();
 
-        contracts.forEach(contract -> {
-            Payment currentPayment = createPayment(contract);
-            currentPayment.getContracts().add(contract);
-            paymentRepository.save(currentPayment);
-        } );
-
+        contracts.forEach(this::generatePaymentsForContract);
 
     }
 
     private void generatePaymentsForContract(Contract contract){
 
-        int number_of_payments = faker.number().numberBetween(0,6);
+        int number_of_payments = faker.number().numberBetween(0, 20);
 
         for( int i = 0; i<number_of_payments; i++){
 
