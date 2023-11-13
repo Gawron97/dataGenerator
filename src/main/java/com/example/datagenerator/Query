@@ -58,3 +58,15 @@ JOIN student ON _user.id = student.id_user
 JOIN contract ON student.id = contract.id_student
 JOIN room ON contract.id_room = room.id
 WHERE room.has_a_bathroom = true;
+
+SELECT _user.first_name, _user.last_name, manager.work_schedule, dormitory.name AS managed_dormitory
+FROM _user
+JOIN manager ON _user.id = manager.id_user
+JOIN dormitory ON manager.id_user = dormitory.id_manager;
+
+SELECT dormitory.name AS dormitory_name, room.room_number, module_type.type AS module_type
+FROM dormitory
+JOIN floor ON dormitory.id = floor.id_dormitory
+JOIN room ON floor.id = room.id_floor
+JOIN module ON room.id_module = module.id
+JOIN module_type ON module.id_module_type = module_type.id;
