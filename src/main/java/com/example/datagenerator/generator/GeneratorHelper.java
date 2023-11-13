@@ -26,6 +26,31 @@ public class GeneratorHelper {
     protected final Faker faker;
     private final UserRepository userRepository;
 
+    private final List<String> userAdditionalInfo = List.of(
+            "Uczulenie na orzechy",
+            "Uczulenie na gluten",
+            "Uczulenie na laktozę",
+            "Wegetarianin",
+            "Weganin",
+            "Nietolerancja laktozy",
+            "Dieta bezglutenowa",
+            "Choroba trzewna",
+            "Celiakia",
+            "Dieta niskokaloryczna",
+            "Dieta wysokobiałkowa",
+            "Uczulenie na plesń",
+            "Uczulenie na pyłki",
+            "Choroba serca",
+            "Choroba nerek",
+            "Cukrzyca",
+            "Weganin z opcją na jajka",
+            "Wegańska dieta bezglutenowa",
+            "Vegetarianin z opcją na ryby",
+            "Czarnoskóry",
+            "Dieta ketogeniczna"
+    );
+
+
     protected boolean getFieldFillingProbability(int percentage) {
         return faker.number().numberBetween(0, 101) <= percentage;
     }
@@ -119,6 +144,7 @@ public class GeneratorHelper {
                 .lastLogin(getFieldFillingProbability(75) ? lastLoginDate : null)
                 .isEnabled(faker.bool().bool())
                 .contactNumber(getFieldFillingProbability(75) ? getPhoneNumber() : null)
+                .additionalInfo(getFieldFillingProbability(10) ? userAdditionalInfo.get(faker.number().numberBetween(0, userAdditionalInfo.size())) : null )
                 .build());
     }
 
