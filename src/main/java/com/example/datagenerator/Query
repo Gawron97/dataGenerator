@@ -1,0 +1,26 @@
+SELECT _user.first_name, _user.last_name, complain.title, complain.submission_date
+FROM _user
+JOIN student ON _user.id = student.id_user
+JOIN complain ON student.id = complain.id_student;
+
+SELECT dormitory.name, floor.level, COUNT(room.id) AS available_rooms, SUM(room.number_of_beds) AS total_beds
+FROM dormitory
+JOIN floor ON dormitory.id = floor.id_dormitory
+LEFT JOIN room ON floor.id = room.id_floor AND room.is_available = true
+GROUP BY dormitory.name, floor.level;
+
+SELECT _user.first_name, _user.last_name, complain.title, complain.submission_date
+FROM _user
+JOIN student ON _user.id = student.id_user
+JOIN complain ON student.id = complain.id_student;
+
+SELECT dormitory.name, additional_services.name AS service_name
+FROM dormitory
+JOIN dormitory_services ON dormitory.id = dormitory_services.id_dormitory
+JOIN additional_services ON dormitory_services.id_additional_service = additional_services.id;
+
+SELECT _user.first_name, _user.last_name, security.qualifications, dormitory.name AS assigned_dormitory
+FROM _user
+JOIN security ON _user.id = security.id_user
+JOIN dormitory_security ON security.id = dormitory_security.id_security
+JOIN dormitory ON dormitory_security.id_dormitory = dormitory.id;
