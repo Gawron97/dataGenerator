@@ -1,31 +1,31 @@
+1.    //Pobieranie danych skarg dla wszytkich userów
 SELECT _user.first_name, _user.last_name, complain.title, complain.submission_date
 FROM _user
 JOIN student ON _user.id = student.id_user
 JOIN complain ON student.id = complain.id_student;
 
+2.    //Pobranie Kkażdego piętra z każdego akademika i policzenie wolnych miejsc oraz łącznej liczby łóżek
 SELECT dormitory.name, floor.level, COUNT(room.id) AS available_rooms, SUM(room.number_of_beds) AS total_beds
 FROM dormitory
 JOIN floor ON dormitory.id = floor.id_dormitory
 LEFT JOIN room ON floor.id = room.id_floor AND room.is_available = true
 GROUP BY dormitory.name, floor.level;
 
-SELECT _user.first_name, _user.last_name, complain.title, complain.submission_date
-FROM _user
-JOIN student ON _user.id = student.id_user
-JOIN complain ON student.id = complain.id_student;
-
+3.        //Pobranie wszystkich dodatkowych usług dla każdego akademika
 SELECT dormitory.name, additional_services.name AS service_name
 FROM dormitory
 JOIN dormitory_services ON dormitory.id = dormitory_services.id_dormitory
 JOIN additional_services ON dormitory_services.id_additional_service = additional_services.id;
 
+4.        //Pobranie wszystkich pracowników ochrony wraz z ich akademikiem oraz kwalifikacjami
 SELECT _user.first_name, _user.last_name, security.qualifications, dormitory.name AS assigned_dormitory
 FROM _user
 JOIN security ON _user.id = security.id_user
 JOIN dormitory_security ON security.id = dormitory_security.id_security
 JOIN dormitory ON dormitory_security.id_dormitory = dormitory.id;
 
-SELECT _user.first_name, _user.last_name, _user.contact_number, room.room_number, dormitory.name AS dormitory_name
+5.    //Pobranie infoirmaicj o wszystkich studentach wraz z ich akademikiem, pokojem, piętrem oraz numerem kontaktowym do studenta
+SELECT _user.first_name, _user.last_name, _user.contact_number, room.room_number, dormitory.name AS dormitory_name, floor.level AS floor_level
 FROM _user
 JOIN student ON _user.id = student.id_user
 JOIN contract ON student.id = contract.id_student
@@ -33,40 +33,44 @@ JOIN room ON contract.id_room = room.id
 JOIN floor ON room.id_floor = floor.id
 JOIN dormitory ON floor.id_dormitory = dormitory.id;
 
-SELECT _user.first_name, _user.last_name, office_worker.seniority, dormitory.name AS managed_dormitory
-FROM _user
-JOIN office_worker ON _user.id = office_worker.id_user
-JOIN dormitory ON office_worker.id_user = dormitory.id_manager;
-
+6.    //Wszytkie płatności wraz z informacją kto placił, za co jaka cene i jaki jest status płatności
 SELECT _user.first_name, _user.last_name, payment.description, payment.creation_date, payment.price, payment_status.status AS payment_status
 FROM _user
 JOIN student ON _user.id = student.id_user
 JOIN payment ON student.id = payment.id_student
 JOIN payment_status ON payment.id_payment_status = payment_status.id;
 
-SELECT _user.first_name, _user.last_name, security.qualifications, dormitory.name AS assigned_dormitory, additional_rooms.room_number AS additional_room_number
-FROM _user
-JOIN security ON _user.id = security.id_user
-JOIN dormitory_security ON security.id = dormitory_security.id_security
-JOIN dormitory ON dormitory_security.id_dormitory = dormitory.id
-JOIN floor_additional_rooms ON dormitory.id = floor_additional_rooms.id_floor
-JOIN additional_rooms ON floor_additional_rooms.id_additional_room = additional_rooms.id;
-
-SELECT _user.first_name, _user.last_name, _user.contact_number, room.room_number
-FROM _user
-JOIN student ON _user.id = student.id_user
-JOIN contract ON student.id = contract.id_student
-JOIN room ON contract.id_room = room.id
-WHERE room.has_a_bathroom = true;
-
+7.    //Pobranie wszystkich managerów wraz z ich akademikiem oraz grafikiem pracy
 SELECT _user.first_name, _user.last_name, manager.work_schedule, dormitory.name AS managed_dormitory
 FROM _user
 JOIN manager ON _user.id = manager.id_user
 JOIN dormitory ON manager.id_user = dormitory.id_manager;
 
+8.    //Wypisanie wszytkich pokoi ze wszytkich akademików wraz z informacją o module w którym sie znajdują
 SELECT dormitory.name AS dormitory_name, room.room_number, module_type.type AS module_type
 FROM dormitory
 JOIN floor ON dormitory.id = floor.id_dormitory
 JOIN room ON floor.id = room.id_floor
 JOIN module ON room.id_module = module.id
 JOIN module_type ON module.id_module_type = module_type.id;
+
+9.    //Pobranie liczbę wsztkich wolnych łózek we wszytkich akademikach
+SELECT SUM(r.free_beds) AS total_available_beds
+FROM dormitory d
+JOIN floor f ON d.id = f.id_dormitory
+JOIN room r ON f.id = r.id_floor
+WHERE r.is_available = true;
+
+9.1. //Liczba wolnych łóżek w konkretnym akademiku
+SELECT SUM(r.free_beds) AS total_available_beds
+FROM dormitory d
+JOIN floor f ON d.id = f.id_dormitory
+JOIN room r ON f.id = r.id_floor
+WHERE r.is_available = true AND d.name = 'T3';
+
+10.   //Pobranie wszystkich informacji o akademikach (ustawy, kryteria przycjecia oraz opis akademików)
+SELECT d.name AS dormitory_name, d.description AS dormitory_description, s.content AS statute_name, s.additional_info AS statute_content, r.criterion AS requirement_criterion
+FROM dormitory d
+JOIN dormitory_requirements dr ON d.id = dr.id_dormitory
+JOIN requirements r ON dr.id_requirement = r.id
+JOIN statute s ON d.id_statute = s.id;
