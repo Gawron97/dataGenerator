@@ -54,7 +54,8 @@ public class PaymentGenerator extends GeneratorHelper {
 
          return Payment.builder()
                  .description(descriptions.get(faker.number().numberBetween(0,descriptions.size())))
-                 .creationDate(getRandomDateBetween(LocalDate.of(2023,1,1), LocalDate.of(2023,12,31)))
+                 .creationDate(getRandomDateBetween(student.getUser().getRegistrationDate(),
+                         LocalDate.of(2023,12,31)))
                  .price((new BigDecimal(faker.number().randomDouble(2,10,1000))))
                  .student(student)
                  .paymentStatus(statuses.get(faker.number().numberBetween(0,statuses.size())))
