@@ -115,3 +115,29 @@ LEFT JOIN application a ON s.id = a.id_student
 WHERE EXTRACT(YEAR FROM a.submission_date) = <ROK>
 GROUP BY f.name, EXTRACT(YEAR FROM a.submission_date)
 ORDER BY student_count DESC;
+
+14. //Zyski z opłat za wynajem dla poszczególnych akademikóww w danym roku - jeszcze do dopracowania
+
+SELECT d.name AS dormitory_name, SUM(p.price) AS total_payment
+FROM dormitory d
+JOIN floor f ON d.id = f.id_dormitory
+JOIN room r ON f.id = r.id_floor
+JOIN contract c ON r.id = c.id_room
+JOIN contract_payments cp ON c.id = cp.id_contract
+JOIN payment p ON cp.id_payment = p.id
+WHERE EXTRACT(YEAR FROM p.creation_date) = 2023 AND p.id_payment_status = '3'
+GROUP BY d.name;
+
+15. // List studentów przyjętych do akademika w danym okresie
+
+SELECT
+    u.first_name,
+    u.last_name,
+	s.id,
+    a.submission_date AS application_date,
+    aps.status
+FROM _user u
+JOIN student s ON u.id = s.id_user
+JOIN application a ON s.id = a.id_student
+JOIN application_status aps ON a.id_application_status = aps.id
+WHERE a.submission_date >= <POCZATEK OKRESU> AND a.submission_date < <KONIEC OKRESU> AND aps.status = 'Zaakceptowana';
