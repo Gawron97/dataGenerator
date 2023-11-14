@@ -74,3 +74,44 @@ FROM dormitory d
 JOIN dormitory_requirements dr ON d.id = dr.id_dormitory
 JOIN requirements r ON dr.id_requirement = r.id
 JOIN statute s ON d.id_statute = s.id;
+
+11. //Zestawienie płatnośći studanta o danym id
+
+SELECT
+    u.first_name || ' ' || u.last_name AS student_name,
+	s.id as student_id,
+    p.id AS payment_id,
+    p.description AS payment_description,
+    p.creation_date AS payment_creation_date,
+    p.price AS payment_price,
+    ps.status AS payment_status
+FROM payment p
+JOIN student s ON p.id_student = s.id
+JOIN _user u ON s.id_user = u.id
+JOIN payment_status ps ON p.id_payment_status = ps.id
+WHERE s.id = <ID_STUDENTA>;
+
+12. //Zestawienie ile aplikacji danego typu było w konkretnym roku
+
+SELECT at.type AS application_type,
+EXTRACT(YEAR FROM a.submission_date) AS submission_year,
+COUNT(*) AS count
+FROM application a
+JOIN application_type at ON a.id_application_type = at.id
+WHERE EXTRACT(YEAR FROM a.submission_date) = 2019
+GROUP BY at.type, EXTRACT(YEAR FROM a.submission_date)
+ORDER BY count DESC;
+
+13. //Liczba studentów z danego wydziału w podanym roku - na razie nie pokazuje 0 gdy nie ma aplikacji
+
+SELECT f.name AS faculty,
+EXTRACT(YEAR FROM a.submission_date) AS submission_year,
+COALESCE(COUNT(DISTINCT s.id), 0) AS student_count
+FROM faculty f
+LEFT JOIN field_of_study fos ON f.id = fos.id_faculty
+LEFT JOIN student_field_of_studies sfos ON fos.id = sfos.id_field_of_study
+LEFT JOIN student s ON sfos.id_student = s.id
+LEFT JOIN application a ON s.id = a.id_student
+WHERE EXTRACT(YEAR FROM a.submission_date) = <ROK>
+GROUP BY f.name, EXTRACT(YEAR FROM a.submission_date)
+ORDER BY student_count DESC;
