@@ -132,3 +132,13 @@ JOIN student s ON u.id = s.id_user
 JOIN application a ON s.id = a.id_student
 JOIN application_status aps ON a.id_application_status = aps.id
 WHERE a.submission_date >= <POCZATEK OKRESU> AND a.submission_date < <KONIEC OKRESU> AND aps.status = 'Zaakceptowana';
+
+16. //Lista studentow z platnosciami w danym roku nie dotyczacymi oplat za umowy
+
+SELECT _user.first_name, _user.last_name, EXTRACT(YEAR FROM payment.creation_date) as payment_year,
+       COALESCE(SUM(payment.price)) as total_price
+FROM payment
+JOIN student ON payment.id_student = student.id
+JOIN _user ON student.id_user = _user.id
+WHERE EXTRACT(YEAR FROM payment.creation_date) = 2023 AND payment.id_payment_status = '15'
+GROUP BY _user.first_name, _user.last_name, EXTRACT(YEAR FROM payment.creation_date)

@@ -35,24 +35,24 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //        fillTable.fillTable().dormitory().generateDormitories();
 //        fillTable.fillTable().floor().generateFloors();
 //        fillTable.fillTable().room().generateRooms(10,25);
-        fillTable.fillTable().contract().generateContracts( LocalDate.of(2022,1,1),
-                                                            LocalDate.of(2023,12,31),500);
+//        fillTable.fillTable().contract().generateContracts( LocalDate.of(2022,1,1),
+//                                                            LocalDate.of(2023,12,31),500);
 //        fillTable.fillTable().paymentStatus().generatePaymentStatuses();
-        fillTable.fillTable().payment().generatePayments(20000);
+//        fillTable.fillTable().payment().generatePayments(20000);
 //        fillTable.fillTable().applicationType().generateApplicationTypes();
 //        fillTable.fillTable().applicationStatus().generateApplicationStatuses();
 //        fillTable.fillTable().application().generateApplications(20000);
 //        fillTable.fillTable().additionalServices().generateAdditionalServices();
 //        fillTable.fillTable().requirements().generateRequirements();
 //        fillTable.fillTable().fieldOfStudy().generateFieldsOfStudy();
-        fillTable.fillTable().contractPayment().generateContractsPayments();
+//        fillTable.fillTable().contractPayment().generateContractsPayments();
 //        fillTable.fillTable().dormitoryRequirementsGenerator().generateDormitoryRequirements();
 //        fillTable.fillTable().dormitorySecurityGenerator().generateDormitorySecurity();
 //        fillTable.fillTable().dormitoryServicesGenerator().generateDormitoryServices();
-        fillTable.fillTable().studentFieldOfStudiesGenerator().generateStudentFieldOfStudies();
-        fillTable.fillTable().invoice().generateInvoices(LocalDate.of(2022,1,1),
-                                                            LocalDate.of(2023,10,31),10000);
-        fillTable.fillTable().floorAdditionalRooms().generateFloorAdditionalRooms();
+//        fillTable.fillTable().studentFieldOfStudiesGenerator().generateStudentFieldOfStudies();
+//        fillTable.fillTable().invoice().generateInvoices(LocalDate.of(2022,1,1),
+//                                                            LocalDate.of(2023,10,31),10000);
+//        fillTable.fillTable().floorAdditionalRooms().generateFloorAdditionalRooms();
     }
 
 
