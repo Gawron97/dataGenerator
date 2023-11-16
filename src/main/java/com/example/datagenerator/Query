@@ -136,9 +136,14 @@ WHERE a.submission_date BETWEEN '01-01-2022' AND '12-12-2023' AND aps.status = '
 16. //Lista studentow z platnosciami w danym roku nie dotyczacymi oplat za umowy
 
 SELECT _user.first_name, _user.last_name, EXTRACT(YEAR FROM payment.creation_date) as payment_year,
-       COALESCE(SUM(payment.price)) as total_price
+       SUM(payment.price) as total_price
 FROM payment
 JOIN student ON payment.id_student = student.id
 JOIN _user ON student.id_user = _user.id
-WHERE EXTRACT(YEAR FROM payment.creation_date) = 2023 AND payment.id_payment_status = '15'
+WHERE EXTRACT(YEAR FROM payment.creation_date) = 2023 AND payment.id_payment_status = '15' AND
+      NOT EXISTS (
+      SELECT 1
+      FROM contract_payments
+      WHERE contract_payments.id_payment = payment.id
+  )
 GROUP BY _user.first_name, _user.last_name, EXTRACT(YEAR FROM payment.creation_date)
