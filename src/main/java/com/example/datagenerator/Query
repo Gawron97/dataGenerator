@@ -93,19 +93,16 @@ WHERE s.id = <ID_STUDENTA>;
 
 12. //Zestawienie ile aplikacji danego typu było w konkretnym roku
 
-SELECT
-    at.type AS application_type,
-    COALESCE(COUNT(a.id), 0) AS count
+SELECT at.type AS application_type, COALESCE(COUNT(a.id), 0) AS count
 FROM application_type at
 LEFT JOIN application a ON at.id = a.id_application_type
 AND EXTRACT(YEAR FROM a.submission_date) = 2022
-GROUP BY at.type, EXTRACT(YEAR FROM a.submission_date)
+GROUP BY at.type
 ORDER BY count DESC;
 
 13. //Liczba studentów z danego wydziału w podanym roku - 0 gdy nie ma żadnych w danym roku
 
-SELECT f.name AS faculty,
-COALESCE(COUNT(a.id), 0) AS student_count
+SELECT f.name AS faculty, COALESCE(COUNT(a.id), 0) AS student_count
 FROM faculty f
 LEFT JOIN field_of_study fos ON f.id = fos.id_faculty
 LEFT JOIN student_field_of_studies sfos ON fos.id = sfos.id_field_of_study
@@ -123,17 +120,13 @@ LEFT JOIN floor f ON d.id = f.id_dormitory
 LEFT JOIN room r ON f.id = r.id_floor
 LEFT JOIN contract c ON r.id = c.id_room
 LEFT JOIN contract_payments cp ON c.id = cp.id_contract
-LEFT JOIN payment p ON cp.id_payment = p.id AND EXTRACT(YEAR FROM p.creation_date) = 2023 AND p.id_payment_status = '3'
+LEFT JOIN payment p ON cp.id_payment = p.id
+AND EXTRACT(YEAR FROM p.creation_date) = 2023 AND p.id_payment_status = '3'
 GROUP BY d.name;
 
 15. // List studentów przyjętych do akademika w danym okresie
 
-SELECT
-    u.first_name,
-    u.last_name,
-	s.id,
-    a.submission_date AS application_date,
-    aps.status
+SELECT u.first_name, u.last_name, s.id, a.submission_date AS application_date, aps.status
 FROM _user u
 JOIN student s ON u.id = s.id_user
 JOIN application a ON s.id = a.id_student
