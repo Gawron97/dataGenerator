@@ -110,6 +110,54 @@ Przydatny link: https://thoughtbot.com/blog/advanced-postgres-performance-tips
 danych do przygotowanych i wypełnionych tabel wprowadzić indeksy. Jakie są wady i zalety
 poszczególnych typów indeksów i w jakich sytuacjach najlepiej ich używać?**
 
+<h5>Typy indeksów:</h5>
+* Indeks B-drzewny (B-Tree):
+  * Zalety:
+    * Działa dobrze dla różnych typów zapytań, zwłaszcza równościowych i zakresowych.
+    * Działa efektywnie dla różnych typów danych, takich jak liczby, ciągi znaków, daty itp.
+    * Stosunkowo niskie zużycie pamięci w porównaniu do niektórych innych indeksów.
+  * Wady:
+    * Mniej efektywny dla operacji złączeń i sortowań.
+    * Może występować wyższe zużycie miejsca na dysku niż niektóre specjalizowane indeksy.
+
+* Indeks haszowy:
+  * Zalety:
+    * Bardzo szybki dla prostych operacji równościowych.
+    * Skuteczny w przypadku wyszukiwań na dużych zbiorach danych, gdzie operacje haszowe są wydajne.
+  * Wady:
+    * Nie obsługuje operacji zakresowych.
+    * Zajmuje więcej miejsca na dysku niż indeksy B-drzewne.
+
+* Indeks GiST (Generalized Search Tree):
+  * Zalety:
+    * Bardzo skuteczny dla danych przestrzennych i innych niestandardowych typów danych.
+    * Obsługuje różne operacje przeszukiwania, takie jak długość łańcucha, operatory itp.
+  * Wady:
+    * Wyższe zużycie miejsca na dysku niż indeksy B-drzewne.
+    * Wyższe koszty operacji zapisu i aktualizacji.
+
+* Indeks GIN (Generalized Inverted Index):
+  * Zalety:
+    * Bardzo skuteczny dla danych złożonych, takich jak tablice, hstore (mapy klucz-wartość) itp.
+    * Działa dobrze dla zapytań związanych z pełnotekstowym przeszukiwaniem.
+  * Wady:
+    * Wyższe koszty aktualizacji w porównaniu do indeksów B-drzewnych.
+    * Wymaga więcej miejsca na dysku niż indeksy B-drzewne.
+
+
+<h5>Sytuacje najlepszego użycia:</h5>
+* Indeks B-drzewny (B-Tree):
+  * Wyszukiwanie równościowe i zakresowe.
+  * Sortowanie i złączenia na niewielkich zbiorach danych.
+
+* Indeks haszowy:
+  * Wyszukiwanie równościowe na dużych zbiorach danych, gdzie efektywność operacji haszowej jest kluczowa.
+
+* Indeks GiST (Generalized Search Tree):
+  * Dane przestrzenne, tekstowe lub niestandardowe typy danych.
+
+* Indeks GIN (Generalized Inverted Index):
+  * Tablice, mapy klucz-wartość, pełnotekstowe przeszukiwanie.
 
 
 **3. Weryfikacja działania zapytań z poprzednich zajęć w świetle wyników funkcji EXPLAIN przed i po
