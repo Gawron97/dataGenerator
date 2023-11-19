@@ -23,60 +23,86 @@ WHERE EXTRACT(YEAR FROM payment.creation_date) = 2023 AND payment.id_payment_sta
 GROUP BY _user.first_name, _user.last_name, EXTRACT(YEAR FROM payment.creation_date)
 ```
 
-![Zrzut ekranu 2023-11-19 o 18.12.37.png](src%2Fmain%2Fjava%2Fcom%2Fexample%2Fdatagenerator%2Fphotos%2FZrzut%20ekranu%202023-11-19%20o%2018.12.37.png)
+![Zrzut ekranu 2023-11-19 o 18.28.02.png](src%2Fmain%2Fjava%2Fcom%2Fexample%2Fdatagenerator%2Fphotos%2FZrzut%20ekranu%202023-11-19%20o%2018.28.02.png)
 
 Jakie informacje są tam przedstawione? Jak je interpretować? Na czym polega optymalizacja zapytań? Wyjaśnienie na przykładzie:
 
-```GroupAggregate (cost=21.83..21.86 rows=1 width=77) (actual time=0.802..0.803 rows=0 loops=1)```
+```HashAggregate:```
 
-* GroupAggregate: Wskazuje na grupowanie wyników. 
-* cost=21.83..21.86: Szacowane koszty wykonania operacji grupowania.
-* rows=1: Szacowana liczba grup.
-* width=77: Szacowana szerokość wyniku wiersza.
-* actual time=0.802..0.803: Rzeczywisty czas wykonania operacji.
-* rows=0: Rzeczywista liczba wierszy zwróconych przez to zapytanie.
-* loops=1: Liczba iteracji (często 1 dla prostych zapytań). 
+* cost=131.83..133.41 rows=105 width=77:
+    * cost to szacowany koszt wykonania operacji grupowania.
+    * rows to szacowana liczba grup.
+    * width to szacowana szerokość wyniku wiersza.
+* actual time=0.977..1.036 rows=163 loops=1:
+    * actual time to faktyczny czas wykonania operacji.
+    * rows to rzeczywista liczba zwróconych wierszy.
+    * loops to liczba iteracji w danym etapie.
 
-```Group Key: _user.first_name, _user.last_name, (EXTRACT(year FROM payment.creation_date))```
+```Group Key:```
 
-* Wskazuje kolumny, według których następuje grupowanie.
+* Grupowanie wyników według kluczy: _user.first_name, _user.last_name, EXTRACT(year FROM payment.creation_date).
 
-```Sort (cost=21.83..21.83 rows=1 width=51) (actual time=0.801..0.802 rows=0 loops=1)```
+```Batches:```
 
-* Sort: Wskazuje na sortowanie wyników.
-* cost=21.83..21.83: Szacowane koszty sortowania.
-* rows=0: Rzeczywista liczba wierszy zwróconych przez to sortowanie.
-* Sort Key: _user.first_name, _user.last_name: Kolumny, według których następuje sortowanie.
-* Sort Method: quicksort Memory: 25kB: Metoda sortowania i zużycie pamięci.
+* Liczba partii (batchy) przetwarzanych w danym etapie.
 
-```Nested Loop Anti Join (cost=4.79..21.82 rows=1 width=51) (actual time=0.286..0.287 rows=0 loops=1)```
+```Memory Usage:```
 
-* Nested Loop Anti Join: Wskazuje na zastosowanie operacji "anti join" z zagnieżdżonymi pętlami.
-* cost=4.79..21.82: Szacowane koszty wykonania.
-* rows=0: Rzeczywista liczba wierszy zwróconych przez to złączenie.
-* width=51: Szacowana szerokość wyniku wiersza.
-* actual time=0.286..0.287: Rzeczywisty czas wykonania operacji.
+* Zużycie pamięci w danym etapie.
 
-```Bitmap Heap Scan on contract_payments (cost=4.24..14.91 rows=11 width=4) (never executed)```
+```Nested Loop:```
 
-* Bitmap Heap Scan: Wskazuje na skanowanie bitmapy na indeksie.
-* cost=4.24..14.91: Szacowane koszty skanowania bitmapy.
-* rows=11: Szacowana liczba wierszy zwróconych przez to skanowanie.
-* width=4: Szacowana szerokość wyniku wiersza.
-* never executed: Wskazuje, że ta część planu nie została wykonana.
+* Pętla zagnieżdżona, oznacza wykonanie operacji dla każdego wiersza z zewnętrznego etapu.
 
-```Planning Time: 0.386 ms```
+```Hash Join:```
 
-* Planning Time: Czas potrzebny na analizę i planowanie wykonania zapytania.
+* Łączenie dwóch zbiorów danych za pomocą hashowania.
 
-```Execution Time: 0.118 ms```
+```Seq Scan:```
 
-* Execution Time: Całkowity czas wykonania zapytania.
+* Pełne przeszukiwanie sekwencyjne tabeli.
+
+```Index Scan:```
+
+* Przeszukiwanie indeksu w poszukiwaniu pasujących rekordów.
+
+```Index Only Scan:```
+
+* Przeszukiwanie indeksu, zwracając tylko informacje z indeksu, bez konieczności odwoływania się do oryginalnej tabeli.
+
+```Planning Time:```
+
+* Czas potrzebny na analizę i planowanie wykonania zapytania.
+
+```Execution Time:```
+
+* Całkowity czas wykonania zapytania.
 
 
 Optymalizacja zapytań przy użyciu EXPLAIN/EXPLAIN ANALYZE polega na analizie planu wykonania zapytania SQL w bazie danych. 
 Dzięki EXPLAIN ANALYZE można identyfikować potencjalne bottlenecks, nieefektywne operacje czy braki w indeksach, co umożliwia 
 dostosowanie zapytań lub struktury bazy danych w celu poprawy wydajności, na podstawie rzeczywistych statystyk wykonania.
+
+Kilka porad do optymalizacji:
+* Koszty i Szacunki:
+
+Analizuj koszty i szacunki, aby zidentyfikować najbardziej kosztowne operacje. Możesz to wykorzystać do optymalizacji, np. przez dodanie indeksów, zmianę kolejności łączeń itp.
+* Buckets i Memory Usage:
+
+Sprawdzanie liczby kubełków (buckets) i zużycia pamięci może pomóc w dostosowaniu konfiguracji bazy danych, zwłaszcza gdy pracujesz z operacjami haszowania.
+* Nested Loop vs. Hash Join:
+
+Rozważ, czy zmiana rodzaju łączenia (Nested Loop, Hash Join) może poprawić wydajność.
+* Seq Scan vs. Index Scan:
+
+W przypadku pełnego przeszukiwania sekwencyjnego (Seq Scan) zastanów się nad dodaniem indeksów, aby przyspieszyć przeszukiwanie.
+* Sort:
+
+Zidentyfikuj operacje sortowania. Sortowanie może być kosztowne, dlatego warto sprawdzić, czy można zoptymalizować zapytanie tak, aby unikać sortowania.
+* Optymalizacja Grupowania:
+
+Grupowanie może być kosztowne, zwłaszcza jeśli operuje na dużej ilości danych. Upewnij się, że kolumny grupujące mają indeksy.
+
 
 Przydatny link: https://thoughtbot.com/blog/advanced-postgres-performance-tips
 
