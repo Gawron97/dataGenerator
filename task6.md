@@ -111,6 +111,7 @@ danych do przygotowanych i wypełnionych tabel wprowadzić indeksy. Jakie są wa
 poszczególnych typów indeksów i w jakich sytuacjach najlepiej ich używać?**
 
 <h5>Typy indeksów:</h5>
+
 * Indeks B-drzewny (B-Tree):
   * Zalety:
     * Działa dobrze dla różnych typów zapytań, zwłaszcza równościowych i zakresowych.
