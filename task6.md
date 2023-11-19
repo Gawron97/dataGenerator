@@ -22,7 +22,8 @@ WHERE EXTRACT(YEAR FROM payment.creation_date) = 2023 AND payment.id_payment_sta
     )
 GROUP BY _user.first_name, _user.last_name, EXTRACT(YEAR FROM payment.creation_date)
 ```
-![Zrzut ekranu 2023-11-19 o 17.49.40.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2Fvar%2Ffolders%2Ff5%2Frpvdkwq903v__j725gcgs6480000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_zXuLNd%2FZrzut%20ekranu%202023-11-19%20o%2017.49.40.png)
+
+![Zrzut ekranu 2023-11-19 o 18.12.37.png](src%2Fmain%2Fjava%2Fcom%2Fexample%2Fdatagenerator%2Fphotos%2FZrzut%20ekranu%202023-11-19%20o%2018.12.37.png)
 
 Jakie informacje są tam przedstawione? Jak je interpretować? Na czym polega optymalizacja zapytań? Odpowiem na przykładzie powyżej:
 
@@ -62,11 +63,11 @@ rows=11: Szacowana liczba wierszy zwróconych przez to skanowanie.
 width=4: Szacowana szerokość wyniku wiersza.
 never executed: Wskazuje, że ta część planu nie została wykonana.
 
-```Planning Time: 0.597 ms```
+```Planning Time: 0.386 ms```
 
 Planning Time: Czas potrzebny na analizę i planowanie wykonania zapytania.
 
-```Execution Time: 0.900 ms```
+```Execution Time: 0.118 ms```
 
 Execution Time: Całkowity czas wykonania zapytania.
 
