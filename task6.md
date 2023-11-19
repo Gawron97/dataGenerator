@@ -25,51 +25,53 @@ GROUP BY _user.first_name, _user.last_name, EXTRACT(YEAR FROM payment.creation_d
 
 ![Zrzut ekranu 2023-11-19 o 18.12.37.png](src%2Fmain%2Fjava%2Fcom%2Fexample%2Fdatagenerator%2Fphotos%2FZrzut%20ekranu%202023-11-19%20o%2018.12.37.png)
 
-Jakie informacje są tam przedstawione? Jak je interpretować? Na czym polega optymalizacja zapytań? Odpowiem na przykładzie powyżej:
+Jakie informacje są tam przedstawione? Jak je interpretować? Na czym polega optymalizacja zapytań? Wyjaśnienie na przykładzie:
 
 ```GroupAggregate (cost=21.83..21.86 rows=1 width=77) (actual time=0.802..0.803 rows=0 loops=1)```
 
-GroupAggregate: Wskazuje na grupowanie wyników. 
-cost=21.83..21.86: Szacowane koszty wykonania operacji grupowania.
-rows=1: Szacowana liczba grup.
-width=77: Szacowana szerokość wyniku wiersza.
-actual time=0.802..0.803: Rzeczywisty czas wykonania operacji.
-rows=0: Rzeczywista liczba wierszy zwróconych przez to zapytanie.
-loops=1: Liczba iteracji (często 1 dla prostych zapytań).
-Group Key: _user.first_name, _user.last_name, (EXTRACT(year FROM payment.creation_date))
-Wskazuje kolumny, według których następuje grupowanie.
+* GroupAggregate: Wskazuje na grupowanie wyników. 
+* cost=21.83..21.86: Szacowane koszty wykonania operacji grupowania.
+* rows=1: Szacowana liczba grup.
+* width=77: Szacowana szerokość wyniku wiersza.
+* actual time=0.802..0.803: Rzeczywisty czas wykonania operacji.
+* rows=0: Rzeczywista liczba wierszy zwróconych przez to zapytanie.
+* loops=1: Liczba iteracji (często 1 dla prostych zapytań). 
+
+```Group Key: _user.first_name, _user.last_name, (EXTRACT(year FROM payment.creation_date))```
+
+* Wskazuje kolumny, według których następuje grupowanie.
 
 ```Sort (cost=21.83..21.83 rows=1 width=51) (actual time=0.801..0.802 rows=0 loops=1)```
 
-Sort: Wskazuje na sortowanie wyników.
-cost=21.83..21.83: Szacowane koszty sortowania.
-rows=0: Rzeczywista liczba wierszy zwróconych przez to sortowanie.
-Sort Key: _user.first_name, _user.last_name: Kolumny, według których następuje sortowanie.
-Sort Method: quicksort Memory: 25kB: Metoda sortowania i zużycie pamięci.
+* Sort: Wskazuje na sortowanie wyników.
+* cost=21.83..21.83: Szacowane koszty sortowania.
+* rows=0: Rzeczywista liczba wierszy zwróconych przez to sortowanie.
+* Sort Key: _user.first_name, _user.last_name: Kolumny, według których następuje sortowanie.
+* Sort Method: quicksort Memory: 25kB: Metoda sortowania i zużycie pamięci.
 
 ```Nested Loop Anti Join (cost=4.79..21.82 rows=1 width=51) (actual time=0.286..0.287 rows=0 loops=1)```
 
-Nested Loop Anti Join: Wskazuje na zastosowanie operacji "anti join" z zagnieżdżonymi pętlami.
-cost=4.79..21.82: Szacowane koszty wykonania.
-rows=0: Rzeczywista liczba wierszy zwróconych przez to złączenie.
-width=51: Szacowana szerokość wyniku wiersza.
-actual time=0.286..0.287: Rzeczywisty czas wykonania operacji.
+* Nested Loop Anti Join: Wskazuje na zastosowanie operacji "anti join" z zagnieżdżonymi pętlami.
+* cost=4.79..21.82: Szacowane koszty wykonania.
+* rows=0: Rzeczywista liczba wierszy zwróconych przez to złączenie.
+* width=51: Szacowana szerokość wyniku wiersza.
+* actual time=0.286..0.287: Rzeczywisty czas wykonania operacji.
 
 ```Bitmap Heap Scan on contract_payments (cost=4.24..14.91 rows=11 width=4) (never executed)```
 
-Bitmap Heap Scan: Wskazuje na skanowanie bitmapy na indeksie.
-cost=4.24..14.91: Szacowane koszty skanowania bitmapy.
-rows=11: Szacowana liczba wierszy zwróconych przez to skanowanie.
-width=4: Szacowana szerokość wyniku wiersza.
-never executed: Wskazuje, że ta część planu nie została wykonana.
+* Bitmap Heap Scan: Wskazuje na skanowanie bitmapy na indeksie.
+* cost=4.24..14.91: Szacowane koszty skanowania bitmapy.
+* rows=11: Szacowana liczba wierszy zwróconych przez to skanowanie.
+* width=4: Szacowana szerokość wyniku wiersza.
+* never executed: Wskazuje, że ta część planu nie została wykonana.
 
 ```Planning Time: 0.386 ms```
 
-Planning Time: Czas potrzebny na analizę i planowanie wykonania zapytania.
+* Planning Time: Czas potrzebny na analizę i planowanie wykonania zapytania.
 
 ```Execution Time: 0.118 ms```
 
-Execution Time: Całkowity czas wykonania zapytania.
+* Execution Time: Całkowity czas wykonania zapytania.
 
 
 Optymalizacja zapytań przy użyciu EXPLAIN/EXPLAIN ANALYZE polega na analizie planu wykonania zapytania SQL w bazie danych. 
