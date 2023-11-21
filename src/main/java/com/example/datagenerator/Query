@@ -40,7 +40,7 @@ LEFT JOIN dormitory_security ds ON s.id = ds.id_security
 GROUP BY s.id, u.id
 ORDER BY dormitory_count DESC, total_salary DESC;
 
-5.    //Pobranie infoirmaicj o wszystkich studentach wraz z ich akademikiem, pokojem, piętrem oraz numerem kontaktowym do studenta
+5.    //Pobranie informacji o wszystkich studentach wraz z ich akademikiem, pokojem, piętrem oraz numerem kontaktowym do studenta
 SELECT _user.first_name, _user.last_name, _user.contact_number, room.room_number, dormitory.name AS dormitory_name, floor.level AS floor_level
 FROM _user
 JOIN student ON _user.id = student.id_user
@@ -61,6 +61,12 @@ SELECT _user.first_name, _user.last_name, manager.work_schedule, dormitory.name 
 FROM _user
 JOIN manager ON _user.id = manager.id_user
 JOIN dormitory ON manager.id_user = dormitory.id_manager;
+
+7.1     //Pobranie wszystkich managerów którzy pracowali w poniedziałki
+SELECT m.id AS manager_id, u.first_name, u.last_name, m.work_schedule
+FROM _user u
+JOIN manager m ON u.id = m.id_user
+WHERE m.work_schedule LIKE '%Pon%';
 
 8.    //Wypisanie wszytkich pokoi ze wszytkich akademików wraz z informacją o module w którym sie znajdują
 SELECT dormitory.name AS dormitory_name, room.room_number, module_type.type AS module_type
