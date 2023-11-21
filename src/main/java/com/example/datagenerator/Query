@@ -156,3 +156,37 @@ JOIN student ON _user.id = student.id_user
 Join complain ON student.id = complain.id_student
 WHERE complain.author = 'Rose Bush'
 GROUP BY _user.id, complain.title;
+
+18. //Lista studentow, ktorzy maja aktualną umowe z akademikiem wraz z informacjami o wystawionych platnosciach
+    //dla wybranego roku i miesiaca
+
+SELECT
+    u.first_name || ' ' || u.last_name AS student_name,
+	s.id as student_id,
+    p.id AS payment_id,
+    p.description AS payment_description,
+    p.creation_date AS payment_creation_date,
+    p.price AS payment_price,
+    ps.status AS payment_status
+FROM payment p
+JOIN student s ON p.id_student = s.id
+JOIN _user u ON s.id_user = u.id
+JOIN payment_status ps ON p.id_payment_status = ps.id
+JOIN contract_payments ON p.id = contract_payments.id_payment
+JOIN contract ON contract_payments.id_contract = contract.id
+WHERE contract.end_date > '21-11-2023'
+  AND EXTRACT(YEAR FROM p.creation_date) == 2023
+  AND EXTRACT(MONTH FROM p.creation_date) == 5;
+
+19. //przychody akademikow z platnosci za umowy w wybranym miesiacu danego roku
+
+SELECT dormitory.name, sum(payment.price)
+FROM dormitory
+JOIN floor ON dormitory.id = floor.id_dormitory
+JOIN room ON floor.id = room.id_floor
+JOIN contract ON room.id = contract.id_room
+JOIN contract_payments ON contract.id = contract_payments.id_contract
+JOIN payment ON contract_payments.id_payment = payment.id
+JOIN student ON contract.id_student = student.id
+WHERE EXTRACT(YEAR FROM payment.creation_date) = 2023 AND EXTRACT(MONTH FROM payment.creation_date) = 5
+GROUP BY dormitory.name;

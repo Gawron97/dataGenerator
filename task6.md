@@ -165,13 +165,16 @@ poszczególnych typów indeksów i w jakich sytuacjach najlepiej ich używać?**
 wprowadzeniu indeksów. Czy można inaczej zdefiniować zapytania?**
 
 * wprowadzony indeks do tabeli payment na creation_date:
-EXTRACT(YEAR FROM creation_date)
+EXTRACT(YEAR FROM creation_date) i EXTRACT(MONTH FROM creation_date)
   * dla 14 zapytania spadek kosztu
     * z HashAggregate  (cost=974.51..974.88 rows=30 width=548)
     * do HashAggregate  (cost=448.41..448.79 rows=30 width=548)
   * dla 16 zapytania spadek kosztu
     * z GroupAggregate  (cost=1075.07..1075.82 rows=25 width=53)
     * do GroupAggregate  (cost=548.98..549.73 rows=25 width=53)
+  * dla 19 zapytania spadek kosztu
+    * z GroupAggregate  (cost=884.88..884.90 rows=1 width=548)
+    * do GroupAggregate  (cost=28.20..28.22 rows=1 width=548)
 
 * wprowadzony indeks do tabeli application na submission_date:
 EXTRACT(YEAR FROM submission_date)
