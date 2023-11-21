@@ -24,6 +24,22 @@ JOIN security ON _user.id = security.id_user
 JOIN dormitory_security ON security.id = dormitory_security.id_security
 JOIN dormitory ON dormitory_security.id_dormitory = dormitory.id;
 
+4.        //Pobranie wszystkich pracowników ochrony wraz z ich akademikiem oraz kwalifikacjami
+SELECT _user.first_name, _user.last_name, security.qualifications, dormitory.name AS assigned_dormitory
+FROM _user
+JOIN security ON _user.id = security.id_user
+JOIN dormitory_security ON security.id = dormitory_security.id_security
+JOIN dormitory ON dormitory_security.id_dormitory = dormitory.id;
+
+4.1     //Lista wszystkich pracowników ochrony oraz liczba ochranianych przez nich akademików i ich łączna pensja
+SELECT s.id AS security_id, u.first_name, u.last_name, s.qualifications, COUNT(ds.id_dormitory) AS dormitory_count,
+    COALESCE(SUM(ds.salary), 0) AS total_salary
+FROM security s
+JOIN _user u ON u.id = s.id_user
+LEFT JOIN dormitory_security ds ON s.id = ds.id_security
+GROUP BY s.id, u.id
+ORDER BY dormitory_count DESC, total_salary DESC;
+
 5.    //Pobranie infoirmaicj o wszystkich studentach wraz z ich akademikiem, pokojem, piętrem oraz numerem kontaktowym do studenta
 SELECT _user.first_name, _user.last_name, _user.contact_number, room.room_number, dormitory.name AS dormitory_name, floor.level AS floor_level
 FROM _user
@@ -140,7 +156,7 @@ SELECT _user.first_name, _user.last_name, EXTRACT(YEAR FROM payment.creation_dat
 FROM payment
 JOIN student ON payment.id_student = student.id
 JOIN _user ON student.id_user = _user.id
-WHERE EXTRACT(YEAR FROM payment.creation_date) = 2023 AND payment.id_payment_status = '15' AND
+WHERE EXTRACT(YEAR FROM payment.creation_date) = 2023 AND payment.id_payment_status = '3' AND
       NOT EXISTS (
       SELECT 1
       FROM contract_payments
