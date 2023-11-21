@@ -172,8 +172,14 @@ EXTRACT(YEAR FROM creation_date)
   * dla 16 zapytania spadek kosztu
     * z GroupAggregate  (cost=1075.07..1075.82 rows=25 width=53)
     * do GroupAggregate  (cost=548.98..549.73 rows=25 width=53)
+
 * wprowadzony indeks do tabeli application na submission_date:
 EXTRACT(YEAR FROM submission_date)
   * dla 13 zapytania spadek kosztu
     * z Sort  (cost=8972.43..8972.58 rows=60 width=524)
     * do Sort  (cost=3450.38..3450.53 rows=60 width=524)
+    
+* wprowadzony indeks do tabeli complain na author:
+  * dla 17 zapytania
+    * z HashAggregate  (cost=11901.28..12273.98 rows=37270 width=33)
+    * do GroupAggregate  (cost=1494.43..1497.31 rows=144 width=34)
