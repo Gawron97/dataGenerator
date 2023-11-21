@@ -164,3 +164,16 @@ poszczególnych typów indeksów i w jakich sytuacjach najlepiej ich używać?**
 **3. Weryfikacja działania zapytań z poprzednich zajęć w świetle wyników funkcji EXPLAIN przed i po
 wprowadzeniu indeksów. Czy można inaczej zdefiniować zapytania?**
 
+* wprowadzony indeks do tabeli payment na creation_date:
+EXTRACT(YEAR FROM creation_date)
+  * dla 14 zapytania spadek kosztu
+    * z HashAggregate  (cost=974.51..974.88 rows=30 width=548)
+    * do HashAggregate  (cost=448.41..448.79 rows=30 width=548)
+  * dla 16 zapytania spadek kosztu
+    * z GroupAggregate  (cost=1075.07..1075.82 rows=25 width=53)
+    * do GroupAggregate  (cost=548.98..549.73 rows=25 width=53)
+* wprowadzony indeks do tabeli application na submission_date:
+EXTRACT(YEAR FROM submission_date)
+  * dla 13 zapytania spadek kosztu
+    * z Sort  (cost=8972.43..8972.58 rows=60 width=524)
+    * do Sort  (cost=3450.38..3450.53 rows=60 width=524)
