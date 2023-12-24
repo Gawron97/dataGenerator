@@ -1,25 +1,32 @@
 package com.example.datagenerator;
 
-import com.example.datagenerator.generator.FillTable;
+import com.example.datagenerator.jpa.generator.FillTable;
+import com.example.datagenerator.mongoDB.model.User;
+import com.example.datagenerator.mongoDB.repository.UserMongoRepository;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.time.LocalDate;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
+@EnableMongoRepositories
 public class DataGeneratorApplication implements CommandLineRunner {
     private static FillTable fillTable;
 
-    public DataGeneratorApplication(FillTable fill) {
-        fillTable = fill;
-    }
+    @Autowired
+    UserMongoRepository userMongoRepository;
+
+//    public DataGeneratorApplication(FillTable fill) {
+//        fillTable = fill;
+//    }
 
     //numberBetween(0, 2) wygeneruje 0 lub 1
 
     public static void main(String[] args) {
         SpringApplication.run(DataGeneratorApplication.class, args);
+
 //        fillTable.fillTable().manager().generateManagers(10000);
 //        fillTable.fillTable().officeWorker().generateOfficeWorker(5000);
 //        fillTable.fillTable().securityWorker().generateSecurity(5000);
@@ -41,7 +48,7 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //        fillTable.fillTable().payment().generatePayments(20000);
 //        fillTable.fillTable().applicationType().generateApplicationTypes();
 //        fillTable.fillTable().applicationStatus().generateApplicationStatuses();
-        fillTable.fillTable().application().generateApplications(100000);
+//        fillTable.fillTable().application().generateApplications(100000);
 //        fillTable.fillTable().additionalServices().generateAdditionalServices();
 //        fillTable.fillTable().requirements().generateRequirements();
 //        fillTable.fillTable().fieldOfStudy().generateFieldsOfStudy();
@@ -59,6 +66,14 @@ public class DataGeneratorApplication implements CommandLineRunner {
     @Override
     @SneakyThrows
     public void run(String... args) {
+        User user = User.builder()
+                .contactNumber("sd")
+                .isEnabled(true)
+                .lastName("sass")
+                .firstName("user2")
+                .build();
+
+        userMongoRepository.save(user);
 //        fillTable.fillTable().user().generateUsers(10);
 //        fillTable.fillTable().manager().generateManagers(2);
 //        fillTable.fillTable().officeWorker().generateOfficeWorker(2);
