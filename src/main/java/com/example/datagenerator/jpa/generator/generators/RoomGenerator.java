@@ -6,7 +6,6 @@ import com.example.datagenerator.jpa.entity.Room;
 import com.example.datagenerator.jpa.entity.RoomType;
 import com.example.datagenerator.jpa.generator.GeneratorHelper;
 import com.example.datagenerator.jpa.repository.*;
-import com.example.datagenerator.repository.*;
 import com.github.javafaker.Faker;
 
 import java.math.BigDecimal;

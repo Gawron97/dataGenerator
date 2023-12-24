@@ -6,7 +6,6 @@ import com.example.datagenerator.jpa.repository.DormitoryRepository;
 import com.example.datagenerator.jpa.repository.ManagerRepository;
 import com.example.datagenerator.jpa.repository.StatuteRepository;
 import com.example.datagenerator.jpa.repository.UserRepository;
-import com.example.datagenerator.repository.*;
 import com.github.javafaker.Faker;
 
 import java.util.List;

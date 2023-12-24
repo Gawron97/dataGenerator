@@ -1,6 +1,5 @@
 package com.example.datagenerator.jpa.generator;
 
-import com.example.datagenerator.generator.generators.*;
 import com.example.datagenerator.jpa.generator.generators.*;
 import lombok.RequiredArgsConstructor;
 

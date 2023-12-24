@@ -6,7 +6,6 @@ import com.example.datagenerator.jpa.generator.GeneratorHelper;
 import com.example.datagenerator.jpa.repository.AdditionalRoomsRepository;
 import com.example.datagenerator.jpa.repository.FloorRepository;
 import com.example.datagenerator.jpa.repository.UserRepository;
-import com.example.datagenerator.repository.*;
 import com.github.javafaker.Faker;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

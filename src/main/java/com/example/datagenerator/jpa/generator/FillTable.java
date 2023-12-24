@@ -1,9 +1,7 @@
 package com.example.datagenerator.jpa.generator;
 
-import com.example.datagenerator.generator.generators.*;
 import com.example.datagenerator.jpa.generator.generators.*;
 import com.example.datagenerator.jpa.repository.*;
-import com.example.datagenerator.repository.*;
 import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
