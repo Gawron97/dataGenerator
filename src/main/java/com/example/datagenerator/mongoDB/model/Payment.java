@@ -23,17 +23,6 @@ public class Payment {
     private String description;
     private LocalDate creationDate;
     private BigDecimal price;
-//    @ManyToOne
-//    @JoinColumn(name = "id_student")
-//    private Student student;
-//    @ManyToOne
-//    @JoinColumn(name = "id_payment_status")
-//    private PaymentStatus paymentStatus;
-//
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "contract_payments",
-//            joinColumns = @JoinColumn(name="id_payment"),
-//            inverseJoinColumns = @JoinColumn(name="id_contract"))
-//
-//    private Set<Contract> contracts = new HashSet<>();
+    private Student student;
+    private PaymentStatus paymentStatus;
 }

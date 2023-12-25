@@ -16,7 +16,5 @@ public class Module {
     @Id
     private String id;
     private Boolean has_a_bathroom;
-//    @ManyToOne
-//    @JoinColumn(name = "id_module_type")
-//    private ModuleType moduleType;
+    private ModuleType moduleType;
 }

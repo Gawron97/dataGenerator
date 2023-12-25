@@ -18,7 +18,5 @@ public class Requirements {
     @Id
     private String id;
     private String criterion;
-//    @ManyToMany(mappedBy = "requirements", fetch = FetchType.EAGER)
-//    private List<Dormitory> dormitories;
-//
+
 }

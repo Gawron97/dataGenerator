@@ -23,14 +23,5 @@ public class Student {
     private String houseNumber;
     private String apartmentNumber;
     private String zipCode;
-
-//    @OneToOne
-//    @JoinColumn(name = "id_user")
-//    private User user;
-//
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "student_field_of_studies",
-//        joinColumns = @JoinColumn(name = "id_student"),
-//        inverseJoinColumns = @JoinColumn(name = "id_field_of_study"))
-//    private Set<FieldOfStudy> fieldOfStudies;
+    private User user;
 }

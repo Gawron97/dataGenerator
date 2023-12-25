@@ -20,7 +20,5 @@ public class Complain {
     private String author;
     private String title;
     private String description;
-//    @ManyToOne
-//    @JoinColumn(name = "id_student")
-//    private Student student;
+    private Student student;
 }

@@ -17,7 +17,5 @@ public class Security {
     private String id;
     private String qualifications;
     private String workSchedule;
-//    @OneToOne
-//    @JoinColumn(name = "id_user")
-//    private User user;
+    private User user;
 }

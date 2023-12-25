@@ -20,9 +20,6 @@ public class FieldOfStudy {
     private String id;
     private String name;
     private String level;
-//    @ManyToOne
-//    @JoinColumn(name = "id_faculty")
-//    private Faculty faculty;
-//    @ManyToMany(mappedBy = "fieldOfStudies", fetch = FetchType.EAGER)
-//    private List<Student> students;
+    private Faculty faculty;
+    private List<Student> students;
 }

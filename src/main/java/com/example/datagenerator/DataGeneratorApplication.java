@@ -1,7 +1,11 @@
 package com.example.datagenerator;
 
 import com.example.datagenerator.jpa.generator.FillTable;
+import com.example.datagenerator.mongoDB.model.AdditionalServices;
+import com.example.datagenerator.mongoDB.model.Dormitory;
 import com.example.datagenerator.mongoDB.model.User;
+import com.example.datagenerator.mongoDB.repository.AdditionalServicesMongoRepository;
+import com.example.datagenerator.mongoDB.repository.DormitoryMongoRepository;
 import com.example.datagenerator.mongoDB.repository.UserMongoRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import java.util.HashSet;
+import java.util.List;
+
 @SpringBootApplication
 @EnableMongoRepositories
 public class DataGeneratorApplication implements CommandLineRunner {
@@ -17,6 +24,12 @@ public class DataGeneratorApplication implements CommandLineRunner {
 
     @Autowired
     UserMongoRepository userMongoRepository;
+
+    @Autowired
+    AdditionalServicesMongoRepository additionalServicesMongoRepository;
+
+    @Autowired
+    DormitoryMongoRepository dormitoryMongoRepository;
 
 //    public DataGeneratorApplication(FillTable fill) {
 //        fillTable = fill;
@@ -66,14 +79,41 @@ public class DataGeneratorApplication implements CommandLineRunner {
     @Override
     @SneakyThrows
     public void run(String... args) {
-        User user = User.builder()
-                .contactNumber("sd")
-                .isEnabled(true)
-                .lastName("sass")
-                .firstName("user2")
-                .build();
 
-        userMongoRepository.save(user);
+//        AdditionalServices additionalServices = AdditionalServices.builder()
+//                .name("service1")
+//                .build();
+//
+//        AdditionalServices additionalServices2 = AdditionalServices.builder()
+//                .name("service2")
+//                .build();
+//
+//        AdditionalServices additionalServices3 = AdditionalServices.builder()
+//                .name("service3")
+//                .build();
+//
+//        Dormitory dormitory = Dormitory.builder()
+//                .name("dor1")
+//                .build();
+//
+//        Dormitory dormitory2 = Dormitory.builder()
+//                .name("dor2")
+//                .build();
+//
+//        dormitory.setAdditionalServices(new HashSet<>(List.of(additionalServices, additionalServices2)));
+//
+//        dormitoryMongoRepository.save(dormitory);
+//        additionalServicesMongoRepository.save(additionalServices);
+//        additionalServicesMongoRepository.save(additionalServices2);
+
+//        User user = User.builder()
+//                .contactNumber("sd")
+//                .isEnabled(true)
+//                .lastName("sass")
+//                .firstName("user2")
+//                .build();
+//
+//        userMongoRepository.save(user);
 //        fillTable.fillTable().user().generateUsers(10);
 //        fillTable.fillTable().manager().generateManagers(2);
 //        fillTable.fillTable().officeWorker().generateOfficeWorker(2);

@@ -28,25 +28,9 @@ public class Dormitory {
     private String numberOfStreet;
     private String description;
     private String contactInfo;
-
-//    @ManyToOne
-//    @JoinColumn(name = "id_statute", referencedColumnName = "id")
-//    private Statute statute;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "id_manager", referencedColumnName = "id")
-//    private Manager manager;
-//
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "dormitory_requirements",
-//            joinColumns = @JoinColumn(name = "id_dormitory"),
-//            inverseJoinColumns = @JoinColumn(name = "id_requirement"))
-//    private Set<Requirements> requirements;
-//
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "dormitory_services",
-//            joinColumns = @JoinColumn(name = "id_dormitory"),
-//            inverseJoinColumns = @JoinColumn(name = "id_additional_service"))
-//    private Set<AdditionalServices> additionalServices;
+    private Statute statute;
+    private Manager manager;
+    private Set<Requirements> requirements;
+    private Set<AdditionalServices> additionalServices;
 
 }

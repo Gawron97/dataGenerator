@@ -21,13 +21,7 @@ public class Contract {
     private String id;
     private LocalDate start_date;
     private LocalDate end_date;
-//    @OneToOne
-//    @JoinColumn(name = "id_room")
-//    private Room room;
-//    @OneToOne
-//    @JoinColumn(name = "id_student")
-//    private Student student;
-//
-//    @ManyToMany(mappedBy = "contracts", fetch = FetchType.EAGER)
-//    private Set<Payment> payments;
+    private Room room;
+    private Student student;
+    private Set<Payment> payments;
 }

@@ -22,16 +22,8 @@ public class Application {
     private String additionalInformation;
     private LocalDate startDate;
     private LocalDate endDate;
-//    @ManyToOne
-//    @JoinColumn(name = "id_application_status")
-//    private ApplicationStatus applicationStatus;
-//    @ManyToOne
-//    @JoinColumn(name = "id_application_type")
-//    private ApplicationType applicationType;
-//    @ManyToOne
-//    @JoinColumn(name = "id_office_worker")
-//    private OfficeWorker officeWorker;
-//    @ManyToOne
-//    @JoinColumn(name = "id_student")
-//    private Student student;
+    private ApplicationStatus applicationStatus;
+    private ApplicationType applicationType;
+    private OfficeWorker officeWorker;
+    private Student student;
 }

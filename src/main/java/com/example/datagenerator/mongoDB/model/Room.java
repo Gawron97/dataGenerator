@@ -26,13 +26,7 @@ public class Room {
     private BigDecimal size;
     private Long freeBeds;
     private Boolean isAvailable;
-//    @ManyToOne
-//    @JoinColumn(name = "id_floor")
-//    private Floor floor;
-//    @ManyToOne
-//    @JoinColumn(name = "id_module")
-//    private Module module;
-//    @ManyToOne
-//    @JoinColumn(name = "id_room_type")
-//    private RoomType roomType;
+    private Floor floor;
+    private Module module;
+    private RoomType roomType;
 }

@@ -20,12 +20,5 @@ public class AdditionalRooms {
     private String id;
     private int roomNumber;
     private String description;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "id_room_type")
-//    private AdditionalRoomType additionalRoomType;
-//
-//
-//    @ManyToMany(mappedBy = "additionalRooms", fetch = FetchType.EAGER)
-//    private List<Floor> floors;
+    private AdditionalRoomType additionalRoomType;
 }

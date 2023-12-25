@@ -23,7 +23,5 @@ public class Invoice {
     private LocalDate creationDate;
     private LocalDate paymentDue;
     private BigDecimal totalPrice;
-//    @ManyToOne
-//    @JoinColumn(name = "id_payment")
-//    private Payment payment;
+    private Payment payment;
 }

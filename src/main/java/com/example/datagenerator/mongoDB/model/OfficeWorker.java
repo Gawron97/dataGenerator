@@ -16,8 +16,6 @@ public class OfficeWorker {
     @Id
     private String id;
     private Long seniority;
-//    @OneToOne
-//    @JoinColumn(name = "id_user")
-//    private User user;
-//
+    private User user;
+
 }

@@ -19,7 +19,4 @@ public class AdditionalServices {
     private String id;
     private String name;
     private String description;
-
-//    @ManyToMany(mappedBy = "additionalServices", fetch = FetchType.EAGER)
-//    private List<Dormitory> dormitories;
 }
