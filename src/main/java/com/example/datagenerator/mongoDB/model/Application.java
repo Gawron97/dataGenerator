@@ -29,4 +29,7 @@ public class Application {
     private OfficeWorker officeWorker;
     @DBRef
     private Application previousApplication;
+
+    @DBRef
+    private Student student;
 }
