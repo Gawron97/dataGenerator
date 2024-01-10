@@ -20,5 +20,5 @@ public class AdditionalRooms {
     private String id;
     private int roomNumber;
     private String description;
-    private AdditionalRoomType additionalRoomType;
+    private RoomType additionalRoomType;
 }

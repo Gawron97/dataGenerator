@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Module {
     @Id
     private String id;
+    private String name;
     private Boolean has_a_bathroom;
     private ModuleType moduleType;
 }

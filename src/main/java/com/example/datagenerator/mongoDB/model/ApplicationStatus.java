@@ -10,13 +10,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data
-@Builder
-@Document
-@NoArgsConstructor
-@AllArgsConstructor
-public class ApplicationStatus {
-    @Id
-    private String id;
-    private String status;
+
+public enum ApplicationStatus {
+
+    ZLOZONA,
+    ZAAKCEPTOWANA,
+    ODRZUCONA,
+    COFNIETA,
+    ROZPATRYWANA
 }

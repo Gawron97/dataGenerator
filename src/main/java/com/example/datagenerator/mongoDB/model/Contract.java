@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -21,7 +22,8 @@ public class Contract {
     private String id;
     private LocalDate start_date;
     private LocalDate end_date;
+    @DBRef
     private Room room;
+    @DBRef
     private Student student;
-    private Set<Payment> payments;
 }

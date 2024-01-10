@@ -20,6 +20,5 @@ public class Floor {
     private Long level;
     private String description;
     private Boolean isAvailable;
-    private Dormitory dormitory;
     private Set<AdditionalRooms> additionalRooms;
 }

@@ -32,5 +32,7 @@ public class Dormitory {
     private Manager manager;
     private Set<Requirements> requirements;
     private Set<AdditionalServices> additionalServices;
+    private Set<Security> security;
+    private Set<Floor> floors;
 
 }

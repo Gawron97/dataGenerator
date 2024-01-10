@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
@@ -23,6 +24,10 @@ public class Payment {
     private String description;
     private LocalDate creationDate;
     private BigDecimal price;
+    @DBRef
     private Student student;
     private PaymentStatus paymentStatus;
+
+    @DBRef
+    private Contract contract;
 }

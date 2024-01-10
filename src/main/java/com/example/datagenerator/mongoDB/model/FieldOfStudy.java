@@ -20,6 +20,8 @@ public class FieldOfStudy {
     private String id;
     private String name;
     private String level;
-    private Faculty faculty;
-    private List<Student> students;
+    private String facultyName;
+    private String facultyDeanOfficeLocation;
+    private String facultyContactNumber;
+    private String facultyEmailAddress;
 }

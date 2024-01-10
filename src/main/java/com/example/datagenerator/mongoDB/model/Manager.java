@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @Document
@@ -16,7 +18,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Manager {
     @Id
     private String id;
+
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private LocalDate registrationDate;
+    private LocalDate lastLogin;
+    private Boolean isEnabled;
+    private String contactNumber;
+    private String additionalInfo;
+
     private String workSchedule;
     private Long seniority;
-    private User user;
+
 }

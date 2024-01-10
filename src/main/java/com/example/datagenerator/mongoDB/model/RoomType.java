@@ -11,12 +11,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Data
-@Builder
-@Document@NoArgsConstructor
-@AllArgsConstructor
-public class RoomType {
-    @Id
-    private String id;
-    private String type;
+public enum RoomType {
+
+    STANDARDOWY,
+    RODZINNY,
+    DLA_NIEPELNOSPRAWNYCH,
+    DLA_OBCOKRAJOWCOW
 }

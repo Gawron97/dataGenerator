@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -24,6 +25,8 @@ public class Application {
     private LocalDate endDate;
     private ApplicationStatus applicationStatus;
     private ApplicationType applicationType;
+    @DBRef
     private OfficeWorker officeWorker;
-    private Student student;
+    @DBRef
+    private Application previousApplication;
 }

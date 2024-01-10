@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
@@ -26,7 +27,9 @@ public class Room {
     private BigDecimal size;
     private Long freeBeds;
     private Boolean isAvailable;
+    @DBRef
     private Floor floor;
+    @DBRef
     private Module module;
     private RoomType roomType;
 }
