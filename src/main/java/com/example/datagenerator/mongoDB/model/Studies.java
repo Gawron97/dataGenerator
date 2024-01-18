@@ -1,9 +1,7 @@
 package com.example.datagenerator.mongoDB.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,11 +13,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 @NoArgsConstructor
 @AllArgsConstructor
-public class Faculty {
+public class Studies {
     @Id
     private String id;
-    private String name;
-    private String deanOfficeLocation;
-    private String contactNumber;
-    private String emailAddress;
+    private String fieldName;
+    private String fieldLevel;
+    private String facultyName;
+    private String facultyDeanOfficeLocation;
+    private String facultyContactNumber;
+    private String facultyEmailAddress;
 }

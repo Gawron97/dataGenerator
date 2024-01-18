@@ -20,5 +20,4 @@ public class Complain {
     private String author;
     private String title;
     private String description;
-    private Student student;
 }

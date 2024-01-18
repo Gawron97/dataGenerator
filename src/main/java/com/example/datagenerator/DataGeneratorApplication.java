@@ -1,9 +1,6 @@
 package com.example.datagenerator;
 
 import com.example.datagenerator.jpa.generator.FillTable;
-import com.example.datagenerator.mongoDB.model.AdditionalServices;
-import com.example.datagenerator.mongoDB.model.Dormitory;
-import com.example.datagenerator.mongoDB.model.User;
 import com.example.datagenerator.mongoDB.repository.AdditionalServicesMongoRepository;
 import com.example.datagenerator.mongoDB.repository.DormitoryMongoRepository;
 import com.example.datagenerator.mongoDB.repository.UserMongoRepository;
@@ -13,9 +10,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-
-import java.util.HashSet;
-import java.util.List;
 
 @SpringBootApplication
 @EnableMongoRepositories

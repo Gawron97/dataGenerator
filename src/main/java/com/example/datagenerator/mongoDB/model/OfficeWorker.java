@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @Document
@@ -16,6 +18,14 @@ public class OfficeWorker {
     @Id
     private String id;
     private Long seniority;
-    private User user;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private LocalDate registrationDate;
+    private LocalDate lastLogin;
+    private Boolean isEnabled;
+    private String contactNumber;
+    private String additionalInfo;
 
 }

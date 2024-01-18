@@ -10,13 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data
-@Builder
-@Document
-@NoArgsConstructor
-@AllArgsConstructor
-public class ApplicationType {
-    @Id
-    private String id;
-    private String type;
+
+public enum ApplicationType {
+    PRZYZNANIE_MIEJSCA, PRZEDLUZENIE_WYNAJMU, ZAMIANA_POKOJU, ZAMIANA_AKADEMIKA, PRZEDWCZESNA_REZYGNACJA
 }

@@ -26,7 +26,6 @@ public class Room {
     private BigDecimal size;
     private Long freeBeds;
     private Boolean isAvailable;
-    private Floor floor;
     private Module module;
     private RoomType roomType;
 }

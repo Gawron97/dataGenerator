@@ -23,6 +23,5 @@ public class Payment {
     private String description;
     private LocalDate creationDate;
     private BigDecimal price;
-    private Student student;
     private PaymentStatus paymentStatus;
 }
