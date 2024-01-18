@@ -3,7 +3,6 @@ package com.example.datagenerator;
 import com.example.datagenerator.jpa.generator.FillTable;
 import com.example.datagenerator.mongoDB.repository.AdditionalServicesMongoRepository;
 import com.example.datagenerator.mongoDB.repository.DormitoryMongoRepository;
-import com.example.datagenerator.mongoDB.repository.UserMongoRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,15 +14,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories
 public class DataGeneratorApplication implements CommandLineRunner {
     private static FillTable fillTable;
-
-    @Autowired
-    UserMongoRepository userMongoRepository;
-
-    @Autowired
-    AdditionalServicesMongoRepository additionalServicesMongoRepository;
-
-    @Autowired
-    DormitoryMongoRepository dormitoryMongoRepository;
 
 //    public DataGeneratorApplication(FillTable fill) {
 //        fillTable = fill;
