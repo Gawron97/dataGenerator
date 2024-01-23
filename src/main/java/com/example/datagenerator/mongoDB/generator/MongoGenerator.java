@@ -340,12 +340,13 @@ public class MongoGenerator extends GeneratorHelper {
         for(int i = 0; i < quantity; i++){
 
             BigDecimal size = BigDecimal.valueOf(faker.number().randomDouble(2,10,21));
+            Long numberOfBeds = (long) getRandomNumberOfBeds();
 
             Room room = Room.builder()
                     .roomNumber(String.valueOf(i+1))
                     .description("brak")
-                    .numberOfBeds(getRandomNumberOfBeds())
-                    .freeBeds(getRandomNumberOfBeds())
+                    .numberOfBeds(numberOfBeds)
+                    .freeBeds(numberOfBeds)
                     .has_a_bathroom(true)
                     .price(size.multiply(BigDecimal.valueOf(40.0)))
                     .size(size)
