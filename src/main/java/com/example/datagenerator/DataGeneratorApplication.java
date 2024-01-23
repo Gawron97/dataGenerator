@@ -23,10 +23,8 @@ public class DataGeneratorApplication implements CommandLineRunner {
     private OfficeWorkerMongoRepository officeWorkerMongoRepository;
 
     @Autowired
-    private RoomMongoRepository roomMongoRepository;
-
-    @Autowired
     private DormitoryMongoRepository dormitoryMongoRepository;
+
 
 
 //    public DataGeneratorApplication(FillTable fill) {
@@ -123,7 +121,8 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //        fillTable.fillTable().student().generateStudents(2);
 
 
-        new MongoGenerator(new Faker(), studentMongoRepository, roomMongoRepository, officeWorkerMongoRepository, dormitoryMongoRepository).generate();
+        new MongoGenerator(new Faker(), studentMongoRepository, officeWorkerMongoRepository, dormitoryMongoRepository).
+                generate();
 
 
     }

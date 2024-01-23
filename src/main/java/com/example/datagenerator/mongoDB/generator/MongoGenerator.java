@@ -3,10 +3,9 @@ package com.example.datagenerator.mongoDB.generator;
 import com.example.datagenerator.mongoDB.model.*;
 import com.example.datagenerator.mongoDB.repository.DormitoryMongoRepository;
 import com.example.datagenerator.mongoDB.repository.OfficeWorkerMongoRepository;
-import com.example.datagenerator.mongoDB.repository.RoomMongoRepository;
 import com.example.datagenerator.mongoDB.repository.StudentMongoRepository;
 import com.github.javafaker.Faker;
-import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,33 +14,70 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+@Slf4j
 public class MongoGenerator extends GeneratorHelper {
 
     private final StudentMongoRepository studentRepository;
-    private final RoomMongoRepository roomRepository;
     private final OfficeWorkerMongoRepository officeWorkerRepository;
-
     private final DormitoryMongoRepository dormitoryMongoRepository;
 
-    public MongoGenerator(Faker faker, StudentMongoRepository studentRepository, RoomMongoRepository roomRepository, OfficeWorkerMongoRepository officeWorkerRepository, DormitoryMongoRepository dormitoryMongoRepository) {
+    public MongoGenerator(Faker faker, StudentMongoRepository studentRepository,
+                          OfficeWorkerMongoRepository officeWorkerRepository,
+                          DormitoryMongoRepository dormitoryMongoRepository) {
         super(faker);
         this.studentRepository = studentRepository;
-        this.roomRepository = roomRepository;
         this.officeWorkerRepository = officeWorkerRepository;
         this.dormitoryMongoRepository = dormitoryMongoRepository;
     }
 
     public void generate() {
 
-        //generateDormitories -> i tutaj bedzie to generowane razem z rooms, ktore pozniej pobierzemy do studentow
-
         generateDormitories();
-        List<Room> rooms = roomRepository.findAll();
+        List<Room> rooms = dormitoryMongoRepository
+                .findAll()
+                .stream()
+                .map(Dormitory::getFloors)
+                .flatMap(Set::stream)
+                .map(Floor::getRooms)
+                .flatMap(Set::stream)
+                .toList();
+        generateOfficeWorkers(1000);
         List<OfficeWorker> officeWorkers = officeWorkerRepository.findAll();
 
         generateStudents(10000, rooms, officeWorkers);
 
 
+    }
+
+    private void generateOfficeWorkers(int quantity) {
+
+        for(int i=0; i<quantity; i++) {
+
+            var mail = faker.internet().emailAddress();
+            while (officeWorkerRepository.existsByEmail(mail)) {
+                mail = faker.internet().emailAddress();
+            }
+            LocalDate registrationDate = getRandomDateBetween(LocalDate.of(2010, 1, 11),
+                    LocalDate.of(2023, 9, 26));
+            LocalDate lastLoginDate = getRandomDateLaterThen(registrationDate);
+
+            OfficeWorker officeWorker = OfficeWorker.builder()
+                    .seniority((long) faker.number().numberBetween(0, 2023 - registrationDate.getYear() + 1))
+                    .firstName(faker.name().firstName())
+                    .lastName(faker.name().lastName())
+                    .email(mail)
+                    .password(faker.internet().password())
+                    .registrationDate(registrationDate)
+                    .lastLogin(getFieldFillingProbability(75) ? lastLoginDate : null)
+                    .isEnabled(faker.bool().bool())
+                    .contactNumber(getFieldFillingProbability(75) ? getPhoneNumber() : null)
+                    .additionalInfo(getFieldFillingProbability(10) ? userAdditionalInfo.get(faker.number().numberBetween(0, userAdditionalInfo.size())) : null )
+                    .build();
+
+            officeWorkerRepository.save(officeWorker);
+            log.info("Office worker number: {} generated", i);
+        }
+        log.info("Office workers generated");
     }
 
     private void generateStudents(int quantity, List<Room> rooms, List<OfficeWorker> officeWorkers) {
@@ -82,7 +118,10 @@ public class MongoGenerator extends GeneratorHelper {
                     .build();
 
             studentRepository.save(student);
+            log.info("Student number: {} generated", i);
         }
+
+        log.info("Students generated");
 
     }
 
@@ -160,7 +199,7 @@ public class MongoGenerator extends GeneratorHelper {
 
             dormitoryMongoRepository.save(dormitory);
         }
-
+        log.info("Dormitories generated");
 
     }
 
