@@ -1,8 +1,9 @@
 package com.example.datagenerator;
 
 import com.example.datagenerator.jpa.generator.FillTable;
-import com.example.datagenerator.mongoDB.repository.AdditionalServicesMongoRepository;
-import com.example.datagenerator.mongoDB.repository.DormitoryMongoRepository;
+import com.example.datagenerator.mongoDB.generator.MongoGenerator;
+import com.example.datagenerator.mongoDB.repository.*;
+import com.github.javafaker.Faker;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,11 +16,24 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class DataGeneratorApplication implements CommandLineRunner {
     private static FillTable fillTable;
 
+    @Autowired
+    private StudentMongoRepository studentMongoRepository;
+
+    @Autowired
+    private OfficeWorkerMongoRepository officeWorkerMongoRepository;
+
+    @Autowired
+    private RoomMongoRepository roomMongoRepository;
+
+    @Autowired
+    private DormitoryMongoRepository dormitoryMongoRepository;
+
+
 //    public DataGeneratorApplication(FillTable fill) {
 //        fillTable = fill;
 //    }
 
-    //numberBetween(0, 2) wygeneruje 0 lub 1
+
 
     public static void main(String[] args) {
         SpringApplication.run(DataGeneratorApplication.class, args);
@@ -57,6 +71,9 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //        fillTable.fillTable().invoice().generateInvoices(LocalDate.of(2022,1,1),
 //                                                            LocalDate.of(2023,10,31),10000);
 //        fillTable.fillTable().floorAdditionalRooms().generateFloorAdditionalRooms();
+
+
+
     }
 
 
@@ -64,7 +81,8 @@ public class DataGeneratorApplication implements CommandLineRunner {
     @SneakyThrows
     public void run(String... args) {
 
-//        AdditionalServices additionalServices = AdditionalServices.builder()
+
+        //        AdditionalServices additionalServices = AdditionalServices.builder()
 //                .name("service1")
 //                .build();
 //
@@ -103,5 +121,10 @@ public class DataGeneratorApplication implements CommandLineRunner {
 //        fillTable.fillTable().officeWorker().generateOfficeWorker(2);
 //        fillTable.fillTable().securityWorker().generateSecurity(2);
 //        fillTable.fillTable().student().generateStudents(2);
+
+
+        new MongoGenerator(new Faker(), studentMongoRepository, roomMongoRepository, officeWorkerMongoRepository, dormitoryMongoRepository).generate();
+
+
     }
 }

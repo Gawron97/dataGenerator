@@ -6,15 +6,14 @@ import com.example.datagenerator.jpa.entity.User;
 import com.example.datagenerator.jpa.repository.ManagerRepository;
 import com.example.datagenerator.jpa.repository.StatuteRepository;
 import com.example.datagenerator.jpa.repository.UserRepository;
+import com.example.datagenerator.mongoDB.model.AdditionalRoomType;
+import com.example.datagenerator.mongoDB.model.RoomType;
 import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 @RequiredArgsConstructor
@@ -57,6 +56,81 @@ public class GeneratorHelper {
             "Chciałbym zapytać, czy istnieje możliwość uzyskania dodatkowych udogodnień w moim pokoju, takich jak biurko czy regały. Obecnie zauważyłem brak pewnych elementów, które ułatwiłyby mi pracę nad studiami. Będę wdzięczny za rozważenie mojej prośby.", "Szanowne Biuro Administracji,\n" +
             "\n" +
             "Mam zamiar opuścić akademik po zakończeniu semestru i chciałbym uzyskać informacje na temat polityki zwrotu kaucji. Jakie są warunki zwrotu kaucji, i czy istnieją jakieś konkretne kroki, które powinienem podjąć w celu zabezpieczenia zwrotu kaucji?");
+
+
+    protected final List<String> requirement_criteria = List.of(
+            "Laureat olimpiady matematycznej, fizycznej lub informatycznej.",
+            "Miejsce zameldowania powyżej 100 km od siedziby uczelni.",
+            "Miejsce zameldowania powyżej 400 km od siedziby uczelni.",
+            "Student konkretnego wydziału Informatyki i Telefomunikacji",
+            "Osoba z niepełnosprawnością, wymagająca dostosowanych warunków zakwaterowania.",
+            "Uczestnik programu wymiany międzynarodowej.",
+            "Członek organizacji studenckiej zrzeszającej mieszkańców akademika.",
+            "Absolwent szkoły partnerskiej uczelni, mający potwierdzone wyniki matury.",
+            "Rodzina wielodzietna z dziećmi, które również studiują na uczelni.",
+            "Pracownik uczelni lub pracownik administracyjny."
+    );
+
+   protected final List<String> contents = List.of("Ustawa_1", "Ustawa_2", "Ustawa_3", "Ustawa_4");
+   protected final List<String> statute_info = List.of(
+            "Zakaz palenia w pomieszczeniach akademika i na terenie kampusu.",
+            "Obowiązkowa rejestracja gości w recepcji akademika oraz ograniczenie czasu ich pobytu.",
+            "Zakaz hałasu po godzinie 22:00 w celu zapewnienia spokoju innym mieszkańcom.",
+            "Zabrania się trzymania zwierząt domowych w pokojach, chyba że jest to wyraźnie zezwolone."
+    );
+
+   protected final Map<String,String> additionalService = Map.of("Dostęp do Internetu", "Szybki internet w cenie 30 zł/miesiąc."
+           ,"Drukarka", "Drukarka dostępna na terenie akademika za 0,20 zł/strona."
+           ,"Obiady", "Miejska stołówka oferuje obiady w cenie 12 zł/posiłek."
+           ,"Pralnia", "Samoobsługowa pralnia dostępna za 5 zł/pranie."
+           ,"Parking", "Parking dla mieszkańców w cenie 50 zł/miesiąc."
+           ,"Siłownia", "Darmowy dostęp do siłowni na terenie akademika."
+           ,"Serwis rowerowy", "Bezpłatny serwis i naprawa rowerów."
+           ,"Bezpieczeństwo", "Całodobowa ochrona i monitoring."
+           ,"Sala TV", "Sala z dostępem do kanałów telewizyjnych."
+           ,"Serwis sprzątający", "Codzienny serwis ");
+
+    protected final List<String> addRoomDescriptions = List.of(
+            "Kuchnia wyposażona w sztućce, kubki i talerze oraz czajnik",
+            "Sala kominkowa do spotkań i relaksu",
+            "Sala fitness z nowoczesnym sprzętem do ćwiczeń",
+            "Sala konferencyjna z miejscami siedzącymi dla 50 osób",
+            "Sala gier z bilardem, ping-pongiem i grami planszowymi",
+            "Pracownia komputerowa z dostępem do internetu",
+            "Biblioteka z bogatym zbiorem książek i czasopism",
+            "Pralnia samoobsługowa z pralkami i suszarkami",
+            "Pomieszczenie do przechowywania rowerów",
+            "Kawiarnia z kawą i przekąskami dla mieszkańców"
+    );
+
+    protected final List<String> floorDescriptions = List.of(
+            "Przestronna przestrzeń z widokiem na kampus!",
+            "Pokój z przytulnym dywanem i kolorowymi poduszkami.",
+            "Minimalistyczny design sprzyjający nauce i relaksowi.",
+            "Atmosfera sprzyjająca kreatywności i wymianie pomysłów.",
+            "Nowoczesne wyposażenie i szybki dostęp do internetu.",
+            "Pokój z ekologicznymi rozwiązaniami i naturalnym oświetleniem.",
+            "Klimatyzacja dla komfortu w gorące dni.",
+            "Przemyślana aranżacja, idealna do nauki i odpoczynku.",
+            "Energia pozytywna w każdym kącie!",
+            "Wygodne łóżko zapewniające regenerację po intensywnym dniu.",
+            "Pokój z motywem roślinnym dla miłośników natury.",
+            "Kącik do pracy zdalnej z ergonomicznym biurkiem.");
+
+    protected final List<String> dormitoryDescriptions = List.of(
+            "Ten akademik to nowoczesny budynek z pełnym wyposażeniem kuchni i łazienek.",
+            "Ten akademik oferuje pokoje jednoosobowe i dwuosobowe z dostępem do internetu.",
+            "Ten akademik znajduje się blisko kampusu i ma wspaniały widok na miasto.",
+            "Ten akademik to doskonałe miejsce do nauki i spotkań towarzyskich.",
+            "Ten akademik oferuje duże sale klubowe i siłownię dla studentów.",
+            "Ten akademik jest przyjazny dla zwierząt i posiada teren rekreacyjny.",
+            "Ten akademik to idealne miejsce dla miłośników sportu z boiskiem i salą fitness.",
+            "Ten akademik zapewnia pełne wyżywienie i ma własną bibliotekę.",
+            "Ten akademik jest dogodnie położony w centrum miasta z dostępem do komunikacji publicznej."
+    );
+
+    protected final List<String> dormitories =
+            List.of("T2", "T3", "T4", "T6", "T15", "T16", "T17", "T18", "T19");
 
 
     protected boolean getFieldFillingProbability(int percentage) {
@@ -156,6 +230,31 @@ public class GeneratorHelper {
         }
         int randomIndex = faker.number().numberBetween(0, statutes.size());
         return statutes.get(randomIndex);
+    }
+
+    protected AdditionalRoomType getRandomAdditionalRoomType(){
+
+        AdditionalRoomType[] enumValues = AdditionalRoomType.values();
+        int randomIndex = new Random().nextInt(enumValues.length);
+        return enumValues[randomIndex];
+
+
+    }
+
+    protected RoomType getRandomRoomType(){
+
+        RoomType[] enumValues = RoomType.values();
+        int randomIndex = new Random().nextInt(enumValues.length);
+        return enumValues[randomIndex];
+
+    }
+
+    protected Long getRandomNumberOfBeds() {
+        return (long) faker.number().numberBetween(1, 5);
+    }
+
+    protected Long getRandomSize() {
+        return (long) faker.number().numberBetween(10, 21);
     }
 
 }
