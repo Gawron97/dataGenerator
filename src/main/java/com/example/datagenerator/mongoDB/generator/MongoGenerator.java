@@ -193,7 +193,7 @@ public class MongoGenerator extends GeneratorHelper {
                     .manager(generateManager())
                     .requirements(generateRequirements(3))
                     .additionalServices(generateAdditionalServices(3))
-                    .floors(generateFloors(3,10))
+                    .floors(generateFloors(10,30))
                     .securities(generateSecurity(3))
                     .build();
 
@@ -410,7 +410,7 @@ public class MongoGenerator extends GeneratorHelper {
                     .level((long) i+1)
                     .description(floorDescriptions.get(faker.number().numberBetween(0, floorDescriptions.size())))
                     .isAvailable(true)
-                    .rooms(generateRooms(10,20))
+                    .rooms(generateRooms(10,60))
                     .additionalRooms(generateAdditionalRooms(3))
                     .build();
 
