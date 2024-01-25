@@ -9,10 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 public class MongoGenerator extends GeneratorHelper {
@@ -41,10 +38,10 @@ public class MongoGenerator extends GeneratorHelper {
                 .map(Floor::getRooms)
                 .flatMap(Set::stream)
                 .toList();
-        generateOfficeWorkers(1000);
+        generateOfficeWorkers(500);
         List<OfficeWorker> officeWorkers = officeWorkerRepository.findAll();
 
-        generateStudents(10000, rooms, officeWorkers);
+        generateStudents(5000, rooms, officeWorkers);
 
 
     }
@@ -198,6 +195,7 @@ public class MongoGenerator extends GeneratorHelper {
                     .build();
 
             dormitoryMongoRepository.save(dormitory);
+            log.info("Dormitory number: {} generated", i);
         }
         log.info("Dormitories generated");
 
@@ -382,6 +380,7 @@ public class MongoGenerator extends GeneratorHelper {
             Long numberOfBeds = (long) getRandomNumberOfBeds();
 
             Room room = Room.builder()
+                    .id(UUID.randomUUID().toString())
                     .roomNumber(String.valueOf(i+1))
                     .description("brak")
                     .numberOfBeds(numberOfBeds)
@@ -394,7 +393,7 @@ public class MongoGenerator extends GeneratorHelper {
                     .build();
             rooms.add(room);
         }
-    return rooms;
+        return rooms;
     }
 
 
