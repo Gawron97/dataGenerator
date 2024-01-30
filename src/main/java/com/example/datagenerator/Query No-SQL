@@ -1,0 +1,678 @@
+1. //przychody akademikow z platnosci za umowy w wybranym miesiacu danego roku
+
+db.dormitory.aggregate([
+  {
+    $lookup: {
+      from: "floor",
+      localField: "id",
+      foreignField: "id_dormitory",
+      as: "floor"
+    }
+  },
+  {
+    $unwind: "$floor"
+  },
+  {
+    $lookup: {
+      from: "room",
+      localField: "floor.id",
+      foreignField: "id_floor",
+      as: "room"
+    }
+  },
+  {
+    $unwind: "$room"
+  },
+  {
+    $lookup: {
+      from: "contract",
+      localField: "room.id",
+      foreignField: "id_room",
+      as: "contract"
+    }
+  },
+  {
+    $unwind: "$contract"
+  },
+  {
+    $lookup: {
+      from: "contract_payments",
+      localField: "contract.id",
+      foreignField: "id_contract",
+      as: "contract_payments"
+    }
+  },
+  {
+    $unwind: "$contract_payments"
+  },
+  {
+    $lookup: {
+      from: "payment",
+      localField: "contract_payments.id_payment",
+      foreignField: "id",
+      as: "payment"
+    }
+  },
+  {
+    $unwind: "$payment"
+  },
+  {
+    $match: {
+      $expr: {
+        $and: [
+          { $eq: [{ $year: "$payment.creation_date" }, 2023] },
+          { $eq: [{ $month: "$payment.creation_date" }, 5] }
+        ]
+      }
+    }
+  },
+  {
+    $group: {
+      _id: "$name",
+      total_price: { $sum: "$payment.price" }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      dormitory_name: "$_id",
+      total_price: 1
+    }
+  }
+])
+
+2. //Lista studentow, ktorzy maja aktualną umowe z akademikiem wraz z informacjami o wystawionych platnosciach
+    //dla wybranego roku i miesiaca
+
+db.payment.aggregate([
+  {
+    $lookup: {
+      from: "student",
+      localField: "id_student",
+      foreignField: "id",
+      as: "student"
+    }
+  },
+  {
+    $unwind: "$student"
+  },
+  {
+    $lookup: {
+      from: "_user",
+      localField: "student.id_user",
+      foreignField: "id",
+      as: "user"
+    }
+  },
+  {
+    $unwind: "$user"
+  },
+  {
+    $lookup: {
+      from: "payment_status",
+      localField: "id_payment_status",
+      foreignField: "id",
+      as: "payment_status"
+    }
+  },
+  {
+    $unwind: "$payment_status"
+  },
+  {
+    $lookup: {
+      from: "contract_payments",
+      localField: "id",
+      foreignField: "id_payment",
+      as: "contract_payments"
+    }
+  },
+  {
+    $unwind: "$contract_payments"
+  },
+  {
+    $lookup: {
+      from: "contract",
+      localField: "contract_payments.id_contract",
+      foreignField: "id",
+      as: "contract"
+    }
+  },
+  {
+    $unwind: "$contract"
+  },
+  {
+    $match: {
+      "contract.end_date": { $gt: ISODate("2023-11-21") },
+      $expr: {
+        $and: [
+          { $eq: [{ $year: "$creation_date" }, 2023] },
+          { $eq: [{ $month: "$creation_date" }, 5] }
+        ]
+      }
+    }
+  },
+  {
+    $project: {
+      student_name: { $concat: ["$user.first_name", " ", "$user.last_name"] },
+      student_id: "$student.id",
+      payment_id: "$id",
+      payment_description: "$description",
+      payment_creation_date: "$creation_date",
+      payment_price: "$price",
+      payment_status: "$payment_status.status"
+    }
+  }
+])
+
+
+3. //Lista studentow razem z iloscia otrzymanych skarg od podanej osoby
+
+db._user.aggregate([
+  {
+    $lookup: {
+      from: "student",
+      localField: "id",
+      foreignField: "id_user",
+      as: "student"
+    }
+  },
+  {
+    $unwind: "$student"
+  },
+  {
+    $lookup: {
+      from: "complain",
+      localField: "student.id",
+      foreignField: "id_student",
+      as: "complain"
+    }
+  },
+  {
+    $unwind: "$complain"
+  },
+  {
+    $match: {
+      "complain.author": "Rose Bush"
+    }
+  },
+  {
+    $group: {
+      _id: {
+        user_id: "$id",
+        complain_title: "$complain.title"
+      },
+      first_name: { $first: "$first_name" },
+      last_name: { $first: "$last_name" },
+      complain_count: { $sum: 1 }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      first_name: 1,
+      last_name: 1,
+      complain_title: "$_id.complain_title",
+      complain_count: 1
+    }
+  }
+])
+
+4. //Lista studentow z platnosciami w danym roku nie dotyczacymi oplat za umowy
+
+db.payment.aggregate([
+  {
+    $match: {
+      $expr: {
+        $and: [
+          { $eq: [{ $year: "$creation_date" }, 2023] },
+          { $eq: ["$id_payment_status", "3"] },
+          {
+            $not: {
+              $exists: {
+                $elemMatch: {
+                  $eq: ["$id", "$$payment_id"]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    $lookup: {
+      from: "student",
+      localField: "id_student",
+      foreignField: "id",
+      as: "student"
+    }
+  },
+  {
+    $unwind: "$student"
+  },
+  {
+    $lookup: {
+      from: "_user",
+      localField: "student.id_user",
+      foreignField: "id",
+      as: "user"
+    }
+  },
+  {
+    $unwind: "$user"
+  },
+  {
+    $group: {
+      _id: {
+        first_name: "$user.first_name",
+        last_name: "$user.last_name",
+        payment_year: { $year: "$creation_date" }
+      },
+      total_price: { $sum: "$price" }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      first_name: "$_id.first_name",
+      last_name: "$_id.last_name",
+      payment_year: "$_id.payment_year",
+      total_price: 1
+    }
+  }
+])
+
+
+5. // List studentów przyjętych do akademika w danym okresie
+
+db._user.aggregate([
+  {
+    $lookup: {
+      from: "student",
+      localField: "id",
+      foreignField: "id_user",
+      as: "student"
+    }
+  },
+  {
+    $unwind: "$student"
+  },
+  {
+    $lookup: {
+      from: "application",
+      localField: "student.id",
+      foreignField: "id_student",
+      as: "application"
+    }
+  },
+  {
+    $unwind: "$application"
+  },
+  {
+    $lookup: {
+      from: "application_status",
+      localField: "application.id_application_status",
+      foreignField: "id",
+      as: "application_status"
+    }
+  },
+  {
+    $unwind: "$application_status"
+  },
+  {
+    $match: {
+      "application.submission_date": {
+        $gte: ISODate("2022-01-01"),
+        $lte: ISODate("2023-12-12")
+      },
+      "application_status.status": "Zaakceptowana"
+    }
+  },
+  {
+    $project: {
+      first_name: "$first_name",
+      last_name: "$last_name",
+      student_id: "$student.id",
+      application_date: "$application.submission_date",
+      status: "$application_status.status"
+    }
+  }
+])
+
+
+6. //Zyski z opłat za wynajem dla poszczególnych akademikóww w danym roku - 0 gdy nie ma żadnych opłat
+
+db.dormitory.aggregate([
+  {
+    $lookup: {
+      from: "floor",
+      localField: "id",
+      foreignField: "id_dormitory",
+      as: "floor"
+    }
+  },
+  {
+    $unwind: {
+      path: "$floor",
+      preserveNullAndEmptyArrays: true
+    }
+  },
+  {
+    $lookup: {
+      from: "room",
+      localField: "floor.id",
+      foreignField: "id_floor",
+      as: "room"
+    }
+  },
+  {
+    $unwind: {
+      path: "$room",
+      preserveNullAndEmptyArrays: true
+    }
+  },
+  {
+    $lookup: {
+      from: "contract",
+      localField: "room.id",
+      foreignField: "id_room",
+      as: "contract"
+    }
+  },
+  {
+    $unwind: {
+      path: "$contract",
+      preserveNullAndEmptyArrays: true
+    }
+  },
+  {
+    $lookup: {
+      from: "contract_payments",
+      localField: "contract.id",
+      foreignField: "id_contract",
+      as: "contract_payments"
+    }
+  },
+  {
+    $unwind: {
+      path: "$contract_payments",
+      preserveNullAndEmptyArrays: true
+    }
+  },
+  {
+    $lookup: {
+      from: "payment",
+      localField: "contract_payments.id_payment",
+      foreignField: "id",
+      as: "payment"
+    }
+  },
+  {
+    $unwind: {
+      path: "$payment",
+      preserveNullAndEmptyArrays: true
+    }
+  },
+  {
+    $match: {
+      $and: [
+        { "payment.creation_date": { $gte: ISODate("2023-01-01"), $lt: ISODate("2024-01-01") } },
+        { "payment.id_payment_status": "3" }
+      ]
+    }
+  },
+  {
+    $group: {
+      _id: "$name",
+      total_payment: { $sum: { $ifNull: ["$payment.price", 0] } }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      dormitory_name: "$_id",
+      total_payment: 1
+    }
+  }
+])
+
+7. //Liczba studentów z danego wydziału w podanym roku - 0 gdy nie ma żadnych w danym roku
+
+db.faculty.aggregate([
+  {
+    $lookup: {
+      from: "field_of_study",
+      localField: "id",
+      foreignField: "id_faculty",
+      as: "field_of_study"
+    }
+  },
+  {
+    $unwind: {
+      path: "$field_of_study",
+      preserveNullAndEmptyArrays: true
+    }
+  },
+  {
+    $lookup: {
+      from: "student_field_of_studies",
+      localField: "field_of_study.id",
+      foreignField: "id_field_of_study",
+      as: "student_field_of_studies"
+    }
+  },
+  {
+    $unwind: {
+      path: "$student_field_of_studies",
+      preserveNullAndEmptyArrays: true
+    }
+  },
+  {
+    $lookup: {
+      from: "student",
+      localField: "student_field_of_studies.id_student",
+      foreignField: "id",
+      as: "student"
+    }
+  },
+  {
+    $unwind: {
+      path: "$student",
+      preserveNullAndEmptyArrays: true
+    }
+  },
+  {
+    $lookup: {
+      from: "application",
+      let: { studentId: "$student.id" },
+      pipeline: [
+        {
+          $match: {
+            $expr: {
+              $and: [
+                { $eq: ["$$studentId", "$id_student"] },
+                { $eq: [{ $year: "$submission_date" }, 2023] }
+              ]
+            }
+          }
+        }
+      ],
+      as: "application"
+    }
+  },
+  {
+    $unwind: {
+      path: "$application",
+      preserveNullAndEmptyArrays: true
+    }
+  },
+  {
+    $group: {
+      _id: "$name",
+      student_count: { $sum: { $cond: [{ $gt: ["$application.id", null] }, 1, 0] } }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      faculty: "$_id",
+      student_count: 1
+    }
+  },
+  {
+    $sort: {
+      student_count: -1
+    }
+  }
+])
+
+8. //Zestawienie ile aplikacji danego typu było w konkretnym roku
+
+db.application_type.aggregate([
+  {
+    $lookup: {
+      from: "application",
+      let: { typeId: "$id" },
+      pipeline: [
+        {
+          $match: {
+            $expr: {
+              $and: [
+                { $eq: ["$$typeId", "$id_application_type"] },
+                { $eq: [{ $year: "$submission_date" }, 2022] }
+              ]
+            }
+          }
+        }
+      ],
+      as: "applications"
+    }
+  },
+  {
+    $group: {
+      _id: "$type",
+      count: { $sum: { $cond: [{ $gt: [{ $size: "$applications" }, 0] }, 1, 0] } }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      application_type: "$_id",
+      count: 1
+    }
+  },
+  {
+    $sort: {
+      count: -1
+    }
+  }
+])
+
+9. //Zestawienie płatnośći studanta o danym id
+
+var studentId = "<ID_STUDENTA>"; // Replace with the actual student ID
+
+db.payment.aggregate([
+  {
+    $match: {
+      "id_student": studentId
+    }
+  },
+  {
+    $lookup: {
+      from: "student",
+      localField: "id_student",
+      foreignField: "id",
+      as: "student"
+    }
+  },
+  {
+    $unwind: "$student"
+  },
+  {
+    $lookup: {
+      from: "_user",
+      localField: "student.id_user",
+      foreignField: "id",
+      as: "user"
+    }
+  },
+  {
+    $unwind: "$user"
+  },
+  {
+    $lookup: {
+      from: "payment_status",
+      localField: "id_payment_status",
+      foreignField: "id",
+      as: "payment_status"
+    }
+  },
+  {
+    $unwind: "$payment_status"
+  },
+  {
+    $project: {
+      _id: 0,
+      student_name: { $concat: ["$user.first_name", " ", "$user.last_name"] },
+      student_id: "$student.id",
+      payment_id: "$id",
+      payment_description: "$description",
+      payment_creation_date: "$creation_date",
+      payment_price: "$price",
+      payment_status: "$payment_status.status"
+    }
+  }
+])
+
+10.  //Liczba wolnych łóżek w konkretnym akademiku
+
+db.dormitory.aggregate([
+  {
+    $match: {
+      "name": "T3"
+    }
+  },
+  {
+    $lookup: {
+      from: "floor",
+      localField: "id",
+      foreignField: "id_dormitory",
+      as: "floor"
+    }
+  },
+  {
+    $unwind: "$floor"
+  },
+  {
+    $lookup: {
+      from: "room",
+      localField: "floor.id",
+      foreignField: "id_floor",
+      as: "room"
+    }
+  },
+  {
+    $unwind: "$room"
+  },
+  {
+    $group: {
+      _id: null,
+      total_available_beds: {
+        $sum: {
+          $cond: [
+            { $and: [{ $eq: ["$room.is_available", true] }] },
+            "$room.free_beds",
+            0
+          ]
+        }
+      }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      total_available_beds: 1
+    }
+  }
+])
