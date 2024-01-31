@@ -165,57 +165,34 @@ db.payment.aggregate([
 ])
 
 
-3. //Lista studentow razem z iloscia otrzymanych skarg od podanej osoby
+3. //Lista studentow razem z iloscia otrzymanych skarg
 
-db._user.aggregate([
+db.student.aggregate([
   {
-    $lookup: {
-      from: "student",
-      localField: "id",
-      foreignField: "id_user",
-      as: "student"
-    }
-  },
-  {
-    $unwind: "$student"
-  },
-  {
-    $lookup: {
-      from: "complain",
-      localField: "student.id",
-      foreignField: "id_student",
-      as: "complain"
-    }
-  },
-  {
-    $unwind: "$complain"
-  },
-  {
-    $match: {
-      "complain.author": "Rose Bush"
-    }
+    $unwind: "$complains"
   },
   {
     $group: {
-      _id: {
-        user_id: "$id",
-        complain_title: "$complain.title"
-      },
-      first_name: { $first: "$first_name" },
-      last_name: { $first: "$last_name" },
-      complain_count: { $sum: 1 }
+      _id: "$_id",
+      firstName: { $first: "$firstName" },
+      lastName: { $first: "$lastName" },
+      domicile: { $first: "$domicile" },
+      contactNumber: { $first: "$contactNumber" },
+      numberOfComplaints: { $sum: 1 }
     }
   },
   {
     $project: {
       _id: 0,
-      first_name: 1,
-      last_name: 1,
-      complain_title: "$_id.complain_title",
-      complain_count: 1
+      studentId: "$_id",
+      firstName: 1,
+      lastName: 1,
+      domicile: 1,
+      contactNumber: 1,
+      numberOfComplaints: 1
     }
   }
-])
+]).forEach(printjson)
 
 4. //Lista studentow z platnosciami w danym roku nie dotyczacymi oplat za umowy
 
@@ -283,59 +260,23 @@ db.payment.aggregate([
 ])
 
 
-5. // List studentów przyjętych do akademika w danym okresie
+5. // Ilość studentów przyjętych do akademika w danym okresie
 
-db._user.aggregate([
+db.student.aggregate([
   {
-    $lookup: {
-      from: "student",
-      localField: "id",
-      foreignField: "id_user",
-      as: "student"
-    }
-  },
-  {
-    $unwind: "$student"
-  },
-  {
-    $lookup: {
-      from: "application",
-      localField: "student.id",
-      foreignField: "id_student",
-      as: "application"
-    }
-  },
-  {
-    $unwind: "$application"
-  },
-  {
-    $lookup: {
-      from: "application_status",
-      localField: "application.id_application_status",
-      foreignField: "id",
-      as: "application_status"
-    }
-  },
-  {
-    $unwind: "$application_status"
+    $unwind: "$applications"
   },
   {
     $match: {
-      "application.submission_date": {
-        $gte: ISODate("2022-01-01"),
-        $lte: ISODate("2023-12-12")
-      },
-      "application_status.status": "Zaakceptowana"
+      "applications.applicationStatus": "ZAAKCEPTOWANA",
+      "applications.submissionDate": {
+        $gte: ISODate("2020-05-01"),
+        $lt: ISODate("2021-01-01")
+      }
     }
   },
   {
-    $project: {
-      first_name: "$first_name",
-      last_name: "$last_name",
-      student_id: "$student.id",
-      application_date: "$application.submission_date",
-      status: "$application_status.status"
-    }
+    $count: "total_accepted_applications"
   }
 ])
 
@@ -528,42 +469,35 @@ db.faculty.aggregate([
 
 8. //Zestawienie ile aplikacji danego typu było w konkretnym roku
 
-db.application_type.aggregate([
+db.student.aggregate([
   {
-    $lookup: {
-      from: "application",
-      let: { typeId: "$id" },
-      pipeline: [
-        {
-          $match: {
-            $expr: {
-              $and: [
-                { $eq: ["$$typeId", "$id_application_type"] },
-                { $eq: [{ $year: "$submission_date" }, 2022] }
-              ]
-            }
-          }
-        }
-      ],
-      as: "applications"
+    $unwind: "$applications"
+  },
+  {
+    $project: {
+      _id: 0,
+      applicationType: "$applications.applicationType",
+      academicYear: 1,
+      applicationYear: { $year: "$applications.submissionDate" },
+      applicationStatus: "$applications.applicationStatus"
+    }
+  },
+  {
+    $match: {
+      applicationYear: 2022 // Replace with the desired year
     }
   },
   {
     $group: {
-      _id: "$type",
-      count: { $sum: { $cond: [{ $gt: [{ $size: "$applications" }, 0] }, 1, 0] } }
+      _id: "$applicationType",
+      total_applications: { $sum: 1 }
     }
   },
   {
     $project: {
       _id: 0,
-      application_type: "$_id",
-      count: 1
-    }
-  },
-  {
-    $sort: {
-      count: -1
+      applicationType: "$_id",
+      total_applications: 1
     }
   }
 ])
@@ -572,55 +506,26 @@ db.application_type.aggregate([
 
 var studentId = "<ID_STUDENTA>"; // Replace with the actual student ID
 
-db.payment.aggregate([
+db.student.aggregate([
   {
     $match: {
-      "id_student": studentId
+      "_id": ObjectId(studentId)
     }
   },
   {
-    $lookup: {
-      from: "student",
-      localField: "id_student",
-      foreignField: "id",
-      as: "student"
+    $unwind: "$payments"
+  },
+  {
+    $group: {
+      _id: "$payments.paymentStatus",
+      total_price: { $sum: { $toDouble: "$payments.price" } }
     }
-  },
-  {
-    $unwind: "$student"
-  },
-  {
-    $lookup: {
-      from: "_user",
-      localField: "student.id_user",
-      foreignField: "id",
-      as: "user"
-    }
-  },
-  {
-    $unwind: "$user"
-  },
-  {
-    $lookup: {
-      from: "payment_status",
-      localField: "id_payment_status",
-      foreignField: "id",
-      as: "payment_status"
-    }
-  },
-  {
-    $unwind: "$payment_status"
   },
   {
     $project: {
       _id: 0,
-      student_name: { $concat: ["$user.first_name", " ", "$user.last_name"] },
-      student_id: "$student.id",
-      payment_id: "$id",
-      payment_description: "$description",
-      payment_creation_date: "$creation_date",
-      payment_price: "$price",
-      payment_status: "$payment_status.status"
+      payment_status: "$_id",
+      total_price: 1
     }
   }
 ])
@@ -630,30 +535,14 @@ db.payment.aggregate([
 db.dormitory.aggregate([
   {
     $match: {
-      "name": "T3"
+      "name": "T2"
     }
   },
   {
-    $lookup: {
-      from: "floor",
-      localField: "id",
-      foreignField: "id_dormitory",
-      as: "floor"
-    }
+    $unwind: "$floors"
   },
   {
-    $unwind: "$floor"
-  },
-  {
-    $lookup: {
-      from: "room",
-      localField: "floor.id",
-      foreignField: "id_floor",
-      as: "room"
-    }
-  },
-  {
-    $unwind: "$room"
+    $unwind: "$floors.rooms"
   },
   {
     $group: {
@@ -661,8 +550,8 @@ db.dormitory.aggregate([
       total_available_beds: {
         $sum: {
           $cond: [
-            { $and: [{ $eq: ["$room.is_available", true] }] },
-            "$room.free_beds",
+            { $eq: ["$floors.rooms.isAvailable", true] },
+            "$floors.rooms.freeBeds",
             0
           ]
         }
