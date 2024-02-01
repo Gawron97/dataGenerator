@@ -15,7 +15,7 @@ db.student.aggregate([
           $cond: [
             {
               $and: [
-                { $eq: ["$contracts.payments.paymentStatus", "ZAKONCZONA"] },
+                { $eq: ["$contracts.payments.paymentStatus", "ZAKONCZONO"] },
                 { $gte: ["$contracts.payments.creationDate", ISODate("2020-01-01")] },
                 { $lt: ["$contracts.payments.creationDate", ISODate("2020-01-31")] }
               ]
@@ -178,8 +178,8 @@ db.dormitory.aggregate([
   {
     $lookup: {
       from: "floor",
-      localField: "id",
-      foreignField: "id_dormitory",
+      localField: "name",
+      foreignField: "dormitoryName",
       as: "floor"
     }
   },
@@ -192,8 +192,8 @@ db.dormitory.aggregate([
   {
     $lookup: {
       from: "room",
-      localField: "floor.id",
-      foreignField: "id_floor",
+      localField: "floor._id",
+      foreignField: "floor_id",
       as: "room"
     }
   },
@@ -206,8 +206,15 @@ db.dormitory.aggregate([
   {
     $lookup: {
       from: "contract",
-      localField: "room.id",
-      foreignField: "id_room",
+      let: { room_id: "$room._id" },
+      pipeline: [
+        {
+          $match: {
+            $expr: { $eq: ["$room.$ref", "room"] },
+            "room.$id": "$$room_id"
+          }
+        }
+      ],
       as: "contract"
     }
   },
@@ -220,8 +227,15 @@ db.dormitory.aggregate([
   {
     $lookup: {
       from: "contract_payments",
-      localField: "contract.id",
-      foreignField: "id_contract",
+      let: { contract_id: "$contract._id" },
+      pipeline: [
+        {
+          $match: {
+            $expr: { $eq: ["$contract.$ref", "contract"] },
+            "contract.$id": "$$contract_id"
+          }
+        }
+      ],
       as: "contract_payments"
     }
   },
@@ -234,8 +248,16 @@ db.dormitory.aggregate([
   {
     $lookup: {
       from: "payment",
-      localField: "contract_payments.id_payment",
-      foreignField: "id",
+      let: { payment_id: "$contract_payments.payment_id" },
+      pipeline: [
+        {
+          $match: {
+            $expr: { $eq: ["$_id", "$$payment_id"] },
+            "creationDate": { $gte: ISODate("2023-01-01"), $lt: ISODate("2024-01-01") },
+            "paymentStatus": "ZAKONCZONO"
+          }
+        }
+      ],
       as: "payment"
     }
   },
@@ -243,14 +265,6 @@ db.dormitory.aggregate([
     $unwind: {
       path: "$payment",
       preserveNullAndEmptyArrays: true
-    }
-  },
-  {
-    $match: {
-      $and: [
-        { "payment.creation_date": { $gte: ISODate("2023-01-01"), $lt: ISODate("2024-01-01") } },
-        { "payment.id_payment_status": "3" }
-      ]
     }
   },
   {
@@ -265,98 +279,49 @@ db.dormitory.aggregate([
       dormitory_name: "$_id",
       total_payment: 1
     }
-  }
-])
-
-7. //Liczba studentów z danego wydziału w podanym roku - 0 gdy nie ma żadnych w danym roku
-
-db.faculty.aggregate([
-  {
-    $lookup: {
-      from: "field_of_study",
-      localField: "id",
-      foreignField: "id_faculty",
-      as: "field_of_study"
-    }
-  },
-  {
-    $unwind: {
-      path: "$field_of_study",
-      preserveNullAndEmptyArrays: true
-    }
-  },
-  {
-    $lookup: {
-      from: "student_field_of_studies",
-      localField: "field_of_study.id",
-      foreignField: "id_field_of_study",
-      as: "student_field_of_studies"
-    }
-  },
-  {
-    $unwind: {
-      path: "$student_field_of_studies",
-      preserveNullAndEmptyArrays: true
-    }
-  },
-  {
-    $lookup: {
-      from: "student",
-      localField: "student_field_of_studies.id_student",
-      foreignField: "id",
-      as: "student"
-    }
-  },
-  {
-    $unwind: {
-      path: "$student",
-      preserveNullAndEmptyArrays: true
-    }
-  },
-  {
-    $lookup: {
-      from: "application",
-      let: { studentId: "$student.id" },
-      pipeline: [
-        {
-          $match: {
-            $expr: {
-              $and: [
-                { $eq: ["$$studentId", "$id_student"] },
-                { $eq: [{ $year: "$submission_date" }, 2023] }
-              ]
-            }
-          }
-        }
-      ],
-      as: "application"
-    }
-  },
-  {
-    $unwind: {
-      path: "$application",
-      preserveNullAndEmptyArrays: true
-    }
-  },
-  {
-    $group: {
-      _id: "$name",
-      student_count: { $sum: { $cond: [{ $gt: ["$application.id", null] }, 1, 0] } }
-    }
   },
   {
     $project: {
-      _id: 0,
-      faculty: "$_id",
-      student_count: 1
-    }
-  },
-  {
-    $sort: {
-      student_count: -1
+      dormitory_name: 1,
+      total_payment: { $ifNull: ["$total_payment", 0] }
     }
   }
 ])
+
+7. //Liczba studentów w poszczególnych wydziałach i latach akademickich
+
+db.student.aggregate([
+    {
+      $unwind: "$studies"
+    },
+    {
+      $group: {
+        _id: {
+          facultyName: "$studies.facultyName",
+          academicYear: "$academicYear"
+        },
+        studentCount: { $sum: 1 }
+      }
+    },
+    {
+      $group: {
+        _id: "$_id.facultyName",
+        academicYears: {
+          $push: {
+            academicYear: "$_id.academicYear",
+            studentCount: "$studentCount"
+          }
+        }
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        facultyName: "$_id",
+        academicYears: 1
+      }
+    }
+  ]).forEach(printjson)
 
 8. //Zestawienie ile aplikacji danego typu było w konkretnym roku
 
