@@ -1,168 +1,81 @@
-1. //przychody akademikow z platnosci za umowy w wybranym miesiacu danego roku
+1. //przychody z platnosci za umowy w danym okresie
 
-db.dormitory.aggregate([
+db.student.aggregate([
   {
-    $lookup: {
-      from: "floor",
-      localField: "id",
-      foreignField: "id_dormitory",
-      as: "floor"
+    $unwind: "$contracts"
+  },
+  {
+    $unwind: "$contracts.payments"
+  },
+  {
+    $group: {
+      _id: null,
+      totalRevenues: {
+        $sum: {
+          $cond: [
+            {
+              $and: [
+                { $eq: ["$contracts.payments.paymentStatus", "ZAKONCZONA"] },
+                { $gte: ["$contracts.payments.creationDate", ISODate("2020-01-01")] },
+                { $lt: ["$contracts.payments.creationDate", ISODate("2020-01-31")] }
+              ]
+            },
+            { $toDouble: "$contracts.payments.price" },
+            0
+          ]
+        }
+      }
     }
   },
   {
-    $unwind: "$floor"
-  },
-  {
-    $lookup: {
-      from: "room",
-      localField: "floor.id",
-      foreignField: "id_floor",
-      as: "room"
+    $project: {
+      _id: 0,
+      totalRevenues: 1
     }
+  }
+]).forEach(printjson)
+
+
+
+2. //Lista studentow, ktorzy maja aktualną umowe z akademikiem wraz z informacjami o wystawionych platnosciach
+
+
+db.student.aggregate([
+  {
+    $unwind: "$contracts"
   },
   {
-    $unwind: "$room"
-  },
-  {
-    $lookup: {
-      from: "contract",
-      localField: "room.id",
-      foreignField: "id_room",
-      as: "contract"
-    }
-  },
-  {
-    $unwind: "$contract"
-  },
-  {
-    $lookup: {
-      from: "contract_payments",
-      localField: "contract.id",
-      foreignField: "id_contract",
-      as: "contract_payments"
-    }
-  },
-  {
-    $unwind: "$contract_payments"
-  },
-  {
-    $lookup: {
-      from: "payment",
-      localField: "contract_payments.id_payment",
-      foreignField: "id",
-      as: "payment"
-    }
-  },
-  {
-    $unwind: "$payment"
+    $unwind: "$contracts.payments"
   },
   {
     $match: {
+      "contracts.payments.paymentStatus": "ZAKONCZONO",
       $expr: {
         $and: [
-          { $eq: [{ $year: "$payment.creation_date" }, 2023] },
-          { $eq: [{ $month: "$payment.creation_date" }, 5] }
+          { $gte: ["$contracts.end_date", ISODate(year + "-01-01")] },
+          { $lt: ["$contracts.start_date", ISODate((year + 1) + "-01-01")] }
         ]
       }
     }
   },
   {
     $group: {
-      _id: "$name",
-      total_price: { $sum: "$payment.price" }
+      _id: "$_id",
+      firstName: { $first: "$firstName" },
+      lastName: { $first: "$lastName" },
+      totalContractPrices: { $sum: { $toDouble: "$contracts.payments.price" } }
     }
   },
   {
     $project: {
       _id: 0,
-      dormitory_name: "$_id",
-      total_price: 1
+      studentId: "$_id",
+      firstName: 1,
+      lastName: 1,
+      totalContractPrices: 1
     }
   }
-])
-
-2. //Lista studentow, ktorzy maja aktualną umowe z akademikiem wraz z informacjami o wystawionych platnosciach
-    //dla wybranego roku i miesiaca
-
-db.payment.aggregate([
-  {
-    $lookup: {
-      from: "student",
-      localField: "id_student",
-      foreignField: "id",
-      as: "student"
-    }
-  },
-  {
-    $unwind: "$student"
-  },
-  {
-    $lookup: {
-      from: "_user",
-      localField: "student.id_user",
-      foreignField: "id",
-      as: "user"
-    }
-  },
-  {
-    $unwind: "$user"
-  },
-  {
-    $lookup: {
-      from: "payment_status",
-      localField: "id_payment_status",
-      foreignField: "id",
-      as: "payment_status"
-    }
-  },
-  {
-    $unwind: "$payment_status"
-  },
-  {
-    $lookup: {
-      from: "contract_payments",
-      localField: "id",
-      foreignField: "id_payment",
-      as: "contract_payments"
-    }
-  },
-  {
-    $unwind: "$contract_payments"
-  },
-  {
-    $lookup: {
-      from: "contract",
-      localField: "contract_payments.id_contract",
-      foreignField: "id",
-      as: "contract"
-    }
-  },
-  {
-    $unwind: "$contract"
-  },
-  {
-    $match: {
-      "contract.end_date": { $gt: ISODate("2023-11-21") },
-      $expr: {
-        $and: [
-          { $eq: [{ $year: "$creation_date" }, 2023] },
-          { $eq: [{ $month: "$creation_date" }, 5] }
-        ]
-      }
-    }
-  },
-  {
-    $project: {
-      student_name: { $concat: ["$user.first_name", " ", "$user.last_name"] },
-      student_id: "$student.id",
-      payment_id: "$id",
-      payment_description: "$description",
-      payment_creation_date: "$creation_date",
-      payment_price: "$price",
-      payment_status: "$payment_status.status"
-    }
-  }
-])
+]).forEach(printjson)
 
 
 3. //Lista studentow razem z iloscia otrzymanych skarg
@@ -194,70 +107,48 @@ db.student.aggregate([
   }
 ]).forEach(printjson)
 
-4. //Lista studentow z platnosciami w danym roku nie dotyczacymi oplat za umowy
+4. // Suma zakonczonych platnocsi studenta niedotyczacymi umow z danego okresu
 
-db.payment.aggregate([
+var startDate = ISODate("2022-01-01");
+var endDate = ISODate("2022-12-31");
+
+db.student.aggregate([
   {
     $match: {
-      $expr: {
-        $and: [
-          { $eq: [{ $year: "$creation_date" }, 2023] },
-          { $eq: ["$id_payment_status", "3"] },
-          {
-            $not: {
-              $exists: {
-                $elemMatch: {
-                  $eq: ["$id", "$$payment_id"]
-                }
-              }
-            }
-          }
-        ]
-      }
+      "_id": ObjectId("65b260dcdf4ae52bfcd6ec78")
     }
   },
   {
-    $lookup: {
-      from: "student",
-      localField: "id_student",
-      foreignField: "id",
-      as: "student"
-    }
-  },
-  {
-    $unwind: "$student"
-  },
-  {
-    $lookup: {
-      from: "_user",
-      localField: "student.id_user",
-      foreignField: "id",
-      as: "user"
-    }
-  },
-  {
-    $unwind: "$user"
+    $unwind: "$payments"
   },
   {
     $group: {
-      _id: {
-        first_name: "$user.first_name",
-        last_name: "$user.last_name",
-        payment_year: { $year: "$creation_date" }
-      },
-      total_price: { $sum: "$price" }
+      _id: null,
+      total_price: {
+        $sum: {
+          $cond: [
+            {
+              $and: [
+                { $eq: ["$payments.paymentStatus", "ZAKONCZONO"] },
+                 { $gte: ["$payments.creationDate", ISODate("2000-01-01")]},
+                 { $lte: ["$payments.creationDate", ISODate("2022-12-31")]}
+
+              ]
+            },
+            { $toDouble: "$payments.price" },
+            0
+          ]
+        }
+      }
     }
   },
   {
     $project: {
       _id: 0,
-      first_name: "$_id.first_name",
-      last_name: "$_id.last_name",
-      payment_year: "$_id.payment_year",
       total_price: 1
     }
   }
-])
+]).forEach(printjson)
 
 
 5. // Ilość studentów przyjętych do akademika w danym okresie
