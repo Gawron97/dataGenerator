@@ -323,6 +323,38 @@ db.student.aggregate([
     }
   ]).forEach(printjson)
 
+7a. Liczba studentów w poszczególnych latach akademickich dla konkretnego wydziału
+
+faculty = "Northern Texas Institute"
+
+db.student.aggregate([
+    {
+      $unwind: "$studies"
+    },
+    {
+      $group: {
+        _id: {
+          facultyName: "$studies.facultyName",
+          academicYear: "$academicYear"
+        },
+        studentCount: { $sum: 1 }
+      }
+    },
+    {
+      $match: {
+        "_id.facultyName": faculty
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        facultyName: "$_id.facultyName",
+        academicYear: "$_id.academicYear",
+        studentCount: 1
+      }
+    }
+  ])
+
 8. //Zestawienie ile aplikacji danego typu było w konkretnym roku
 
 db.student.aggregate([
